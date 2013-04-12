@@ -1,7 +1,21 @@
 # Django settings for checkinatfmi project.
+import os
+from unipath import Path
 
-DEBUG = True
-TEMPLATE_DEBUG = DEBUG
+from django.core.exceptions import ImproperlyConfigured 
+
+
+def get_env_variable(var_name):
+    """
+    Get the environment variable or return exception
+    """
+    try:
+        return os.environ[var_name]
+    except KeyError:
+        error_msg = "Set the %s environment variable" % var_name
+        raise ImproperlyConfigured(error_msg)
+
+PROJECT_ROOT= Path(__file__).ancestor(3)
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -11,11 +25,11 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '',                      # Or path to database file if using sqlite3.
+        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'checkin_db',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
-        'USER': '',
-        'PASSWORD': '',
+        'USER': 'mightypixel',
+        'PASSWORD': '123',
         'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         'PORT': '',                      # Set to empty string for default.
     }
@@ -50,18 +64,18 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = PROJECT_ROOT.child("media")
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://example.com/media/", "http://media.example.com/"
-MEDIA_URL = ''
+MEDIA_URL = '/media/'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = ''
+STATIC_ROOT = PROJECT_ROOT.child("static")
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
@@ -72,6 +86,9 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    STATIC_ROOT.child("images"),
+    STATIC_ROOT.child("css"),
+    STATIC_ROOT.child("js"),
 )
 
 # List of finder classes that know how to find static files in
@@ -83,7 +100,8 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'j*qhjd*b=5!kn2#xjq(^u#68y7kshnt)b&vc#i5jr8%s-+4n6a'
+# gets the secret_key from the env (put the secretkey in bashrc for example)
+SECRET_KEY = get_env_variable("CHECKIN_SECRET_KEY")
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -111,6 +129,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    PROJECT_ROOT.child("templates"),
 )
 
 INSTALLED_APPS = (
@@ -120,8 +139,9 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
+    'django.contrib.admin',
+    #-----
+    'south',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
