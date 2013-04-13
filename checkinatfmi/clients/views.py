@@ -48,19 +48,23 @@ def checkin(request):
         except ObjectDoesNotExist, e:
             print "client doesn't exist"
             return HttpResponse("error")
-        if client.status:# and client.is_updated():
-            # Checkin
+        if client.status:
             key = request.POST.get("key", "")
+            checkin_time = request.POST.get("time", "")
             try:
-                user = User.objects.get(card_key = key)
-                place = Place.objects.get(mac = mac)          
+                place = Place.objects.get(mac = mac)
+                try:
+                    user = User.objects.get(card_key = key)
+                except User.DoesNotExist: 
+                    user = User.create(key)
             except ObjectDoesNotExist, e:
                 return HttpResponse("error")
 
-            checkin_time = request.POST.get("time", "")
-
-            Checkin.checkin(user, place, checkin_time) 
-
+            active_checkins = Checkin.objects.filter(user__name = user.name, active = True)
+            for checkin in active_checkins:
+                checkin.checkout()
+            if not place in [check.place for check in active_checkins]:
+                Checkin.checkin(user, place, checkin_time)
             return HttpResponse("ok")
         else:
             return HttpResponse("error")

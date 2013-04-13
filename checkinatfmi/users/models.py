@@ -6,3 +6,11 @@ class User(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    @staticmethod
+    def create(key):
+        user = User()
+        user.name = key
+        user.card_key = key
+        user.save()
+        return user

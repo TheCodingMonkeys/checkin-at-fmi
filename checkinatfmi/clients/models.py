@@ -10,10 +10,3 @@ class Client(models.Model):
     
     def __unicode__(self):
         return "%s" % self.mac
-
-#class Checkin(models.Model):
-#    key = models.CharField(max_length = 63)
-#    mac = models.CharField(max_length = 63)
-#
-#    def __unicode__(self):
-#        return "%s checked %s" % (self.mac, self.key)
