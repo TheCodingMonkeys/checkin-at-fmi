@@ -144,6 +144,9 @@ INSTALLED_APPS = (
     'south',
     #-----
     'clients',
+    'checkin',
+    'users',
+    'places',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
