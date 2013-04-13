@@ -1,0 +1,7 @@
+from django.conf.urls import patterns
+from django.core.urlresolvers import resolve
+
+urlpatterns = patterns('clients.views',
+    (r'status/', 'status'),
+    (r'$', 'checkin'), 
+)
