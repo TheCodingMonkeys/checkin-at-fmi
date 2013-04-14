@@ -18,8 +18,7 @@ def index(request):
         checkins_inside = Checkin.objects.filter(place = place)
         all_users = []
         for checkin in checkins_inside:
-            names = " ".split(checkin.user.name)
-            all_users += [[names[0], names[-1], now-checkin.time]]
+            all_users += [[checkin.user.name, (now-checkin.time).days * 24 * 60]]
         all_places += [[place, place.capacity, len(all_users), all_users]]
     print all_places
     return render_to_response('index.html',

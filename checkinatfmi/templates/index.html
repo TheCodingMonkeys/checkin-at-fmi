@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -46,35 +46,33 @@
 
     <div class="container">
 
-     <h2>Посещаемост в зала 100</h2>
-		<div class="progress progress-striped active">
-		<!-- 30% progress-info  60% progress-warning 85% progress-danger -->
-		 	<div class="bar" style="width: 40%;"><strong>8 Човека</strong></div>
-		</div>
-    <table class="table table-bordered">
-    	<thead>
-			<tr>
-				<th></th>
-				<th>Име:</th>
-				<th>Фамилия:</th>
-				<th>Седи от:</th>	
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td>1</td>
-				<td>Ивайло</td>
-				<td>Бъчваров</td>
-				<td>3 часа и 25 минути</td>
-			</tr>
-			<tr>
-				<td>2</td>
-				<td>Огнян</td>
-				<td>Ангелов</td>
-				<td>1 часа и 5 минути</td>
-			</tr>
-		</tbody>
-	</table>
+     {% for place in places %}
+        <h2>Посещаемост в зала {{ place.0.name }}</h2>
+            <div class="progress progress-striped active">
+            <!-- 30% progress-info  60% progress-warning 85% progress-danger -->
+                <div class="bar" style="width: 40%;"><strong>8 Човека</strong></div>
+            </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Име:</th>
+                    <th>Фамилия:</th>
+                    <th>Седи от:</th>	
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in place.3 %} 
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ user.0 }}</td>
+                    <td>Бъчваров</td>
+                    <td>{{ user.1 }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endfor %}
 
     </div> <!-- /container -->
 
