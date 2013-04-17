@@ -3,7 +3,7 @@ from django.contrib import admin
 from models import Place
 
 class PlaceAdmin(admin.ModelAdmin):
-    fields = ['name', 'mac']
-    list_display = ['name', 'mac']
+    fields = ['name', 'capacity']
+    list_display = ['name', 'capacity']
 
 admin.site.register(Place, PlaceAdmin)

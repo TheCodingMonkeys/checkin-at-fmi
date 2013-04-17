@@ -10,15 +10,21 @@ from checkin.models import Checkin
 from places.models import Place
 from users.models import User
 
+def days_hours_minutes(td):
+    return td.seconds//3600, (td.seconds//60)%60, td.seconds%60
+
 def index(request):
     now = datetime.datetime.utcnow().replace(tzinfo=utc)
+    print now
     places = Place.objects.all()
     all_places = []
     for place in places:
-        checkins_inside = Checkin.objects.filter(place = place)
+        checkins_inside = Checkin.objects.filter(place = place, active = True)
         all_users = []
         for checkin in checkins_inside:
-            all_users += [[checkin.user.name, (now-checkin.time).days * 24 * 60]]
+            print checkin.time
+            all_users += [[checkin.user.name, days_hours_minutes(now-checkin.time)]]
+            print (now-checkin.time)
         all_places += [[place, place.capacity, len(all_users), all_users]]
     print all_places
     return render_to_response('index.html',

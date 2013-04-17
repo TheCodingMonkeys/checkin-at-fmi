@@ -1,6 +1,8 @@
 # Create your views here.
 import sys
-from datetime import datetime
+import datetime
+
+from django.utils.timezone import utc
 
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -28,7 +30,7 @@ def status(request):
             client.save()
          
         if client.status == True:
-            client.status_changed = datetime.now
+            client.status_changed = datetime.datetime.utcnow().replace(tzinfo=utc)
             return HttpResponse("ok")
         else:
             return HttpResponse("error")
@@ -52,7 +54,7 @@ def checkin(request):
             key = request.POST.get("key", "")
             checkin_time = request.POST.get("time", "")
             try:
-                place = Place.objects.get(mac = mac)
+                # place = Place.objects.get(mac = mac)
                 try:
                     user = User.objects.get(card_key = key)
                 except User.DoesNotExist: 
@@ -63,8 +65,8 @@ def checkin(request):
             active_checkins = Checkin.objects.filter(user__name = user.name, active = True)
             for checkin in active_checkins:
                 checkin.checkout()
-            if not place in [check.place for check in active_checkins]:
-                Checkin.checkin(user, place, checkin_time)
+            if not client.place in [check.place for check in active_checkins]:
+                Checkin.checkin(user, client.place, checkin_time)
             return HttpResponse("ok")
         else:
             return HttpResponse("error")

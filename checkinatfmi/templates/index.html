@@ -48,14 +48,17 @@
 
      {% for place in places %}
         <h2>Посещаемост в зала {{ place.0.name }}</h2>
-            <div class="progress progress-striped active">
+        <div class="progress progress-striped active">
             <!-- 30% progress-info  60% progress-warning 85% progress-danger -->
-                <div class="bar" style="width: 40%;"><strong>8 Човека</strong></div>
+            <div class="bar info" style="width: {% widthratio place.2 place.1 100 %}%; postion:absolute"></div>
+            <div style="position:absolute; margin:auto;">
+                <strong>{{ place.2 }} Човека / {{ place.1 }} max</strong>
             </div>
+        </div>
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th></th>
+                    <th>#</th>
                     <th>Име:</th>
                     <th>Фамилия:</th>
                     <th>Седи от:</th>	
@@ -66,8 +69,8 @@
                 <tr>
                     <td>{{ forloop.counter }}</td>
                     <td>{{ user.0 }}</td>
-                    <td>Бъчваров</td>
-                    <td>{{ user.1 }}</td>
+                    <td>{{ user.0 }}</td>
+                    <td>{% if user.1.0 != 0 %}{{ user.1.0 }} часа, {% endif %}{% if user.1.1 != 0 %}{{ user.1.1 }} минути, {% endif %}{{ user.1.2 }} секунди</td>
                 </tr>
                 {% endfor %}
             </tbody>
