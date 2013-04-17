@@ -22,9 +22,9 @@ def index(request):
         checkins_inside = Checkin.objects.filter(place = place, active = True)
         all_users = []
         for checkin in checkins_inside:
-            print checkin.time
-            all_users += [[checkin.user.name, days_hours_minutes(now-checkin.time)]]
-            print (now-checkin.time)
+            print checkin.checkin_time
+            all_users += [[checkin.user.name, days_hours_minutes(now-checkin.checkin_time)]]
+            print (now-checkin.checkin_time)
         all_places += [[place, place.capacity, len(all_users), all_users]]
     print all_places
     return render_to_response('index.html',

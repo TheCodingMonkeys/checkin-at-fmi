@@ -64,7 +64,7 @@ def checkin(request):
 
             active_checkins = Checkin.objects.filter(user__name = user.name, active = True)
             for checkin in active_checkins:
-                checkin.checkout()
+                checkin.checkout(checkin_time)
             if not client.place in [check.place for check in active_checkins]:
                 Checkin.checkin(user, client.place, checkin_time)
             return HttpResponse("ok")
