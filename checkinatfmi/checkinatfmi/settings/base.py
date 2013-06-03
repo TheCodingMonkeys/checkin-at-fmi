@@ -2,7 +2,7 @@
 import os
 from unipath import Path
 
-from django.core.exceptions import ImproperlyConfigured 
+from django.core.exceptions import ImproperlyConfigured
 
 
 def get_env_variable(var_name):
@@ -131,6 +131,8 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
     PROJECT_ROOT.child("templates"),
 )
+
+from secret import *
 
 INSTALLED_APPS = (
     'django.contrib.auth',
