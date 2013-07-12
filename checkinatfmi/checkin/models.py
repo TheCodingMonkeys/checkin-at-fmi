@@ -3,6 +3,8 @@ from django.db import models
 from users.models import User
 from places.models import Place
 
+from datetime import datetime
+
 class Checkin (models.Model):
     user = models.ForeignKey(User)
     place = models.ForeignKey(Place)
@@ -18,10 +20,12 @@ class Checkin (models.Model):
         checkin = Checkin()
         checkin.user = user
         checkin.place = place
-        checkin.checkin = time
+        checkin.checkin = datetime.now()
+        print checkin.checkin
         checkin.active = True
         checkin.save()
 
+    @staticmethod
     def checkout(self, checkout_time):
         self.active = False
         self.checkout_time = checkout_time

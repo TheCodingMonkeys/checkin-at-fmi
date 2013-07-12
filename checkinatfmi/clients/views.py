@@ -28,7 +28,7 @@ def status(request):
             client = Client()
             client.mac = mac
             client.save()
-         
+
         if client.status == True:
             client.status_changed = datetime.datetime.utcnow().replace(tzinfo=utc)
             return HttpResponse("ok")
@@ -53,11 +53,12 @@ def checkin(request):
         if client.status:
             key = request.POST.get("key", "")
             checkin_time = request.POST.get("time", "")
+            print checkin_time
             try:
                 # place = Place.objects.get(mac = mac)
                 try:
                     user = User.objects.get(card_key = key)
-                except User.DoesNotExist: 
+                except User.DoesNotExist:
                     user = User.create(key)
             except ObjectDoesNotExist, e:
                 return HttpResponse("error")
