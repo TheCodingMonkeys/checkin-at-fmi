@@ -63,10 +63,13 @@ def checkin(request):
             except ObjectDoesNotExist, e:
                 return HttpResponse("error")
 
+
             active_checkins = Checkin.objects.filter(user__name = user.name, active = True)
-            for checkin in active_checkins:
-                checkin.checkout(checkin_time)
-            if not client.place in [check.place for check in active_checkins]:
+            for active_checkin in active_checkins:
+                print "CHECKOUT" + str(active_checkin) + "@" + checkin_time
+                active_checkin.checkout(checkin_time)
+            if not (client.place in [check.place for check in active_checkins]):
+                print client.place
                 Checkin.checkin(user, client.place, checkin_time)
             return HttpResponse("ok")
         else:

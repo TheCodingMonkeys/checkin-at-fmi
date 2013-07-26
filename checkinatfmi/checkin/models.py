@@ -8,7 +8,7 @@ from datetime import datetime
 class Checkin (models.Model):
     user = models.ForeignKey(User)
     place = models.ForeignKey(Place)
-    checkin_time = models.DateTimeField()
+    checkin_time = models.DateTimeField(null = True)
     checkout_time = models.DateTimeField(null = True, blank = True)
     active = models.BooleanField(default = False)
 
@@ -20,12 +20,10 @@ class Checkin (models.Model):
         checkin = Checkin()
         checkin.user = user
         checkin.place = place
-        checkin.checkin = datetime.now()
-        print checkin.checkin
+        checkin.checkin_time = time#datetime.now()
         checkin.active = True
         checkin.save()
 
-    @staticmethod
     def checkout(self, checkout_time):
         self.active = False
         self.checkout_time = checkout_time

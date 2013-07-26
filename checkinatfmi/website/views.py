@@ -39,7 +39,7 @@ def statistics(request):
     for user in all_users:
         checkin_count = Checkin.objects.filter(user__name = user.name).count()
         scores += [[user.name, checkin_count]]
-    
+
     print scores
     return render_to_response('statistics.html',
             {
