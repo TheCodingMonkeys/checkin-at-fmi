@@ -30,7 +30,7 @@ def status(request):
             client.save()
 
         if client.status == True:
-            client.status_changed = datetime.datetime.utcnow().replace(tzinfo=utc)
+            client.status_changed = datetime.datetime.now() #.utcnow().replace(tzinfo=utc)
             return HttpResponse("ok")
         else:
             return HttpResponse("error")
@@ -58,6 +58,7 @@ def checkin(request):
                 user = User.objects.get(card_key = key)
             except User.DoesNotExist:
                 user = User.create(key)
+                return HttpResponse("error")
             active_checkins = Checkin.objects.filter(user__name = user.name, active = True)
             for active_checkin in active_checkins:
                 print "CHECKOUT" + str(active_checkin) + "@" + checkin_time

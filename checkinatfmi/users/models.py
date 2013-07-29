@@ -10,7 +10,7 @@ class User(models.Model):
     @staticmethod
     def create(key):
         user = User()
-        user.name = key
+        user.name = "Unregistered"
         user.card_key = key
         user.save()
         return user
