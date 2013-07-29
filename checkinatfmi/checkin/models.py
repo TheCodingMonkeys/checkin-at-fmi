@@ -20,9 +20,10 @@ class Checkin (models.Model):
         checkin = Checkin()
         checkin.user = user
         checkin.place = place
-        checkin.checkin_time = time#datetime.now()
+        checkin.checkin_time = time
         checkin.active = True
         checkin.save()
+        return checkin
 
     def checkout(self, checkout_time):
         self.active = False

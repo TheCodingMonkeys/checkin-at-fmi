@@ -18,7 +18,8 @@ def get_env_variable(var_name):
 PROJECT_ROOT= Path(__file__).ancestor(3)
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('Ognyan Angelov', 'ognyan_angelov@yahoo.com'),
+    ('Ivaylo Bachvarov', 'bachvarof@gmail'),
 )
 
 MANAGERS = ADMINS
@@ -60,7 +61,7 @@ USE_I18N = True
 USE_L10N = True
 
 # If you set this to False, Django will not use timezone-aware datetimes.
-USE_TZ = True
+USE_TZ = False
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
@@ -101,7 +102,7 @@ STATICFILES_FINDERS = (
 
 # Make this unique, and don't share it with anybody.
 # gets the secret_key from the env (put the secretkey in bashrc for example)
-SECRET_KEY = get_env_variable("CHECKIN_SECRET_KEY")
+# SECRET_KEY = get_env_variable("CHECKIN_SECRET_KEY")
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -132,7 +133,7 @@ TEMPLATE_DIRS = (
     PROJECT_ROOT.child("templates"),
 )
 
-from secret import *
+from secret import * # Overides SECRET Key
 
 INSTALLED_APPS = (
     'django.contrib.auth',

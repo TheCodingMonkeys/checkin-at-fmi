@@ -55,15 +55,9 @@ def checkin(request):
             checkin_time = request.POST.get("time", "")
             print checkin_time
             try:
-                # place = Place.objects.get(mac = mac)
-                try:
-                    user = User.objects.get(card_key = key)
-                except User.DoesNotExist:
-                    user = User.create(key)
-            except ObjectDoesNotExist, e:
-                return HttpResponse("error")
-
-
+                user = User.objects.get(card_key = key)
+            except User.DoesNotExist:
+                user = User.create(key)
             active_checkins = Checkin.objects.filter(user__name = user.name, active = True)
             for active_checkin in active_checkins:
                 print "CHECKOUT" + str(active_checkin) + "@" + checkin_time
