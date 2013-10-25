@@ -1,8 +1,6 @@
 import datetime
 
 from django.utils.timezone import utc
-from django.http import HttpResponse
-from django.http import Http404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
@@ -10,8 +8,10 @@ from checkin.models import Checkin
 from places.models import Place
 from users.models import User
 
+
 def days_hours_minutes(td):
-    return td.seconds//3600, (td.seconds//60)%60, td.seconds%60
+    return td.seconds // 3600, (td.seconds // 60) % 60, td.seconds % 60
+
 
 def index(request):
     now = datetime.datetime.utcnow().replace(tzinfo=utc)
@@ -39,7 +39,7 @@ def statistics(request):
     for user in all_users:
         checkin_count = Checkin.objects.filter(user__name = user.name).count()
         scores += [[user.name, checkin_count]]
-    
+
     print scores
     return render_to_response('statistics.html',
             {

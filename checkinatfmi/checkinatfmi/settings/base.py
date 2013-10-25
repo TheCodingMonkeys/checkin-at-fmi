@@ -1,9 +1,11 @@
 # Django settings for checkinatfmi project.
+
 import os
+import keychain
+
 from unipath import Path
 
 from django.core.exceptions import ImproperlyConfigured 
-
 
 def get_env_variable(var_name):
     """
@@ -15,6 +17,7 @@ def get_env_variable(var_name):
         error_msg = "Set the %s environment variable" % var_name
         raise ImproperlyConfigured(error_msg)
 
+
 PROJECT_ROOT= Path(__file__).ancestor(3)
 
 ADMINS = (
@@ -25,11 +28,10 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'checkin_db',                      # Or path to database file if using sqlite3.
-        # The following settings are not used with sqlite3:
-        'USER': 'mightypixel',
-        'PASSWORD': '123',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': keychain.db_name,
+        'USER': keychain.db_user,
+        'PASSWORD': keychain.db_pass,
         'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         'PORT': '',                      # Set to empty string for default.
     }
@@ -101,7 +103,7 @@ STATICFILES_FINDERS = (
 
 # Make this unique, and don't share it with anybody.
 # gets the secret_key from the env (put the secretkey in bashrc for example)
-SECRET_KEY = get_env_variable("CHECKIN_SECRET_KEY")
+SECRET_KEY = keychain.secret_key
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
