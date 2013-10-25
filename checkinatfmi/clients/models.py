@@ -7,6 +7,6 @@ class Client(models.Model):
     status = models.NullBooleanField ()
     status_changed = models.DateTimeField (auto_now=True)
     place = models.ForeignKey (Place, null=True)
-    
+
     def __unicode__(self):
         return "%s" % self.mac

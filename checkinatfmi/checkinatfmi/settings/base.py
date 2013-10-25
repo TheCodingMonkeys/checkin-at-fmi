@@ -5,7 +5,7 @@ import keychain
 
 from unipath import Path
 
-from django.core.exceptions import ImproperlyConfigured 
+from django.core.exceptions import ImproperlyConfigured
 
 def get_env_variable(var_name):
     """
@@ -21,7 +21,8 @@ def get_env_variable(var_name):
 PROJECT_ROOT= Path(__file__).ancestor(3)
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('Ognyan Angelov', 'ognyan_angelov@yahoo.com'),
+    ('Ivaylo Bachvarov', 'bachvarof@gmail'),
 )
 
 MANAGERS = ADMINS
@@ -62,7 +63,7 @@ USE_I18N = True
 USE_L10N = True
 
 # If you set this to False, Django will not use timezone-aware datetimes.
-USE_TZ = True
+USE_TZ = False
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"

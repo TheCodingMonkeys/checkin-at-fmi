@@ -47,7 +47,7 @@
     <div class="container">
 
      {% for place in places %}
-        <h2>Посещаемост в зала {{ place.0.name }}</h2>
+        <h2>Посещаемост в {{ place.0.name }}</h2>
         <div class="progress progress-striped active">
             <!-- 30% progress-info  60% progress-warning 85% progress-danger -->
             <div class="bar info" style="width: {% widthratio place.2 place.1 100 %}%; postion:absolute"></div>
@@ -61,7 +61,7 @@
                     <th>#</th>
                     <th>Име:</th>
                     <th>Фамилия:</th>
-                    <th>Седи от:</th>	
+                    <th>Седи от:</th>
                 </tr>
             </thead>
             <tbody>

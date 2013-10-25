@@ -4,5 +4,9 @@
 local_settings.py
 *~
 *.swp
+<<<<<<< HEAD
 keychain.py
 .ropeproject/
+=======
+secret.py
+>>>>>>> 1d80f45de7fb960e82e0633afea13761a5ca9c70

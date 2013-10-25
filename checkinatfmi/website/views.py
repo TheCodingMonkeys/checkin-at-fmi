@@ -14,8 +14,7 @@ def days_hours_minutes(td):
 
 
 def index(request):
-    now = datetime.datetime.utcnow().replace(tzinfo=utc)
-    print now
+    now = datetime.datetime.now()
     places = Place.objects.all()
     all_places = []
     for place in places:
