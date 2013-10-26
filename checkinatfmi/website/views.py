@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta, time
+from dateutil.relativedelta import relativedelta
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -37,24 +38,42 @@ def index(request):
             context_instance=RequestContext(request))
 
 def statistics(request):
-    place_checkins_by_hour = []
+    place_checkins = []
 
     places = Place.objects.all()
     for place in places:    
-        today = datetime.now().date()
-        tomorrow = today + timedelta(1)
-        today_start = datetime.combine(today, time())
-        today_end = datetime.combine(tomorrow, time())
-        place_checkins_by_hour += [
+        today_date = datetime.now().date()
+
+        monthly_checkins = []
+        for i in range(12):
+            date = today_date + relativedelta(months=i-11)
+            monthly_checkins += [Checkin.objects.filter(place = place, checkin_time__month=date.month).count()]
+
+        daily_checkins = []
+        for i in range(7):
+            daily_checkins += [Checkin.objects.filter(place = place, checkin_time__day=(today_date + timedelta(days=i-6)).day).count()]
+
+        
+        checkins_for_today = Checkin.objects.filter(place = place, checkin_time__year=today_date.year,
+                                                                    checkin_time__month=today_date.month,
+                                                                    checkin_time__day=today_date.day)
+
+        hourly_checkins = [0]*24
+        for checkin in checkins_for_today:
+            hourly_checkins[checkin.checkin_time.hour] += 1
+
+        place_checkins += [
             {
                 'place': place,
-                'count': Checkin.objects.filter(place = place, checkout_time__day=today.day).count,
+                'monthly_checkins': monthly_checkins,
+                'daily_checkins': daily_checkins,
+                'hourly_checkins': hourly_checkins
             }
-        ]
+        ]                    
 
     return render_to_response('statistics.html',
             {
-                "place_checkins_by_hour" : place_checkins_by_hour,
+                'place_checkins': place_checkins,
             },
             context_instance=RequestContext(request))
 

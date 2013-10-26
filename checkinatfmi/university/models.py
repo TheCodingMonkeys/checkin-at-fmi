@@ -18,6 +18,7 @@ class CustomUser(User):
     @classmethod
     def create(cls, key = ''):
         user = cls()
+        user.username = cls.objects.count()
         user.first_name = 'Unregistered'
         user.card_key = key
 
