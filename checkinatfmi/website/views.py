@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timedelta, time
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -17,7 +17,7 @@ def days_hours_minutes(td):
 
 
 def index(request):
-    now = datetime.datetime.now()
+    now = datetime.now()
     places = Place.objects.all()
     all_places = []
     for place in places:
@@ -37,16 +37,24 @@ def index(request):
             context_instance=RequestContext(request))
 
 def statistics(request):
-    all_users = User.objects.all()
-    scores = []
-    for user in all_users:
-        checkin_count = Checkin.objects.filter(user__first_name = user.first_name).count()
-        scores += [[user.first_name, checkin_count]]
+    place_checkins_by_hour = []
 
-    print scores
+    places = Place.objects.all()
+    for place in places:    
+        today = datetime.now.date()
+        tomorrow = today + timedelta(1)
+        today_start = datetime.combine(today, time())
+        today_end = datetime.combine(tomorrow, time())
+        place_checkins_by_hour += [
+            {
+                'place': place,
+                'count': Checkin.objects.filter(place = place, checkout_time__day=today.day).count,
+            }
+        ]
+
     return render_to_response('statistics.html',
             {
-                "scores" : scores,
+                "place_checkins_by_hour" : place_checkins_by_hour,
             },
             context_instance=RequestContext(request))
 

@@ -1,12 +1,12 @@
 from django.db import models
 
-from university.models import User
+from university.models import CustomUser
 from places.models import Place
 
 from datetime import datetime
 
 class Checkin (models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(CustomUser)
     place = models.ForeignKey(Place)
     checkin_time = models.DateTimeField(null = True)
     checkout_time = models.DateTimeField(null = True, blank = True)

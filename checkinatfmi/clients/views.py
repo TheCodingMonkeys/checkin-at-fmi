@@ -10,7 +10,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
 
 from models import Client
-from university.models import User
+from university.models import CustomUser
 from places.models import Place
 from checkin.models import Checkin
 
@@ -55,9 +55,12 @@ def checkin(request):
             checkin_time = request.POST.get("time", "")
             print checkin_time
             try:
-                user = User.objects.get(card_key = key)
-            except User.DoesNotExist:
-                user = User.create(key)
+                user = CustomUser.objects.get(card_key = key)
+                print user
+            except CustomUser.DoesNotExist:
+                user = CustomUser.create(key)
+                print user.card_key
+                user.save()
                 return HttpResponse("error")
             active_checkins = Checkin.objects.filter(user__first_name = user.first_name , active = True)
             for active_checkin in active_checkins:

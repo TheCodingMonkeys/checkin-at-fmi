@@ -17,7 +17,8 @@ class CustomUser(User):
 
     @classmethod
     def create(cls, key = ''):
-        user = cls(key=title)
+        user = cls()
+        user.first_name = 'Unregistered'
         user.card_key = key
 
         return user
