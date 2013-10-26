@@ -2,10 +2,6 @@
 	
 	{%  block content %}
 
-	<div>
-		{{ place_checkins }}
-	</div>
-
 	<div class="chart-wrapper" style="width: 50%; float: left;">
 		<div id="chartSpecialty"></div>
 	</div>
@@ -47,7 +43,7 @@
 		        },
 		        series: [{
 		            name: "Посещаемост за деня",
-		            data: [0, 0, 0, 0, 0, 0, 0, 0, 4, 9, 15, 9, 10, 16, 20, 22, 30, 18, 15, 10, 5, 4, 0, 0],
+		            data: {{ place_checkins.0.hourly_checkins }},
 		                color: "#37A9E3"
 
 		        }],
@@ -92,7 +88,7 @@
 		        },
 		        series: [{
 		            name: "Посещаемост за седмицата",
-		            data: [100, 150, 170, 157, 168, 200, 198],
+		            data: {{ place_checkins.0.daily_checkins }},
 		                color: "#38CD49"
 
 		        }],
@@ -138,7 +134,7 @@
 		        },
 		        series: [{
 		            name: "Посещаемост по месеци",
-		            data: [1000, 1500, 1700, 1570, 1680, 2000, 1980],
+		            data: {{ place_checkins.0.monthly_checkins }},
 		                color: "#FE864E"
 
 		        }],
