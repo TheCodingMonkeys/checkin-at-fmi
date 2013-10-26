@@ -1,5 +1,259 @@
 {% extends "base.html" %}
+	
+	{%  block content %}
+	<div class="chart-wrapper" style="width: 50%; float: left;">
+		<div id="chartSpecialty"></div>
+	</div>
 
-  {% block content %}
-	<h2></h2>
+	<div class="chart-wrapper" style="width: 50%; float: right;">
+		<div id="chartYear"></div>
+    </div>
+    
+    <div class="chart-wrapper">
+        <div id="daily-chart"></div>
+    </div>
+
+    <div class="chart-wrapper">
+        <div id="weekly-chart"></div>
+    </div>
+
+    <div class="chart-wrapper">
+        <div id="monthly-chart"></div>
+    </div>
+
+	{% endblock %}
+  	
+  	{% block scripts %}
+	<script>
+		function createDailyChart() {
+		    $("#daily-chart").kendoChart({
+		        title: {
+		            text: "Посещаемост за днес"
+		        },
+		        legend: {
+		            position: "bottom"
+		        },
+		        chartArea: {
+		            background: ""
+		        },
+		        seriesDefaults: {
+		            type: "line"
+		        },
+		        series: [{
+		            name: "Посещаемост за деня",
+		            data: [0, 0, 0, 0, 0, 0, 0, 0, 4, 9, 15, 9, 10, 16, 20, 22, 30, 18, 15, 10, 5, 4, 0, 0],
+		                color: "#37A9E3"
+
+		        }],
+		        valueAxis: {
+		            labels: {
+		                format: "{0}"
+		            },
+		            line: {
+		                visible: false
+		            },
+		            axisCrossingValue: -10
+		        },
+		        categoryAxis: {
+		            categories: ['0h', "1h", "2h", "3h", "4h", "5h", "6h", "7h", "8h", "9h", "10h", "11h", "12h", "13h", "14h", "15h", "16h", "17h", "18h", "19h", "20h", "21h", "22h", "23h"],
+		            majorGridLines: {
+		                visible: false,
+		            }
+		        },
+		        tooltip: {
+		            visible: true,
+		            format: "{0}%",
+		            template: "#= series.name #: #= value #"
+		        }
+		    });
+		}
+
+		function weeklyChart() {
+		    $("#weekly-chart").kendoChart({
+		        title: {
+		            text: "Посещаемост за седмицата"
+		        },
+		        legend: {
+		            position: "bottom"
+		        },
+		        chartArea: {
+		            background: ""
+		        },
+		        seriesDefaults: {
+		            type: "line"
+		        },
+		        series: [{
+		            name: "Посещаемост за седмицата",
+		            data: [100, 150, 170, 157, 168, 200, 198],
+		                color: "#38CD49"
+
+		        }],
+		        valueAxis: {
+		            labels: {
+		                format: "{0}"
+		            },
+		            line: {
+		                visible: false
+		            },
+		            axisCrossingValue: -10
+		        },
+		        categoryAxis: {
+		            categories: ["Понеделник","Вторник","Сряда","Червъртък","Петък","Събота","Неделя"],
+		            majorGridLines: {
+		                visible: false,
+		            }
+		        },
+		        tooltip: {
+		            visible: true,
+		            format: "{0}%",
+		            template: "#= series.name #: #= value #"
+		        }
+		    });
+		}
+
+		function monthlyChart() {
+		    $("#monthly-chart").kendoChart({
+		        title: {
+		            text: "Посещаемост по месеци"
+		        },
+		        legend: {
+		            position: "bottom"
+		        },
+		        chartArea: {
+		            background: ""
+		        },
+		        seriesDefaults: {
+		            type: "line"
+		        },
+		        series: [{
+		            name: "Посещаемост по месеци",
+		            data: [1000, 1500, 1700, 1570, 1680, 2000, 1980],
+		                color: "#FE864E"
+
+		        }],
+		        valueAxis: {
+		            labels: {
+		                format: "{0}"
+		            },
+		            line: {
+		                visible: false
+		            },
+		            axisCrossingValue: -10
+		        },
+		        categoryAxis: {
+		            categories: ["Януари", "Февруари", "Март", "Април", "Май", "Юни", "Юли", "Август", "Септември", "Октомври", "Ноември", "Декември"],
+		            majorGridLines: {
+		                visible: false,
+		            }
+		        },
+		        tooltip: {
+		            visible: true,
+		            format: "{0}%",
+		            template: "#= series.name #: #= value #"
+		        }
+		    });
+		}
+
+        function createPieSpecialty() {
+            $("#chartSpecialty").kendoChart({
+                title: {
+                    position: "bottom",
+                    text: "Share of Internet Population Growth, 2007 - 2012"
+                },
+                legend: {
+                    visible: false
+                },
+                chartArea: {
+                    background: ""
+                },
+                seriesDefaults: {
+                    labels: {
+                        visible: true,
+                        background: "transparent",
+                        template: "#= category #: #= value#%"
+                    }
+                },
+                series: [{
+                    type: "pie",
+                    startAngle: 150,
+                    data: [{
+                        category: "Информатика",
+                        value: 53.8,
+                        color: "#903000"
+                    },{
+                        category: "Математика и информатика",
+                        value: 16.1,
+                        color: "#90cc38"
+                    },{
+                        category: "Статистика",
+                        value: 11.3,
+                        color: "#068c35"
+                    }]
+                }],
+                tooltip: {
+                    visible: true,
+                    format: "{0}%"
+                }
+            });
+        }
+
+        function createPieYear() {
+            $("#chartYear").kendoChart({
+                title: {
+                    position: "bottom",
+                    text: "Share of Internet Population Growth, 2007 - 2012"
+                },
+                legend: {
+                    visible: false
+                },
+                chartArea: {
+                    background: ""
+                },
+                seriesDefaults: {
+                    labels: {
+                        visible: true,
+                        background: "transparent",
+                        template: "#= category #: #= value#%"
+                    }
+                },
+                series: [{
+                    type: "pie",
+                    startAngle: 150,
+                    data: [{
+                        category: "Информатика",
+                        value: 53.8,
+                        color: "#903000"
+                    },{
+                        category: "Математика и информатика",
+                        value: 16.1,
+                        color: "#90cc38"
+                    },{
+                        category: "Статистика",
+                        value: 11.3,
+                        color: "#068c35"
+                    }]
+                }],
+                tooltip: {
+                    visible: true,
+                    format: "{0}%"
+                }
+            });
+        }
+
+        $(document).ready(createPieSpecialty);
+        $(document).bind("kendo:skinChange", createPieSpecialty);
+
+        $(document).ready(createPieYear);
+        $(document).bind("kendo:skinChange", createPieYear);
+
+		$(document).ready(createDailyChart);
+		$(document).bind("kendo:skinChange", createDailyChart);
+
+		$(document).ready(weeklyChart);
+		$(document).bind("kendo:skinChange", weeklyChart);
+
+		$(document).ready(monthlyChart);
+		$(document).bind("kendo:skinChange", monthlyChart);
+
+	</script>
   {% endblock %}
