@@ -10,7 +10,7 @@ from django.template import RequestContext
 
 from checkin.models import Checkin
 from places.models import Place
-from university.models import User
+from university.models import User, Specialty
 
 
 def days_hours_minutes(td):
@@ -62,14 +62,34 @@ def statistics(request):
         for checkin in checkins_for_today:
             hourly_checkins[checkin.checkin_time.hour] += 1
 
+        specialties = Specialty.objects.all()
+        piechart_specialty = []
+        
+        for specialty in specialties:
+            piechart_specialty += [{'specialty': specialty,
+                                    'checkin_counts': Checkin.objects.filter(place = place,
+                                                        user__specialty=specialty).count()}]
+
+
+        piechart_grade = []
+
+        for grade in range(4):
+            piechart_grade += [{'grade': grade,
+                                    'checkin_counts': Checkin.objects.filter(place = place,
+                                                        user__grade=grade).count()}]
+
         place_checkins += [
             {
                 'place': place,
                 'monthly_checkins': monthly_checkins,
                 'daily_checkins': daily_checkins,
-                'hourly_checkins': hourly_checkins
+                'hourly_checkins': hourly_checkins,
+                'piechart_specialty': piechart_specialty,
+                'piechart_grade': piechart_grade,
             }
-        ]                    
+        ]
+
+        
 
     return render_to_response('statistics.html',
             {
