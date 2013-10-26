@@ -3,7 +3,12 @@ body {
 }
 
 #active-people {
-	position: absolute;
+	margin: auto;
 	text-align: center;
-	width: 940px;
+	margin-top: -43px;
+	font-weight: bold;
+	margin-bottom: 40px;
+}
+.progress{
+	height: 25px;
 }
