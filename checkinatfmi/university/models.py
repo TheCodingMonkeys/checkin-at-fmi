@@ -24,7 +24,7 @@ class CustomUser(User):
         user.first_name = 'Unregistered'
         user.card_key = key
         user.password = 'password'
-
+        user.save()
         return user
 
     def __unicode__(self):

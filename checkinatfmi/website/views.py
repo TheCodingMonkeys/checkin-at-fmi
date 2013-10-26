@@ -114,4 +114,13 @@ def profile(request):
 
     },
     context_instance=RequestContext(request))
+
+@login_required
+def library(request):
+    return render_to_response('library.html',
+    {
+
+    },
+    context_instance=RequestContext(request))
+
     

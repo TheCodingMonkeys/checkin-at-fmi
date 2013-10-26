@@ -6,4 +6,5 @@ urlpatterns = patterns('website.views',
     (r'^$', 'index'),
     (r'statistics/$', 'statistics'),
     (r'profile/$', 'profile'),
+    (r'library/$', 'library'),
 )

@@ -1,6 +1,7 @@
-# Create your views here.
 import sys
 import datetime
+import urllib2
+import json
 
 from django.utils.timezone import utc
 
@@ -14,7 +15,8 @@ from university.models import CustomUser
 from places.models import Place
 from checkin.models import Checkin
 
-# TODO csrf hack -> needs to identify client
+FMI_LIBRARY_URL = "http://zala100.sofiapubcrawl.com/API.php"
+
 @csrf_exempt
 def status(request):
     """
@@ -37,40 +39,47 @@ def status(request):
     else:
         raise Http404
 
-# TODO csrf hack -> needs to identify client
 @csrf_exempt
 def checkin(request):
     """
     Checkin request -> asks checks
     """
-    if request.method == 'POST':
+    if request.method != 'POST':
+        return HttpResponse("error")
+    else:
         mac = request.POST.get("mac", "")
         try:
             client = Client.objects.get(mac = mac)
         except ObjectDoesNotExist, e:
             print "client doesn't exist"
             return HttpResponse("error")
-        if client.status:
+        if not client.status:
+            return HttpResponse("error")
+        else:
             key = request.POST.get("key", "")
             checkin_time = request.POST.get("time", "")
-            print checkin_time
             try:
                 user = CustomUser.objects.get(card_key = key)
-                print user
+                active_checkins = Checkin.objects.filter(user__first_name = user.first_name , active = True)
+                for active_checkin in active_checkins:
+                    active_checkin.checkout(checkin_time)
+                if not (client.place in [check.place for check in active_checkins]):
+                    print client.place
+                    Checkin.checkin(user, client.place, checkin_time)
+                return HttpResponse("ok")
             except CustomUser.DoesNotExist:
-                user = CustomUser.create(key)
-                print user.card_key
-                user.save()
-                return HttpResponse("error")
-            active_checkins = Checkin.objects.filter(user__first_name = user.first_name , active = True)
-            for active_checkin in active_checkins:
-                # print "CHECKOUT" + str(active_checkin) + "@" + checkin_time
-                active_checkin.checkout(checkin_time)
-            if not (client.place in [check.place for check in active_checkins]):
-                print client.place
-                Checkin.checkin(user, client.place, checkin_time)
-            return HttpResponse("ok")
-        else:
-            return HttpResponse("error")
-    else:
-        raise Http404
+                book = getBootForId(key)
+                print book
+                if not book:
+                    response = CustomUser.create(key)
+                    print resposnse
+                    return HttpResponse("error")
+                else:
+                    raise Http404
+
+
+def getBootForId(book_id):
+    opener = urllib2.build_opener(urllib2.HTTPHandler)
+    request = urllib2.Request(FMI_LIBRARY_URL + '?code' + str(book_id))
+    response = urllib2.urlopen(request)
+    return response
