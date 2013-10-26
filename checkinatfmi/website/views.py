@@ -41,7 +41,7 @@ def statistics(request):
 
     places = Place.objects.all()
     for place in places:    
-        today = datetime.now.date()
+        today = datetime.now().date()
         tomorrow = today + timedelta(1)
         today_start = datetime.combine(today, time())
         today_end = datetime.combine(tomorrow, time())
