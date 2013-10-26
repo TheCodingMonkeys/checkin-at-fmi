@@ -1,0 +1,9 @@
+body {
+	padding-top: 60px;
+}
+
+#active-people {
+	position: absolute;
+	text-align: center;
+	width: 940px;
+}
