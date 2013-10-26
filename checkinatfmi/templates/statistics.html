@@ -25,6 +25,7 @@
   	
   	{% block scripts %}
 	<script>
+		var today = new Date();
 		function createDailyChart() {
 		    $("#daily-chart").kendoChart({
 		        title: {
@@ -69,6 +70,8 @@
 		}
 
 		function weeklyChart() {
+			var weekDays = ["Понеделник","Вторник","Сряда","Червъртък","Петък","Събота","Неделя"];
+			var sevenDaysAgo = [].concat(weekDays.slice(today.getDay()), weekDays.slice(0, today.getDay()));
 		    $("#weekly-chart").kendoChart({
 		        title: {
 		            text: "Посещаемост за седмицата"
@@ -98,7 +101,7 @@
 		            axisCrossingValue: -10
 		        },
 		        categoryAxis: {
-		            categories: ["Понеделник","Вторник","Сряда","Червъртък","Петък","Събота","Неделя"],
+		            categories: sevenDaysAgo,
 		            majorGridLines: {
 		                visible: false,
 		            }
@@ -112,6 +115,9 @@
 		}
 
 		function monthlyChart() {
+			var months = ["Януари", "Февруари", "Март", "Април", "Май", "Юни", "Юли", "Август", "Септември", "Октомври", "Ноември", "Декември"];
+			var last12Months = [].concat(months.slice(today.getMonth() + 1), months.slice(0, today.getMonth() + 1));
+			console.log(last12Months);
 		    $("#monthly-chart").kendoChart({
 		        title: {
 		            text: "Посещаемост по месеци"
@@ -141,7 +147,7 @@
 		            axisCrossingValue: -10
 		        },
 		        categoryAxis: {
-		            categories: ["Януари", "Февруари", "Март", "Април", "Май", "Юни", "Юли", "Август", "Септември", "Октомври", "Ноември", "Декември"],
+		            categories: last12Months,
 		            majorGridLines: {
 		                visible: false,
 		            }
@@ -159,7 +165,7 @@
             	theme: "silver",
                 title: {
                     position: "bottom",
-                    text: "Share of Internet Population Growth, 2007 - 2012"
+                    text: "Посещаемост по специалности"
                 },
                 legend: {
                     visible: false
@@ -200,7 +206,7 @@
             	theme: "silver",
                 title: {
                     position: "bottom",
-                    text: "Share of Internet Population Growth, 2007 - 2012"
+                    text: "Посещаемост по курсове"
                 },
                 legend: {
                     visible: false
