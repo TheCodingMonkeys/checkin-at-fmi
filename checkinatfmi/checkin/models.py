@@ -1,6 +1,6 @@
 from django.db import models
 
-from users.models import User
+from university.models import User
 from places.models import Place
 
 from datetime import datetime

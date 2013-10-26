@@ -5,4 +5,5 @@ from django.core.urlresolvers import resolve
 urlpatterns = patterns('website.views',
     (r'^$', 'index'),
     (r'statistics/$', 'statistics'),
+    (r'profile/$', 'profile'),
 )

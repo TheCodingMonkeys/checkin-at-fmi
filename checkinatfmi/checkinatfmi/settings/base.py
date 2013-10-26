@@ -29,8 +29,8 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': keychain.db_name,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'sample.db', #keychain.db_name,
         'USER': keychain.db_user,
         'PASSWORD': keychain.db_pass,
         'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
@@ -128,6 +128,8 @@ ROOT_URLCONF = 'checkinatfmi.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'checkinatfmi.wsgi.application'
 
+AUTH_PROFILE_MODULE = 'accounts.UserProfile'
+
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
@@ -149,7 +151,7 @@ INSTALLED_APPS = (
     #-----
     'clients',
     'checkin',
-    'users',
+    'university',
     'places',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',

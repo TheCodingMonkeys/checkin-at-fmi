@@ -1,12 +1,15 @@
 import datetime
 
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.utils.timezone import utc
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
+
 from checkin.models import Checkin
 from places.models import Place
-from users.models import User
+from university.models import User
 
 
 def days_hours_minutes(td):
@@ -46,3 +49,27 @@ def statistics(request):
                 "scores" : scores,
             },
             context_instance=RequestContext(request))
+
+
+@login_required
+def profile(request):
+    all_users = User.objects.all()
+
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        if user.is_active:
+            login(request, user)
+            return render_to_response('profile.html',
+            {
+            },
+            context_instance=RequestContext(request))
+        else:
+            pass
+            # Return a 'disabled account' error message
+    else:
+        pass
+        # Return an 'invalid login' error message.
+
+    

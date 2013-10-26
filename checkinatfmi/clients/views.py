@@ -10,7 +10,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
 
 from models import Client
-from users.models import User
+from university.models import User
 from places.models import Place
 from checkin.models import Checkin
 
