@@ -7,7 +7,7 @@ from models import Specialty, CustomUser
 #    list_display = ['first_name', 'last_name']
 
 class CustomUserAdmin(admin.ModelAdmin):
-    fields = ['first_name', 'last_name', 'card_key', 'groups', 'specialty', 'grade']
+    fields = ['first_name', 'last_name', 'card_key', 'groups', 'specialty', 'grade', 'email', 'password']
     list_display = ['first_name', 'last_name', 'specialty']
     
 

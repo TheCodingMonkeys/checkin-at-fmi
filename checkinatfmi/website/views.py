@@ -1,7 +1,8 @@
 from datetime import datetime, timedelta, time
 from dateutil.relativedelta import relativedelta
 
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.utils.timezone import utc
 from django.shortcuts import render_to_response
@@ -36,6 +37,13 @@ def index(request):
                 "places" : all_places,
             },
             context_instance=RequestContext(request))
+
+def logout_page(request):
+    """
+    Log users out and re-direct them to the main page.
+    """
+    logout(request)
+    return HttpResponseRedirect('/')
 
 def statistics(request):
     place_checkins = []
@@ -100,23 +108,10 @@ def statistics(request):
 
 @login_required
 def profile(request):
-    all_users = User.objects.all()
 
-    username = request.POST['username']
-    password = request.POST['password']
-    user = authenticate(username=username, password=password)
-    if user is not None:
-        if user.is_active:
-            login(request, user)
-            return render_to_response('profile.html',
-            {
-            },
-            context_instance=RequestContext(request))
-        else:
-            pass
-            # Return a 'disabled account' error message
-    else:
-        pass
-        # Return an 'invalid login' error message.
+    return render_to_response('profile.html',
+    {
 
+    },
+    context_instance=RequestContext(request))
     

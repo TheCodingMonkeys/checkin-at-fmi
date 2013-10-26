@@ -28,15 +28,48 @@
             <li><a href="/">Начало</a></li>
             <li><a href="/statistics/">Статистика</a></li>
           </ul>
-          <form class="navbar-form navbar-right">
-            <div class="form-group">
-              <input type="text" placeholder="Email" class="form-control">
-            </div>
-            <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-success">Sign in</button>
-          </form>
+          {% if user.is_authenticated %}
+            <p class="welcome-message pull-right hidden-phone">
+                        <i class="icon-user icon-white"></i>
+                        Welcome,
+                        <strong><a href="/profile/">{{ user.username }}</a></strong>.
+            </p>
+            <div id="user-tools" class="pull-right">
+                            <div class="btn-group pull-right">
+                                <a href="/admin/auth/user/1/" class="btn btn-primary">
+                                <i class="icon white user"></i>
+                                 @{{ user.username }}
+                                </a>
+                                <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle"><span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                  <li>
+                                          <a href="/admin/password_change/">
+                                              <i class="icon-pencil"></i>
+                                              Change password
+                                          </a>
+                                      </li>
+                                  
+                                  <li>
+                                      <a href="/admin/logout/">
+                                          <i class="icon-off"></i>
+                                          Log out</a>
+                                  </li>
+                                </ul>
+                            </div>
+                        </div>
+          {% else %}
+            <form class="navbar-form navbar-right" method="post">
+              {% csrf_token %}
+              <div class="form-group">
+                <input name="username" type="text" placeholder="Email" class="form-control">
+              </div>
+              <div class="form-group">
+                <input name="password" type="password" placeholder="Password" class="form-control">
+              </div>
+              <input type="hidden" name="next" value="/" />
+              <button type="submit" value="login" class="btn btn-success">Sign in</button>
+            </form>
+          {% endif %}
         </div>
       </div>
     </div>

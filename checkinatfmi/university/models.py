@@ -23,6 +23,7 @@ class CustomUser(User):
         user.username = cls.objects.count()
         user.first_name = 'Unregistered'
         user.card_key = key
+        user.password = 'password'
 
         return user
 

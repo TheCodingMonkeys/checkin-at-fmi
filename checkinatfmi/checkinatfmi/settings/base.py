@@ -84,6 +84,8 @@ STATIC_ROOT = PROJECT_ROOT.child("static")
 # Example: "http://example.com/static/", "http://static.example.com/"
 STATIC_URL = '/static/'
 
+LOGIN_URL = '/login/'
+
 # Additional locations of static files
 STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
@@ -128,7 +130,12 @@ ROOT_URLCONF = 'checkinatfmi.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'checkinatfmi.wsgi.application'
 
-AUTH_PROFILE_MODULE = 'accounts.UserProfile'
+AUTH_PROFILE_MODULE = 'university.CustomUser'
+
+AUTHENTICATION_BACKENDS = (
+    'checkinatfmi.settings.checkin_auth.EmailOrUsernameModelBackend',
+    'django.contrib.auth.backends.ModelBackend'
+)
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
