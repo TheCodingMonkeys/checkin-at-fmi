@@ -22,7 +22,8 @@ def index(request):
         all_users = []
         for checkin in checkins_inside:
             print checkin.checkin_time
-            all_users += [[checkin.user.first_name, days_hours_minutes(now-checkin.checkin_time)]]
+            all_users += [{'first_name': checkin.user.first_name, 'last_name': checkin.user.last_name,
+                            'active_time': days_hours_minutes(now-checkin.checkin_time)}]
             print (now-checkin.checkin_time)
         all_places += [[place, place.capacity, len(all_users), all_users]]
     print all_places
