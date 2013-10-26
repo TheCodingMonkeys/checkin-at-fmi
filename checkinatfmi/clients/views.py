@@ -59,7 +59,7 @@ def checkin(request):
             except User.DoesNotExist:
                 user = User.create(key)
                 return HttpResponse("error")
-            active_checkins = Checkin.objects.filter(user__name = user.name, active = True)
+            active_checkins = Checkin.objects.filter(user__first_name = user.first_name , active = True)
             for active_checkin in active_checkins:
                 print "CHECKOUT" + str(active_checkin) + "@" + checkin_time
                 active_checkin.checkout(checkin_time)

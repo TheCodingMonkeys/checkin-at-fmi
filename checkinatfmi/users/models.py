@@ -1,16 +1,17 @@
 from django.db import models
 
 class User(models.Model):
-    name = models.CharField(max_length = 63)
+    first_name = models.CharField(max_length = 63, default='')
+    last_name = models.CharField(max_length = 63, default='')
     card_key = models.CharField(max_length = 63)
 
     def __unicode__(self):
-        return self.name
+        return self.first_name + ' ' + self.last_name
 
     @staticmethod
     def create(key):
         user = User()
-        user.name = "Unregistered"
+        user.first_name = "Unregistered"
         user.card_key = key
         user.save()
         return user
