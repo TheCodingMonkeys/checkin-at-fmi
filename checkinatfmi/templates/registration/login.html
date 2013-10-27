@@ -1,18 +1,18 @@
 {% extends "base.html" %}
 
  {% block content %}
-	<h1>User Login</h1>
 	{% if form.errors %}
-	    <p>Your username and password didn't match.
-	        Please try again.</p>
+	    <div class="alert alert-warning">Your username and password didn't match. Please try again.</div>
 	{% endif %}
-	<form method="post" >
+
+
+	<form method="post" class="form-signin">
+ 		<h2 class="form-signin-heading">Please sign in</h2>
 	{% csrf_token %}
-	    <p><label for="id_username">Username:</label>
-	        {{ form.username }}</p>
-	    <p><label for="id_password">Password:</label>
-	        {{ form.password }}</p>
+	        <input type="text" name="{{ form.username.name }}" class="form-control" id="username" autofocus placeholder="Enter SUSI Username"/>
+	        <input type="password" name="{{ form.password.name }}" class="form-control" id="password" placeholder="Enter SUSI Password"/>
 	    <input type="hidden" name="next" value="{{ next }}"/>
-	    <input type="submit" value="login" />
+		
+		 <button class="btn btn-lg btn-primary btn-block" type="submit">Вход</button>   
 	</form>
 {% endblock %}

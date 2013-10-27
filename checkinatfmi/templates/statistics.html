@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 	
 	{%  block content %}
-
 	<div class="chart-wrapper" style="width: 50%; float: left;">
 		<div id="chartSpecialty"></div>
 	</div>
@@ -135,7 +134,7 @@
 		        series: [{
 		            name: "Посещаемост по месеци",
 		            data: {{ place_checkins.0.monthly_checkins }},
-		                color: "#FE864E"
+	                color: "#FE864E"
 
 		        }],
 		        valueAxis: {
@@ -178,22 +177,19 @@
                     labels: {
                         visible: true,
                         background: "transparent",
-                        template: "#= category #: #= value#%"
+                        template: "#= category #: #= value#"
                     }
                 },
                 series: [{
                     type: "pie",
                     startAngle: 150,
-                    data: [{
-                        category: "Информатика",
-                        value: 53.8,
-                    },{
-                        category: "Математика и информатика",
-                        value: 16.1,
-                    },{
-                        category: "Статистика",
-                        value: 11.3,
-                    }]
+                    data: [
+					{% for specialty in place_checkins.0.piechart_specialty %}
+						{ 
+							category: "{{ specialty.specialty }}" ,
+						 	value: {{ specialty.checkin_counts }}, 
+						},
+					{% endfor %}]
                 }],
                 tooltip: {
                     visible: true,
@@ -219,33 +215,25 @@
                     labels: {
                         visible: true,
                         background: "transparent",
-                        template: "#= category #: #= value#%"
+                        template: "#= category #: #= value#"
                     }
                 },
                 series: [{
                     type: "pie",
                     startAngle: 150,
-                    data: [{
-                        category: "Информатика",
-                        value: 53.8,
-                    },{
-                        category: "Математика и информатика",
-                        value: 16.1,
-                    },{
-                        category: "Статистика",
-                        value: 11.3,
-                    },{
-                        category: "Статистика",
-                        value: 11.3,
-                    },{
-                        category: "Статистика",
-                        value: 11.3,
-                    }]
-                }],
+                    data: [
+					{% for grade in place_checkins.0.piechart_grade %}
+						{ 
+							category: {{ grade.grade }} + 1 + " Курс" ,
+						 	value: {{ grade.checkin_counts }}
+						},
+					{% endfor %}
+                ],
                 tooltip: {
                     visible: true,
                     format: "{0}%"
                 }
+            }]
             });
         }
 
