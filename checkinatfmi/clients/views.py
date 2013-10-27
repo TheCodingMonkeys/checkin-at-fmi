@@ -11,9 +11,9 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
 
 from models import Client
-from university.models import CustomUser
+from university.models import CustomUser, Book
 from places.models import Place
-from checkin.models import Checkin
+from checkin.models import Checkin, Bookrent
 
 FMI_LIBRARY_URL = "http://zala100.sofiapubcrawl.com/API.php"
 
@@ -46,40 +46,67 @@ def checkin(request):
     """
     if request.method != 'POST':
         return HttpResponse("error")
-    else:
-        mac = request.POST.get("mac", "")
-        try:
-            client = Client.objects.get(mac = mac)
-        except ObjectDoesNotExist, e:
-            print "client doesn't exist"
+    mac = request.POST.get("mac", "")
+    try:
+        client = Client.objects.get(mac = mac)
+    except ObjectDoesNotExist, e:
+        print "client doesn't exist"
+        return HttpResponse("error")
+    if not client.status:
+        return HttpResponse("error")
+    
+    key = request.POST.get("key", "")            
+    checkin_time = request.POST.get("time", "")
+
+    try:
+        users = CustomUser.objects.filter(card_key = key).all()
+        if len(users) > 1:
             return HttpResponse("error")
-        if not client.status:
+        elif len(users) == 0:
+            raise CustomUser.DoesNotExist()
+        
+        user = users[0]
+        if not user.valid:
+            return HttpResponse("error")
+
+        active_checkins = Checkin.objects.filter(user__first_name = user.first_name , active = True)
+        for active_checkin in active_checkins:
+            active_checkin.checkout(checkin_time)
+        if not (client.place in [check.place for check in active_checkins]):
+            print client.place
+            Checkin.checkin(user, client.place, checkin_time)
+        return HttpResponse("ok")
+
+    except CustomUser.DoesNotExist:
+        response = getBootForId(key)
+        if not response:
+            CustomUser.create(key)
+
             return HttpResponse("error")
         else:
-            key = request.POST.get("key", "")
-            checkin_time = request.POST.get("time", "")
-            try:
-                user = CustomUser.objects.get(card_key = key)
-                active_checkins = Checkin.objects.filter(user__first_name = user.first_name , active = True)
-                for active_checkin in active_checkins:
-                    active_checkin.checkout(checkin_time)
-                if not (client.place in [check.place for check in active_checkins]):
-                    print client.place
-                    Checkin.checkin(user, client.place, checkin_time)
-                return HttpResponse("ok")
-            except CustomUser.DoesNotExist:
-                book = getBootForId(key)
-                print book
-                if not book:
-                    response = CustomUser.create(key)
-                    print resposnse
-                    return HttpResponse("error")
-                else:
-                    raise Http404
+            print response
+
+            book_data = json.load(response) #.read()
+            #book_obj = json.load(book_data)
+            print book_data
+            book, created = Book.objects.get_or_create(id=book_data['id'])
+            title = book_data['title']
+            print title
+            book.title = 'Title'
+            book.save()
+            rent = Bookrent.bookrent(client.place, book, checkin_time)
+            print book
+            print rent
+            #Bookrent.rent()
+            return HttpResponse("ok")
 
 
 def getBootForId(book_id):
     opener = urllib2.build_opener(urllib2.HTTPHandler)
-    request = urllib2.Request(FMI_LIBRARY_URL + '?code' + str(book_id))
-    response = urllib2.urlopen(request)
-    return response
+    url = urllib2.Request(FMI_LIBRARY_URL + '?code=' + str(book_id))
+    try:
+        request = urllib2.urlopen(url)
+    except urllib2.HTTPError, e:
+        return False
+        
+    return request
