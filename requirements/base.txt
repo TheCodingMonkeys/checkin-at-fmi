@@ -4,4 +4,6 @@ South==0.7.6
 Unipath==1.0
 argparse==1.2.1
 bootstrap-admin==0.1.8
+python-dateutil==2.2
+six==1.4.1
 wsgiref==0.1.2
