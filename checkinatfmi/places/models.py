@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Place(models.Model):
     """
     Represents physical place at the university/institution
@@ -10,8 +11,8 @@ class Place(models.Model):
     Methods:
         unicode - print representation
     """
-    name = models.CharField(max_length = 15, null = True)
-    capacity = models.IntegerField(null = True, blank = True)
+    name = models.CharField(max_length=15, null=True)
+    capacity = models.IntegerField(null=True, blank=True)
 
     def __unicode__(self):
         return self.name
