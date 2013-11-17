@@ -15,6 +15,7 @@ from university.models import CustomUser, Book
 from places.models import Place
 from checkin.models import Checkin, Bookrent
 
+
 FMI_LIBRARY_URL = "http://zala100.sofiapubcrawl.com/API.php"
 
 @csrf_exempt
