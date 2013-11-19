@@ -11,7 +11,7 @@ class Place(models.Model):
     Methods:
         unicode - print representation
     """
-    name = models.CharField(max_length=15, null=True)
+    name = models.CharField(max_length=63, null=True)
     capacity = models.IntegerField(null=True, blank=True)
 
     def __unicode__(self):
