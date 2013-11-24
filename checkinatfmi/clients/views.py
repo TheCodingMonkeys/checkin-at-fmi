@@ -53,7 +53,7 @@ def checkin(request):
     if len(users) > 1:
         return HttpResponse("error")
     elif len(users) == 0:
-        get_book_or_register_user()
+        book = get_book_or_register_user(key)
     
     user = users[0]
     if not user.valid:
@@ -66,7 +66,7 @@ def checkin(request):
         print(client.place)
         Checkin.checkin(user, client.place, checkin_time)
         return HttpResponse("ok")
-    return HttpResposnse("error")
+    return HttpResponse("error")
 
 
 def rent_book(book_id, book_title):
@@ -74,7 +74,7 @@ def rent_book(book_id, book_title):
     rent = Bookrent.bookrent(client.place, book, checkin_time)
     return rent
 
-def get_book_or_register_user():
+def get_book_or_register_user(key):
     response = getBookForId(key)
     if not response:
         # There is no book for this card id
