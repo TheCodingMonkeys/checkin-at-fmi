@@ -157,11 +157,11 @@ INSTALLED_APPS = (
     'south',
     #-----
     'clients',
-    'checkin',
-    'university',
+    #'checkin',
+    #'university',
     'places',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
+    'identifications',
+    'activities',
 )
 
 # A sample logging configuration. The only tangible logging
