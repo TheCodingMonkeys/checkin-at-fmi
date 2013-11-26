@@ -25,6 +25,7 @@ ADMINS = (
     ('Ivaylo Bachvarov', 'bachvarof@gmail'),
 )
 
+
 MANAGERS = ADMINS
 
 DATABASES = {
@@ -80,6 +81,9 @@ MEDIA_URL = '/media/'
 # Example: "/var/www/example.com/static/"
 STATIC_ROOT = PROJECT_ROOT.child("static")
 
+
+GENERICADMIN_JS = ""
+
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
 STATIC_URL = '/static/'
@@ -91,9 +95,6 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    STATIC_ROOT.child("images"),
-    STATIC_ROOT.child("css"),
-    STATIC_ROOT.child("js"),
 )
 
 # List of finder classes that know how to find static files in
@@ -144,6 +145,7 @@ TEMPLATE_DIRS = (
     PROJECT_ROOT.child("templates"),
 )
 
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -151,6 +153,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'genericadmin',
     'bootstrap_admin',
     'django.contrib.admin',
     #-----
@@ -162,6 +165,7 @@ INSTALLED_APPS = (
     'places',
     'identifications',
     'activities',
+    'website',
 )
 
 # A sample logging configuration. The only tangible logging

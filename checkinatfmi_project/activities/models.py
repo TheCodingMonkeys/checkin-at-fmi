@@ -7,10 +7,10 @@ class Activity(models.Model):
     carrier = models.ForeignKey('Carrier', verbose_name='Indentification Carrier')
 
     def __unicode__(self):
-        return "%s: %s at %s" % (time, client, carrier)
+        return u'%s: %s at %s' % (self.time, self.client, self.carrier)
 
     class Meta:
-        verbose_name_plural = "activities"
+        verbose_name_plural = 'activities'
 
 
 class Carrier(models.Model):
@@ -20,7 +20,7 @@ class Carrier(models.Model):
     identification = models.ForeignKey('identifications.Identification')
 
     def __unicode__(self):
-        return "%s (%s): %s" % (state, medium, identification)
+        return u'%s (%s): %s' % (self.state, self.medium, self.identification)
 
 
 class Borrow(models.Model):
@@ -34,7 +34,7 @@ class Borrow(models.Model):
     borrowed_item = property(_get_borrowed_item)
 
     def __unicode__(self):
-        return "%s -> %s" % (borrower, borrowed_item)
+        return '%s -> %s' % (borrower, borrowed_item)
 
 
 class Checkin(models.Model):
@@ -47,4 +47,4 @@ class Checkin(models.Model):
     cardowner = property(_get_cardowner)
 
     def __unicode__(self):
-        return "%s" % (cardowner)
+        return '%s' % (cardowner)
