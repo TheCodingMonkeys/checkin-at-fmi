@@ -1,3 +1,5 @@
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes import generic
 from django.db import models
 
 
@@ -14,13 +16,16 @@ class Activity(models.Model):
 
 
 class Carrier(models.Model):
+    data = models.CharField(max_length=255)
     state = models.IntegerField()
-    data = models.CharField(max_length=127)
     medium = models.IntegerField()
-    identification = models.ForeignKey('identifications.Identification')
+
+    content_type = models.ForeignKey(ContentType)
+    object_id = models.PositiveIntegerField()
+    identification = generic.GenericForeignKey('content_type', 'object_id')
 
     def __unicode__(self):
-        return u'%s (%s): %s' % (self.state, self.medium, self.identification)
+        return u'%s (%s): %s' % (self.state, self.medium, self.content_type)
 
 
 class Borrow(models.Model):
