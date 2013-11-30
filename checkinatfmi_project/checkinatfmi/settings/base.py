@@ -160,6 +160,7 @@ INSTALLED_APPS = (
     'south',
     #-----
     'clients',
+    'relatedwidget',
     #'checkin',
     #'university',
     'places',

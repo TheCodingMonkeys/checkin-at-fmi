@@ -16,6 +16,16 @@ class Activity(models.Model):
 
 
 class Carrier(models.Model):
+    UNREGISTERED = 'U'
+    REGISTERED = 'R'
+    BANNED = 'B'
+    CARRIER_STATES = (
+            (UNREGISTERED, 'UNREGISTERED'),
+            (BANNED, 'BANNED'),
+            (REGISTERED, 'REGISTERED'),
+    )
+    state = models.CharField(choices=CARRIER_STATES, max_length=2, default=UNREGISTERED)
+
     data = models.CharField(max_length=255)
     state = models.IntegerField()
     medium = models.IntegerField()
