@@ -1,21 +1,17 @@
 from django.contrib import admin
 
-from models import Specialty, CustomUser, Book
+from models import Specialty
+from models import Place
 
-#class UserAdmin(admin.ModelAdmin):
-#    fields = ['first_name', 'last_name', 'card_key']
-#    list_display = ['first_name', 'last_name']
 
-class CustomUserAdmin(admin.ModelAdmin):
-    fields = ['first_name', 'last_name', 'card_key', 'groups', 'specialty',
-            'grade', 'username', 'email', 'valid']
-    list_display = ['first_name', 'last_name', 'specialty', 'valid']
-    
+class PlaceAdmin(admin.ModelAdmin):
+    fields = ['name', 'capacity']
+    list_display = ['name', 'capacity']
+
 
 class SpecialtyAdmin(admin.ModelAdmin):
 	fields = ['name']
 
 
-admin.site.register(CustomUser, CustomUserAdmin)
+admin.site.register(Place, PlaceAdmin)
 admin.site.register(Specialty, SpecialtyAdmin)
-admin.site.register(Book)

@@ -153,17 +153,15 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #-----
     'genericadmin',
     'bootstrap_admin',
     'django.contrib.admin',
-    #-----
     'south',
+    'relatedwidget',
     #-----
     'clients',
-    'relatedwidget',
-    #'checkin',
-    #'university',
-    'places',
+    'university',
     'identifications',
     'activities',
     'website',

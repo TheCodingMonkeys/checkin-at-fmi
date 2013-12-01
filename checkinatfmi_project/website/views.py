@@ -8,10 +8,8 @@ from django.utils.timezone import utc
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
-
-from checkin.models import Checkin
-from places.models import Place
-from university.models import User, Specialty
+from activities.models import Checkin
+from university.models import Place, Specialty
 
 
 def days_hours_minutes(td):

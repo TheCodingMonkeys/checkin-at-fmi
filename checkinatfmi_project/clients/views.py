@@ -5,19 +5,20 @@ import json
 
 from django.utils.timezone import utc
 
-from django.http import HttpResponse
+from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import Http404
+from django.core.urlresolvers import reverse
 
+from activities.models import Checkin, Borrow
+from activities.views import register_activity
+from identifications.models import Book
 from models import Client
-from university.models import CustomUser, Book
-from places.models import Place
-from checkin.models import Checkin, Bookrent
+from university import helper as university_helper
+from university.models import Place
 
-
-FMI_LIBRARY_URL = "http://zala100.sofiapubcrawl.com/API.php"
 
 @csrf_exempt
 @require_http_methods(['POST'])
@@ -28,11 +29,12 @@ def status(request):
     mac = request.POST.get("mac", "")
     client = Client.objects.get_or_create(mac = mac)[0]
 
-    if client.status == True:
-        return HttpResponse("error")
+    if client.status == False:
+        return HttpResponse(status=401)
 
-    client.status_changed = datetime.datetime.now() #.utcnow().replace(tzinfo=utc)
-    return HttpResponse("ok")
+    client.status_changed = datetime.datetime.now()
+    client.save()
+    return HttpResponse(status=200)
 
 
 @csrf_exempt
@@ -42,18 +44,21 @@ def checkin(request):
     Checkin request -> asks checks
     """
     mac = request.POST.get("mac", "")
+    key = request.POST.get("key", "")            
+    time = request.POST.get("time", "")
+
     client = Client.objects.get_or_create(mac = mac)[0]
     if not client.status:
-        return HttpResponse("error")
-    
-    key = request.POST.get("key", "")            
-    checkin_time = request.POST.get("time", "")
+        return HttpResponse(status=401)
 
-    users = CustomUser.objects.filter(card_key = key).all()
+    print key
+    #return redirect('/activities/register/', time=time, data=key, client=client)
+    return register_activity(request, time=time, data=key, client=client)
+    #users = CustomUser.objects.filter(card_key = key).all()
     if len(users) > 1:
         return HttpResponse("error")
     elif len(users) == 0:
-        book = get_book_or_register_user(key)
+        book =  get_book_or_register_user(key)
     
     user = users[0]
     if not user.valid:
@@ -75,25 +80,13 @@ def rent_book(book_id, book_title):
     return rent
 
 def get_book_or_register_user(key):
-    response = getBookForId(key)
+    response = university_helper.getBookForId(key)
     if not response:
         # There is no book for this card id
-        CustomUser.create(key)
+        #CustomUser.create(key)
         return False
 
     print(response)
     book_data = json.load(response)
     book_rent = rent_book(book_data['id'], book_data['title'])
     return book_rent
-
-
-
-def getBookForId(book_id):
-    #opener = urllib2.build_opener(urllib2.HTTPHandler)
-    url = urllib2.Request(FMI_LIBRARY_URL + '?code=' + str(book_id))
-    try:
-        request = urllib2.urlopen(url)
-    except urllib2.HTTPError, e:
-        return False
-        
-    return request

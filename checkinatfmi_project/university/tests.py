@@ -7,10 +7,21 @@ Replace this with more appropriate tests for your application.
 
 from django.test import TestCase
 
+from models import Place
 
 class SimpleTest(TestCase):
-    def test_basic_addition(self):
+    def test_simple_place_creation(self):
         """
-        Tests that 1 + 1 always equals 2.
+        Creates test place
         """
-        self.assertEqual(1 + 1, 2)
+        places = Place.objects.filter(name = "Test Place")
+        [place.delete() for place in places]
+
+        place = Place()
+        place.name = "Test Place"
+        place.capacity = 20
+        place.save()
+
+        place = Place.objects.filter(name = "Test Place")
+        print place
+        self.assertNotEqual(place, None)

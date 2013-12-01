@@ -1,0 +1,10 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+
+{% block title %}{{ title }} | {% trans 'Checkin@FMI admin' %}{% endblock %}
+
+{% block branding %}
+<a href="{% url 'admin:index' %}" class="brand" id="site-name">Checkin@FMI</a>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
