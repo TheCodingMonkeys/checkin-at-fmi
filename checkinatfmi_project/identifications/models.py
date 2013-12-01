@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.contenttypes import generic
 from django.db import models
 
@@ -8,6 +9,8 @@ class Cardowner(models.Model):
     """
     Basic model of person with a card
     """
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, blank=True)
+
     carrier = generic.GenericRelation('activities.Carrier')
     faculty_number = models.IntegerField()
     grade = models.IntegerField()
@@ -15,6 +18,13 @@ class Cardowner(models.Model):
     susi_name = models.CharField(max_length=63, null=True, blank=True)
     sudi_password = models.CharField(max_length=63, null=True, blank=True)
 
+    @property
+    def first_name(self):
+        return self.user.first_name()
+
+    @property
+    def last_name(self):
+        return self.user.last_name()
 
     @classmethod
     def register_activity(self, activity):

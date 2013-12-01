@@ -131,7 +131,6 @@ ROOT_URLCONF = 'checkinatfmi.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'checkinatfmi.wsgi.application'
 
-AUTH_PROFILE_MODULE = 'university.CustomUser'
 
 AUTHENTICATION_BACKENDS = (
     'checkinatfmi.settings.checkin_auth.EmailOrUsernameModelBackend',

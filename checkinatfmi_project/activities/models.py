@@ -16,10 +16,9 @@ class Activity(models.Model):
     client = models.ForeignKey('clients.Client')
     carrier = models.ForeignKey('Carrier', verbose_name='Indentification Carrier')
 
-    def _get_client_place(self):
+    @property
+    def place(self):
         return self.client.place
-
-    place = property(_get_client_place)
 
     @classmethod
     def create(cls, time, client, carrier):
@@ -71,10 +70,9 @@ class Borrow(models.Model):
     borrow = models.ForeignKey(Activity, related_name='borrowes')
     handback = models.ForeignKey(Activity, related_name='handbackes')
 
-    def _get_borrowed_item(self):
+    @property
+    def borrowed_item(self):
         return self.borrow.carrier.identification
-
-    borrowed_item = property(_get_borrowed_item)
 
     def __unicode__(self):
         return '%s -> %s' % (borrower, borrowed_item)

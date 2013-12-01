@@ -7,14 +7,18 @@ from relatedwidget import RelatedWidgetWrapperBase
 
 from models import Activity, Borrow, Checkin, Carrier
 
-class CarrierForm(forms.ModelForm):
-    state = forms.ChoiceField(choices=Carrier.CARRIER_STATES, widget=forms.Select)
-    class Meta:
-        model = Carrier
-
 
 class ActivityAdmin(RelatedWidgetWrapperBase, admin.ModelAdmin):
     pass
+
+
+class CarrierForm(forms.ModelForm):
+    state = forms.ChoiceField(choices=Carrier.CARRIER_STATES, widget=forms.Select)
+    #list_display = ('fistname')
+
+    class Meta:
+        model = Carrier
+
 
 class CarrierAdmin(GenericAdminModelAdmin):
     content_type_whitelist = (
