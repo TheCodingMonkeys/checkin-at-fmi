@@ -15,4 +15,3 @@ def register_activity(request, time='', data='', client=''):
         return HttpResponse(status=200)
     else:
         return HttpResponse(status=403)
-

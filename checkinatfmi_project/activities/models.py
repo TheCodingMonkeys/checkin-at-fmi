@@ -3,9 +3,10 @@ from django.contrib.contenttypes import generic
 from django.db import models
 
 
-class ActivityManager(models.Manager):
-    def add_activity(self, time, client, carrier):
-        pass
+class CheckinManager(models.Manager):
+    def active(self):
+        return super(CheckinManager, self).get_query_set()\
+                .filter(checkout_activity__isnull=True)
 
 
 class Activity(models.Model):
@@ -13,7 +14,10 @@ class Activity(models.Model):
     client = models.ForeignKey('clients.Client')
     carrier = models.ForeignKey('Carrier', verbose_name='Indentification Carrier')
 
-    activities = ActivityManager()
+    def _get_client_place(self):
+        return self.client.place
+
+    place = property(_get_client_place)
 
     @classmethod
     def create(cls, time, client, carrier):
@@ -23,7 +27,11 @@ class Activity(models.Model):
         return activity
 
     def __unicode__(self):
-        return u'%s: %s at %s' % (self.time, self.client, self.carrier)
+        return u'%s: %s > %s' % (
+                    self.time,
+                    self.carrier.identification,
+                    self.place
+                )
 
     class Meta:
         verbose_name_plural = 'activities'
@@ -61,9 +69,6 @@ class Borrow(models.Model):
     borrow = models.ForeignKey(Activity, related_name='borrowes')
     handback = models.ForeignKey(Activity, related_name='handbackes')
 
-    def register_activity(self, activity):
-        print 'hello'
-
     def _get_borrowed_item(self):
         return self.borrow.carrier.identification
 
@@ -77,10 +82,22 @@ class Checkin(models.Model):
     checkin_activity = models.ForeignKey(Activity, related_name='checkins')
     checkout_activity = models.ForeignKey(Activity, related_name='checkouts', null=True)
 
-    def _get_cardowner(self):
+    #def _get_cardowner(self):
+    #    return self.checkin_activity.carrier.identification
+    @property
+    def cardowner(self):
         return self.checkin_activity.carrier.identification
 
-    cardowner = property(_get_cardowner)
+
+    #cardowner = property(_get_cardowner)
+    objects = models.Manager()
+    checkins = CheckinManager()
+
+    def is_active(self):
+        return not self.checkout_activity
+
+    def active_time(self):
+        return self.checkout_activity.time - self.checkin_activity.time
 
     def __unicode__(self):
         return '%s @ %s' % (self.cardowner, self.checkin_activity)

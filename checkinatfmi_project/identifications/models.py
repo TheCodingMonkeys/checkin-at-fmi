@@ -19,12 +19,20 @@ class Cardowner(models.Model):
     @classmethod
     def register_activity(self, activity):
         print "Registering checkin for activity: " + str(activity)
-        # get all active checkins for cardowner and checkout
-        active_checkins = Checkin.objects.filter(checkout_activity__isnull=True)
+
+        is_checkin = True
+        active_checkins = Checkin.checkins.active()
         for checkin in active_checkins:
+            if checkin.checkin_activity.place == activity.place:
+                is_checkin = False
             checkin.checkout_activity = activity
-        
-        checkin.save()
+            checkin.save()
+
+        if is_checkin:
+            checkin = Checkin()
+            checkin.checkin_activity = activity
+            checkin.save()
+
 
     def __unicode__(self):
         return u'%s: %s' % (self.faculty_number, self.specialty)
