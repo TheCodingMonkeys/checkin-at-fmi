@@ -11,6 +11,9 @@ class CardownerForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(forms.ModelForm, self).__init__(*args, **kwargs)
+        if not 'instance' in kwargs:
+            return
+
         user = kwargs['instance'].user
         if user:
             first_name = user.first_name
@@ -38,10 +41,11 @@ class CardownerAdmin(admin.ModelAdmin):
     form = CardownerForm
     
     def save_model(self, request, obj, form, change):
-        if not obj.user:
-            user = User() 
-        else:
+
+        if hasattr(obj, 'user'):
             user = obj.user
+        else:
+            user = User() 
 
         user.first_name = form.cleaned_data['first_name']
         user.last_name = form.cleaned_data['last_name']

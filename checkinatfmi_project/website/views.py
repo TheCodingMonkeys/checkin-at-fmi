@@ -22,10 +22,11 @@ def index(request):
         checkins_inside = Checkin.checkins.active()
         all_users = []
         for checkin in checkins_inside:
+
             all_users += [
                     {
-                        'first_name': 'Pandichko',#checkin.user.first_name,
-                        'last_name': 'Pendechko',#checkin.user.last_name,
+                        'first_name': checkin.cardowner.user.first_name,
+                        'last_name': checkin.cardowner.user.last_name,
                         'active_time': days_hours_minutes(checkin.active_time())
                     }
             ]
