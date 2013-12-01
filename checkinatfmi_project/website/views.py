@@ -8,12 +8,10 @@ from django.utils.timezone import utc
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
+from utils.datetime_util import days_hours_minutes
+
 from activities.models import Checkin
 from university.models import Place, Specialty
-
-
-def days_hours_minutes(td):
-    return td.seconds // 3600, (td.seconds // 60) % 60, td.seconds % 60
 
 
 def index(request):
@@ -21,15 +19,18 @@ def index(request):
     places = Place.objects.all()
     all_places = []
     for place in places:
-        checkins_inside = Checkin.objects.filter(place = place, active = True)
+        checkins_inside = Checkin.checkins.active()
         all_users = []
         for checkin in checkins_inside:
-            print checkin.checkin_time
-            all_users += [{'first_name': checkin.user.first_name, 'last_name': checkin.user.last_name,
-                            'active_time': days_hours_minutes(now-checkin.checkin_time)}]
-            print (now-checkin.checkin_time)
+            all_users += [
+                    {
+                        'first_name': 'Pandichko',#checkin.user.first_name,
+                        'last_name': 'Pendechko',#checkin.user.last_name,
+                        'active_time': days_hours_minutes(checkin.active_time())
+                    }
+            ]
         all_places += [[place, place.capacity, len(all_users), all_users]]
-    print all_places
+
     return render_to_response('index.html',
             {
                 "places" : all_places,

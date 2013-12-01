@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.db import models
@@ -82,22 +84,21 @@ class Checkin(models.Model):
     checkin_activity = models.ForeignKey(Activity, related_name='checkins')
     checkout_activity = models.ForeignKey(Activity, related_name='checkouts', null=True)
 
-    #def _get_cardowner(self):
-    #    return self.checkin_activity.carrier.identification
+    objects = models.Manager()
+    checkins = CheckinManager()
+
     @property
     def cardowner(self):
         return self.checkin_activity.carrier.identification
-
-
-    #cardowner = property(_get_cardowner)
-    objects = models.Manager()
-    checkins = CheckinManager()
 
     def is_active(self):
         return not self.checkout_activity
 
     def active_time(self):
-        return self.checkout_activity.time - self.checkin_activity.time
+        checkin_end_time = datetime.now()\
+                            if self.checkout_activity is None\
+                            else self.checkout_activity.time
+        return checkin_end_time - self.checkin_activity.time
 
     def __unicode__(self):
         return '%s @ %s' % (self.cardowner, self.checkin_activity)
