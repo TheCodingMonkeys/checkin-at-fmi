@@ -5,7 +5,7 @@ class Specialty(models.Model):
     """
     Specialty in University
     """
-    name = models.CharField(max_length=63)
+    name = models.CharField(max_length=255)
 
     def __unicode__(self):
         return self.name
@@ -21,8 +21,8 @@ class Place(models.Model):
     Methods:
         unicode - print representation
     """
-    name = models.CharField(max_length=63, null=True)
-    capacity = models.IntegerField(null=True, blank=True)
+    name = models.CharField(max_length=255)
+    capacity = models.IntegerField()
 
     def __unicode__(self):
         return self.name

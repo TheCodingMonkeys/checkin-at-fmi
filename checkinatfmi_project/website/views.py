@@ -55,7 +55,8 @@ def statistics(request):
         monthly_checkins = []
         for i in range(12):
             date = today_date + relativedelta(months=i-11)
-            monthly_checkins += [Checkin.objects.filter(place = place, checkin_time__month=date.month).count()]
+            monthly_checkins += [Checkin.objects.filter(place = place,
+                checkin_activity__time__month=date.month).count()]
 
         daily_checkins = []
         for i in range(7):
@@ -74,9 +75,13 @@ def statistics(request):
         piechart_specialty = []
         
         for specialty in specialties:
-            piechart_specialty += [{'specialty': specialty,
-                                    'checkin_counts': Checkin.objects.filter(place = place,
-                                                        user__specialty=specialty).count()}]
+            piechart_specialty += [
+                    {
+                        'specialty': specialty,
+                        'checkin_counts': Checkin.objects.filter(place = place,
+                                            user__specialty=specialty).count()
+                    }
+            ]
 
 
         piechart_grade = []

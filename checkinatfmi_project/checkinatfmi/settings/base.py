@@ -30,8 +30,8 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'sample.db', #keychain.db_name,
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': keychain.db_name,
         'USER': keychain.db_user,
         'PASSWORD': keychain.db_pass,
         'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.

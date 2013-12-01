@@ -89,6 +89,10 @@ class Checkin(models.Model):
     def cardowner(self):
         return self.checkin_activity.carrier.identification
 
+    @property
+    def place(self):
+        return self.checkin_activity.place
+
     def is_active(self):
         return not self.checkout_activity
 

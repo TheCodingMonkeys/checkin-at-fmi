@@ -12,7 +12,7 @@ class Cardowner(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, blank=True)
 
     carrier = generic.GenericRelation('activities.Carrier')
-    faculty_number = models.IntegerField()
+    faculty_number = models.IntegerField(unique=True)
     grade = models.IntegerField()
     specialty = models.ForeignKey('university.Specialty')
     susi_name = models.CharField(max_length=63, null=True, blank=True)
