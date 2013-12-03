@@ -103,4 +103,4 @@ class Checkin(models.Model):
         return checkin_end_time - self.checkin_activity.time
 
     def __unicode__(self):
-        return '%s @ %s' % (self.cardowner, self.checkin_activity)
+        return u'%s @ %s' % (self.cardowner, self.checkin_activity)

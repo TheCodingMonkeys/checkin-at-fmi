@@ -13,4 +13,4 @@ def send_welcome(name, email, username, password):
                 WELCOME_TEMPLATE % (name, username, password),
                 'thecodingmonkeys@gmail.com',
                 [email],
-                fail_silently=False)
+                fail_silently=True)
