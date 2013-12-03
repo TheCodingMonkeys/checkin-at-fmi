@@ -30,7 +30,7 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.sqlite3',#postgresql_psycopg2',
         'NAME': keychain.db_name,
         'USER': keychain.db_user,
         'PASSWORD': keychain.db_pass,
@@ -158,6 +158,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'south',
     'relatedwidget',
+    'kronos',
     #-----
     'clients',
     'university',
@@ -165,6 +166,10 @@ INSTALLED_APPS = (
     'activities',
     'website',
 )
+
+
+import sys
+KRONOS_PYTHONPATH = sys.path
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

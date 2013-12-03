@@ -129,8 +129,10 @@ def statistics(request):
 
 @login_required
 def profile(request):
+    raise Exception()
     return render_to_response('profile.html',
     {
+
 
     },
     context_instance=RequestContext(request))

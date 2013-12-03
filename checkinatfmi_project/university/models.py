@@ -11,6 +11,9 @@ class Specialty(models.Model):
         return self.name
 
 
+class PlaceManager(models.Manager):
+    pass
+
 class Place(models.Model):
     """
     Represents physical place at the university/institution
@@ -23,6 +26,8 @@ class Place(models.Model):
     """
     name = models.CharField(max_length=255)
     capacity = models.IntegerField()
+    objects = models.Manager()
+    places = PlaceManager()
 
     def __unicode__(self):
         return self.name
