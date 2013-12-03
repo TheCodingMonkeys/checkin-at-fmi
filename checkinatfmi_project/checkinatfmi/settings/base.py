@@ -168,8 +168,8 @@ INSTALLED_APPS = (
 )
 
 
-import sys
-KRONOS_PYTHONPATH = sys.path
+#import sys
+#KRONOS_PYTHONPATH = sys.path
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
