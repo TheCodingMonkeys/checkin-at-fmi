@@ -4,12 +4,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.db import models
 
-
-class CheckinManager(models.Manager):
-    def active(self):
-        return super(CheckinManager, self).get_query_set()\
-                .filter(checkout_activity__isnull=True)
-
+from managers import CheckinManager
 
 class Activity(models.Model):
     time = models.DateTimeField()
@@ -91,7 +86,7 @@ class Checkin(models.Model):
 
     @property
     def place(self):
-        return self.checkin_activity.place
+        return self.checkin_activity.client.place
 
     def is_active(self):
         return not self.checkout_activity

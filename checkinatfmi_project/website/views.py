@@ -53,43 +53,59 @@ def statistics(request):
         today_date = datetime.now().date()
 
         monthly_checkins = []
-        for i in range(12):
+        for i in reversed(xrange(12)):
             date = today_date + relativedelta(months=i-11)
-            monthly_checkins += [Checkin.objects.filter(place = place,
-                checkin_activity__time__month=date.month).count()]
+            monthly_checkins += [
+                Checkin.checkins.filter_by_place_and_month(
+                    place,
+                    today_date.month - i
+                ).count()
+            ]
 
         daily_checkins = []
-        for i in range(7):
-            daily_checkins += [Checkin.objects.filter(place = place, checkin_time__day=(today_date + timedelta(days=i-6)).day).count()]
+        for i in reversed(xrange(7)):
+            daily_checkins += [
+                Checkin.checkins.filter_by_place_and_day(
+                    place,
+                    (today_date + timedelta(days=i)).day
+                ).count()
+            ]
 
         
-        checkins_for_today = Checkin.objects.filter(place = place, checkin_time__year=today_date.year,
-                                                                    checkin_time__month=today_date.month,
-                                                                    checkin_time__day=today_date.day)
+        checkins_for_today = Checkin.checkins.filter_by_place_and_day(
+                place,
+                today_date.day)
 
         hourly_checkins = [0]*24
         for checkin in checkins_for_today:
-            hourly_checkins[checkin.checkin_time.hour] += 1
+            hourly_checkins[checkin.checkin_activity.time.hour] += 1
 
         specialties = Specialty.objects.all()
         piechart_specialty = []
-        
         for specialty in specialties:
             piechart_specialty += [
                     {
-                        'specialty': specialty,
-                        'checkin_counts': Checkin.objects.filter(place = place,
-                                            user__specialty=specialty).count()
-                    }
+                    'specialty': specialty,
+                    'checkin_counts':
+                    Checkin.checkins.filter_by_place_and_specialty(
+                        place,
+                        specialty
+                    ).count()
+                }
             ]
 
-
         piechart_grade = []
-
         for grade in range(4):
-            piechart_grade += [{'grade': grade,
-                                    'checkin_counts': Checkin.objects.filter(place = place,
-                                                        user__grade=grade).count()}]
+            piechart_grade += [
+                {
+                    'grade': grade,
+                    'checkin_counts':
+                    Checkin.checkins.filter_by_place_and_grade(
+                        place,
+                        grade
+                    ).count()
+                }
+            ]
 
         place_checkins += [
             {
@@ -113,7 +129,6 @@ def statistics(request):
 
 @login_required
 def profile(request):
-
     return render_to_response('profile.html',
     {
 
