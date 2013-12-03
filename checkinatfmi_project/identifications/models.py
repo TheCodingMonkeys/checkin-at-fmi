@@ -33,10 +33,11 @@ class Cardowner(models.Model):
         is_checkin = True
         active_checkins = Checkin.checkins.active()
         for checkin in active_checkins:
-            if checkin.checkin_activity.place == activity.place:
+            if checkin.checkin_activity.place == activity.place and \
+                checkin.cardowner == activity.carrier.identification:
                 is_checkin = False
-            checkin.checkout_activity = activity
-            checkin.save()
+                checkin.checkout_activity = activity
+                checkin.save()
 
         if is_checkin:
             checkin = Checkin()
@@ -58,3 +59,8 @@ class Book(models.Model):
 
     def __unicode__(self):
         return u"%s: %s" % (self.title, self.isbn)
+
+    @classmethod
+    def register_activity(self, activity):
+        print "Registering book for activity: " + str(activity)
+
