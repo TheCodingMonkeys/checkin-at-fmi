@@ -48,8 +48,10 @@ table {
 
 #christmas_panda {
     height: 100px;
-    float: right;
-    margin-left: -15px;    
+	position: fixed;
+	left: 70%;
+	top: 32px;
+	z-index: 10000;
 }
 
 #site-footer {
