@@ -54,7 +54,7 @@ class Carrier(models.Model):
         return self.state == Carrier.REGISTERED 
 
     def __unicode__(self):
-        return u'%s: %s' % (self.state, self.content_type)
+        return u'%s %s: %s' % (self.state, self.content_type, self.identification)
 
     class Meta:
         verbose_name = "Identification Carrier"
@@ -70,7 +70,7 @@ class Borrow(models.Model):
         return self.borrow.carrier.identification
 
     def __unicode__(self):
-        return '%s -> %s' % (borrower, borrowed_item)
+        return u'%s -> %s' % (borrower, borrowed_item)
 
 
 class Checkin(models.Model):

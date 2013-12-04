@@ -6,7 +6,7 @@ from models import Client
 class ClientAdmin(admin.ModelAdmin):
     fields = ['mac', 'status', 'status_changed', 'place']
     readonly_fields = ['status_changed', 'mac']
-    list_display = ['mac', 'status_changed', 'status']
+    list_display = ['mac', 'place', 'status_changed', 'status']
 
 
 class ProxyClient(Client):

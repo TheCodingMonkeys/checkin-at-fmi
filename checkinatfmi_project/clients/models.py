@@ -9,4 +9,4 @@ class Client(models.Model):
     place = models.ForeignKey(Place, null=True)
 
     def __unicode__(self):
-        return "%s @ %s" % (self.mac, self.status_changed)
+        return u"%s @ %s" % (self.mac, self.place)
