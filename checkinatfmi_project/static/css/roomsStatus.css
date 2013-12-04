@@ -49,9 +49,14 @@ table {
 #christmas_panda {
     height: 100px;
     float: right;
-    margin-left: -15px;
-    //position: absolute;
-    //right: 90;
-    //top: 90;
-    
+    margin-left: -15px;    
+}
+
+#site-footer {
+	position: fixed;
+	width: 100%;
+	bottom: 0px;
+	background: #F5F5F5;
+	padding: 5px;
+	text-align: center;
 }
