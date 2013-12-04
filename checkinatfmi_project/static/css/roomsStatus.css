@@ -13,3 +13,7 @@ body {
 .progress{
 	height: 25px;
 }
+html {
+    overflow: -moz-scrollbars-vertical; 
+    overflow-y: scroll;
+}
