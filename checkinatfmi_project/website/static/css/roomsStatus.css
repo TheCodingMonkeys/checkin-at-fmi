@@ -10,6 +10,11 @@ body {
 	font-weight: bold;
 	margin-bottom: 40px;
 }
+
 .progress{
 	height: 25px;
+}
+
+.chart-wrapper {
+	float: left;
 }
