@@ -9,6 +9,7 @@
 
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
         <link href="/static/css/roomsStatus.css" rel="stylesheet">
+
     </head>
 
       <body>
@@ -25,7 +26,7 @@
             <div class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
                 <li><a href="/">Начало</a></li>
-                <!-- <li><a href="/statistics/">Статистика</a></li> -->
+                <li><a href="/statistics/">Статистика</a></li>
                 <!-- <li><a href="/library/">Библиотека</a></li> -->
               </ul>
               <ul class="nav navbar-nav navbar-right">
@@ -37,7 +38,7 @@
                   </ul>
                 </li>
               {% else %}
-                <li><a href="/login/">Вход</a></li>
+                <!-- <li><a href="/login/">Вход</a></li> -->
               {% endif %}
               </ul>
             </div>
@@ -52,6 +53,7 @@
         <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
         <script src="http://cdn.kendostatic.com/2012.2.710/js/kendo.all.min.js"></script>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+        <script src="http://cloud.github.com/downloads/kopipejst/jqSnow/jquery.snow.min.1.0.js"></script>
         {% block scripts %}
         {% endblock %}
         <script>
@@ -63,6 +65,11 @@
           ga('create', 'UA-46178912-1', 'zala100.com');
           ga('send', 'pageview');
 
+        </script>
+        <script>
+        $(document).ready( function(){
+          $.fn.snow({minSize: 10, maxSize: 25, newOn: 700});
+        });
         </script>
     </body>
 </html>
