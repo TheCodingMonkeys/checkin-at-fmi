@@ -1,7 +1,12 @@
+html {
+    overflow: -moz-scrollbars-vertical; 
+    overflow-y: scroll;
+}
+
 body {
 	padding-top: 60px;
 	background: url(http://cdn.osxdaily.com/wp-content/uploads/2011/10/NSLinenBackgroundPattern.png);
-	min-height: 1024px;
+	//min-height: 1024px;
 }
 
 #active-people {
@@ -39,4 +44,14 @@ table {
 
 .navbar a:hover {
 	color: #5E9CD2 !important;
+}
+
+#christmas_panda {
+    height: 100px;
+    float: right;
+    margin-left: -15px;
+    //position: absolute;
+    //right: 90;
+    //top: 90;
+    
 }
