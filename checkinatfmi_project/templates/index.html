@@ -27,7 +27,21 @@
                     {% if user.active_time.2 == 0 %}
                       По-малко от минута
                     {% else %}
-                      {{ user.active_time.1 }} часа {{ user.active_time.2 }} минути
+                      {% if user.active_time.1 != 0 %}
+                        {{ user.active_time.1 }} 
+                          {% if user.active_time.1 == 1 %}
+                            час
+                          {% else %}
+                            часа
+                          {% endif %} 
+                      {% endif %}
+
+                      {{ user.active_time.2 }} 
+                      {% if user.active_time.2 == 1 %}
+                        минута
+                      {% else %}
+                        минути
+                      {% endif %} 
                     {% endif %}
                   </td>
               </tr>
