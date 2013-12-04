@@ -20,11 +20,11 @@ class Cardowner(models.Model):
 
     @property
     def first_name(self):
-        return self.user.first_name()
+        return self.user.first_name
 
     @property
     def last_name(self):
-        return self.user.last_name()
+        return self.user.last_name
 
     @classmethod
     def register_activity(self, activity):
@@ -46,7 +46,7 @@ class Cardowner(models.Model):
 
 
     def __unicode__(self):
-        return u'%s: %s' % (self.faculty_number, self.specialty)
+        return u'%s (%s): %s' % (self.first_name, self.faculty_number, self.specialty)
 
 
 class Book(models.Model):
@@ -58,7 +58,7 @@ class Book(models.Model):
     isbn = models.CharField(max_length=63)
 
     def __unicode__(self):
-        return u"%s: %s" % (self.title, self.isbn)
+        return u'%s: %s' % (self.title, self.isbn)
 
     @classmethod
     def register_activity(self, activity):
