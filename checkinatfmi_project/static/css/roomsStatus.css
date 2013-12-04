@@ -40,3 +40,8 @@ table {
 .navbar a:hover {
 	color: #5E9CD2 !important;
 }
+
+html {
+    overflow: -moz-scrollbars-vertical; 
+    overflow-y: scroll;
+}
