@@ -9,8 +9,9 @@ Best Regards,
 TheCodingMonkeys""" 
 
 def send_welcome(name, email, username, password):
-    send_mail("Welcome to Checkin@FMI",
+    print "sending email"
+    print send_mail("Welcome to Checkin@FMI",
                 WELCOME_TEMPLATE % (name, username, password),
                 'thecodingmonkeys@gmail.com',
                 [email],
-                fail_silently=True)
+                fail_silently=False)
