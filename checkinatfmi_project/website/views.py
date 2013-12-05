@@ -67,7 +67,7 @@ def statistics(request):
             daily_checkins += [
                 Checkin.checkins.filter_by_place_and_day(
                     place,
-                    (today_date + timedelta(days=i)).day
+                    (today_date - timedelta(days=i)).day
                 ).count()
             ]
 
