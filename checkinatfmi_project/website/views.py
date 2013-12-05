@@ -19,7 +19,7 @@ def index(request):
     places = Place.objects.all()
     all_places = []
     for place in places:
-        checkins_inside = Checkin.checkins.active()
+        checkins_inside = Checkin.checkins.active().order_by('-checkin_activity__time')
         all_users = []
         for checkin in checkins_inside:
 
