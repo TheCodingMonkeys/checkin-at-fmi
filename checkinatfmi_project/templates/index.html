@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
   {% block content %}
-           <img id="christmas_panda" src="{{ STATIC_URL }}/images/panda_cut.png" alt="panda" />
+           <img id="christmas_panda" src="{{ STATIC_URL }}images/panda_cut.png" alt="panda" />
     {% for place in places %}
       <h2>Посещаемост в {{ place.0.name }}</h2>
       <!-- 30% progress-info  60% progress-warning 85% progress-danger -->
