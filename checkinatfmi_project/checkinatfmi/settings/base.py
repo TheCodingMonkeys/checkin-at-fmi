@@ -30,7 +30,7 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': keychain.db_name,
         'USER': keychain.db_user,
         'PASSWORD': keychain.db_pass,
