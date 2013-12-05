@@ -26,8 +26,9 @@ class CheckinManager(models.Manager):
                     checkin_activity__carrier__cardowner__specialty=specialty
                 )
 
-    def filter_by_place_and_grade(self, place, specialty):
+    def filter_by_place_and_grade(self, place, grade):
         return super(CheckinManager, self).get_query_set()\
                 .filter(
-                    checkin_activity__client__place=place
+                    checkin_activity__client__place=place,
+                    checkin_activity__carrier__cardowner__grade=grade
                 )

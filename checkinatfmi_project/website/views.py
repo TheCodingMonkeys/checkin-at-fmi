@@ -102,7 +102,7 @@ def statistics(request):
                     'checkin_counts':
                     Checkin.checkins.filter_by_place_and_grade(
                         place,
-                        grade
+                        grade + 1
                     ).count()
                 }
             ]
