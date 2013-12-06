@@ -1,3 +1,6 @@
+import random
+import string
+
 from django import forms
 from django.contrib import admin
 from django.contrib.auth.models import User
@@ -42,27 +45,28 @@ class CardownerAdmin(admin.ModelAdmin):
     form = CardownerForm
     
     def save_model(self, request, obj, form, change):
-
+        password = None
         if hasattr(obj, 'user'):
             user = obj.user
         else:
             user = User() 
+            password = ''.join(random.choice(
+                string.ascii_uppercase + string.digits) for x in range(7)
+            )
 
         user.first_name = form.cleaned_data['first_name']
         user.last_name = form.cleaned_data['last_name']
         user.email = form.cleaned_data['email']
         user.username = form.cleaned_data['faculty_number']
-        password = User.objects.make_random_password()
-        user.set_password(password)
 
-        if user.email:
+        if password:
             send_welcome(
                 user.first_name,
                 user.email,
                 user.username,
-                user.password
+                password
             )
-
+            user.set_password(password)
 
         user.save()
         obj.user = user
