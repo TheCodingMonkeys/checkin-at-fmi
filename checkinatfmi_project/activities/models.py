@@ -88,6 +88,21 @@ class Checkin(models.Model):
     def place(self):
         return self.checkin_activity.client.place
 
+    @property
+    def checkin_time(self):
+        return self.checkin_activity.time
+
+    @property
+    def checkout_time(self):
+        if self.checkout_activity:
+            return self.checkout_activity.time
+        else:
+            return None
+
+    @property
+    def cardowner(self):
+        return self.checkin_activity.carrier.identification
+
     def is_active(self):
         return not self.checkout_activity
 
