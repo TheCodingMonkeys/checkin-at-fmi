@@ -44,7 +44,7 @@ def checkout(modeladmin, request, queryset):
 
 class CheckinAdmin(admin.ModelAdmin):
     actions = [checkout]
-    list_display = ('cardowner', 'checkin_time', 'checkout_time', 'place', 'is_active', ) 
+    list_display = ('cardowner', 'checkin_time_admin', 'checkout_time_admin', 'place', 'is_active', ) 
     list_filter = ('checkin_activity__client__place',)
     search_fields = ['checkin_activity__carrier__cardowner__faculty_number']
 

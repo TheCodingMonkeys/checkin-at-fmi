@@ -92,12 +92,28 @@ class Checkin(models.Model):
     def checkin_time(self):
         return self.checkin_activity.time
 
+    def checkin_time_admin(self):
+        return self.checkin_activity.time
+
+    checkin_time_admin.admin_order_field = 'checkin_activity__time'
+
     @property
     def checkout_time(self):
         if self.checkout_activity:
             return self.checkout_activity.time
         else:
             return None
+
+    def checkout_time_admin(self):
+        if self.checkout_activity:
+            return self.checkout_activity.time
+        else:
+            return None
+
+    checkout_time_admin.admin_order_field = 'checkout_activity__time'
+
+
+
 
     @property
     def cardowner(self):
