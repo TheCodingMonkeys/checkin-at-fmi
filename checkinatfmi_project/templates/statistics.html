@@ -185,10 +185,12 @@
                     startAngle: 150,
                     data: [
 					{% for specialty in place_checkins.0.piechart_specialty %}
-						{ 
-							category: "{{ specialty.specialty }}" ,
-						 	value: {{ specialty.checkin_counts }}, 
-						},
+                        {% if specialty.checkin_counts != 0 %}
+                            { 
+                                category: "{{ specialty.specialty }}" ,
+                                value: {{ specialty.checkin_counts }}, 
+                            },
+                        {% endif %}
 					{% endfor %}]
                 }],
                 tooltip: {
