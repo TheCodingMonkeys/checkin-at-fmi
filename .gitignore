@@ -6,4 +6,5 @@
 keychain.py
 database_name
 checkin_db
-logs
+lags
+/checkinatfmi_project/static/
