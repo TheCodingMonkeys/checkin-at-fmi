@@ -50,7 +50,7 @@ class CardownerAdmin(admin.ModelAdmin):
         if hasattr(obj, 'user'):
             user = obj.user
         else:
-            user = User.objects.get_or_create(username=faculty_number) 
+            user = User.objects.get_or_create(username=faculty_number)[0]
             password = ''.join(random.choice(
                 string.ascii_uppercase + string.digits) for x in range(7)
             )
