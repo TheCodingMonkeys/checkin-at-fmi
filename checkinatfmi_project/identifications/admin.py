@@ -46,10 +46,11 @@ class CardownerAdmin(admin.ModelAdmin):
     
     def save_model(self, request, obj, form, change):
         password = None
+        faculty_number = form.cleaned_data['faculty_number']
         if hasattr(obj, 'user'):
             user = obj.user
         else:
-            user = User() 
+            user = User.objects.get_or_create(username=faculty_number) 
             password = ''.join(random.choice(
                 string.ascii_uppercase + string.digits) for x in range(7)
             )
@@ -57,7 +58,7 @@ class CardownerAdmin(admin.ModelAdmin):
         user.first_name = form.cleaned_data['first_name']
         user.last_name = form.cleaned_data['last_name']
         user.email = form.cleaned_data['email']
-        user.username = form.cleaned_data['faculty_number']
+        user.username = faculty_number
 
         if password:
             send_welcome(
