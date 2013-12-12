@@ -6,7 +6,6 @@ html {
 body {
 	padding-top: 60px;
 	background: url(http://cdn.osxdaily.com/wp-content/uploads/2011/10/NSLinenBackgroundPattern.png);
-	//min-height: 1024px;
 }
 
 #active-people {
@@ -25,8 +24,8 @@ body {
 	float: left;
 }
 
-table {
-	background: rgb(245, 245, 245);
+.table {
+	background: #F5F5F5;
 }
 
 #attendance-table {
@@ -46,7 +45,7 @@ table {
 	color: #5E9CD2 !important;
 }
 
-#christmas_panda {
+#christmas-panda {
     height: 100px;
     position: fixed;
     left: 70%;
