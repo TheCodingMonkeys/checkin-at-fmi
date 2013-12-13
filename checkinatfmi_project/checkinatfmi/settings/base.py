@@ -21,8 +21,8 @@ def get_env_variable(var_name):
 PROJECT_ROOT= Path(__file__).ancestor(3)
 
 ADMINS = (
-    ('Ognyan Angelov', 'ognyan_angelov@yahoo.com'),
-    ('Ivaylo Bachvarov', 'bachvarof@gmail'),
+    ('Ognyan Angelov', 'ognyan.v.angelov@gmail.com'),
+    ('Ivaylo Bachvarov', 'bachvarof@gmail.com'),
 )
 
 
@@ -172,44 +172,38 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
     'formatters': {
-        'standard': {
-            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
-            'datefmt' : "%d/%b/%Y %H:%M:%S"
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
         },
     },
     'handlers': {
         'null': {
-            'level':'DEBUG',
-            'class':'django.utils.log.NullHandler',
-        },
-        'logfile': {
-            'level':'DEBUG',
-            'class':'logging.handlers.RotatingFileHandler',
-            'filename': PROJECT_ROOT + "/logs/production.log",
-            'maxBytes': 50000,
-            'backupCount': 2,
-            'formatter': 'standard',
+            'level': 'DEBUG',
+            'class': 'logging.NullHandler',
         },
         'console':{
-            'level':'INFO',
-            'class':'logging.StreamHandler',
-            'formatter': 'standard'
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
         },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler'
+        }
     },
     'loggers': {
         'django': {
-            'handlers':['console'],
+            'handlers': ['null'],
             'propagate': True,
-            'level':'WARN',
+            'level': 'INFO',
         },
-        'django.db.backends': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
             'propagate': False,
-        },
-	'MYAPP': {
-            'handlers': ['console', 'logfile'],
-            'level': 'DEBUG',
-        },
+        }
     }
 }
