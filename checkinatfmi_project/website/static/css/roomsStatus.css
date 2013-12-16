@@ -5,13 +5,13 @@ html {
 
 body {
 	padding-top: 60px;
-	background: url(http://cdn.osxdaily.com/wp-content/uploads/2011/10/NSLinenBackgroundPattern.png);
+	background: url(/static/images/site_bg.png);
 }
 
 #active-people {
 	margin: auto;
 	text-align: center;
-	margin-top: -43px;
+	margin-top: -40px;
 	font-weight: bold;
 	margin-bottom: 40px;
 }
