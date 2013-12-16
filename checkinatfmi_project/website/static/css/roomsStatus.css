@@ -46,11 +46,11 @@ body {
 }
 
 #christmas-panda {
-    height: 100px;
-    position: fixed;
-    left: 70%;
-    top: 32px;
-    z-index: 10000;
+    height: 78px;
+    position: absolute;
+    left: 85%;
+    top: 53px;
+    z-index: 1;
 }
 
 #site-footer {
