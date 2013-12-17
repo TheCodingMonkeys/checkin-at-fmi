@@ -23,7 +23,7 @@
                   <td>{{ forloop.counter }}</td>
                   <td>{{ user.first_name }} {{ user.last_name }}</td>
                   <td>
-                    {% if user.active_time.2 == 0 %}
+                    {% if user.active_time.2 == 0 and user.active_time.1 == 0%}
                       По-малко от минута
                     {% else %}
                       {% if user.active_time.1 != 0 %}
