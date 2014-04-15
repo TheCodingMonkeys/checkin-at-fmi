@@ -12,10 +12,11 @@ class CheckinManager(models.Manager):
                     checkin_activity__time__month=month
                 )
 
-    def filter_by_place_and_day(self, place, day):
+    def filter_by_place_day_and_month(self, place, day, month):
         return super(CheckinManager, self).get_query_set()\
                 .filter(
                         checkin_activity__client__place=place,
+                        checkin_activity__time__month=month,
                         checkin_activity__time__day=day
                 )
 

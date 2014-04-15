@@ -7,7 +7,8 @@ TEMPLATE_DEBUG = DEBUG
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # 'ENGINE': 'django.db.backends.sqlite3',
         'NAME': keychain.db_name,
         'USER': keychain.db_user,
         'PASSWORD': keychain.db_pass,

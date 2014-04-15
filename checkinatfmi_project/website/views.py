@@ -65,16 +65,20 @@ def statistics(request):
         daily_checkins = []
         for i in reversed(xrange(7)):
             daily_checkins += [
-                Checkin.checkins.filter_by_place_and_day(
+                Checkin.checkins.filter_by_place_day_and_month(
                     place,
-                    (today_date - timedelta(days=i)).day
+                    (today_date - timedelta(days=i)).day,
+                    today_date.month
                 ).count()
             ]
 
+        print daily_checkins
+        print today_date.month
         
-        checkins_for_today = Checkin.checkins.filter_by_place_and_day(
+        checkins_for_today = Checkin.checkins.filter_by_place_day_and_month(
                 place,
-                today_date.day)
+                today_date.day,
+                today_date.month)
 
         hourly_checkins = [0]*24
         for checkin in checkins_for_today:
