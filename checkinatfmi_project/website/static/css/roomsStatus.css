@@ -53,6 +53,16 @@ body {
     z-index: 1;
 }
 
+#easter-bunny {
+    height: 120px;
+    position: absolute;
+    left: 85%;
+    top: 27px;
+    z-index: 10000;
+}
+
+
+
 #site-footer {
 	position: fixed;
 	width: 100%;

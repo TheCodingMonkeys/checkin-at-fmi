@@ -71,9 +71,6 @@ def statistics(request):
                     today_date.month
                 ).count()
             ]
-
-        print daily_checkins
-        print today_date.month
         
         checkins_for_today = Checkin.checkins.filter_by_place_day_and_month(
                 place,
