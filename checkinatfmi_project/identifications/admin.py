@@ -61,12 +61,12 @@ class CardownerAdmin(admin.ModelAdmin):
         user.username = faculty_number
 
         if password:
-            send_welcome(
-                user.first_name,
-                user.email,
-                user.username,
-                password
-            )
+            #send_welcome(
+            #    user.first_name,
+            #    user.email,
+            #    user.username,
+            #    password
+            #)
             user.set_password(password)
 
         user.save()
