@@ -5,13 +5,16 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.utils.timezone import utc
-from django.shortcuts import render_to_response
+from django.shortcuts import render, get_object_or_404
 from django.template import RequestContext
+from django.db.models import Q
 
 from utils.datetime_util import days_hours_minutes
 
 from activities.models import Checkin
 from university.models import Place, Specialty
+from identifications.forms import BookSerachFrom
+from identifications.models import Book
 
 
 def index(request):
@@ -32,11 +35,7 @@ def index(request):
             ]
         all_places += [[place, place.capacity, len(all_users), all_users]]
 
-    return render_to_response('index.html',
-            {
-                "places" : all_places,
-            },
-            context_instance=RequestContext(request))
+    return render(request, 'index.html', locals())
 
 def logout_page(request):
     """
@@ -121,28 +120,34 @@ def statistics(request):
 
         
 
-    return render_to_response('statistics.html',
-            {
-                'place_checkins': place_checkins,
-            },
-            context_instance=RequestContext(request))
+    return render(request, 'statistics.html', locals())
 
 
 @login_required
 def profile(request):
-    return render_to_response('profile.html',
-    {
-
-
-    },
-    context_instance=RequestContext(request))
+    return render(request, 'profile.html', locals())
 
 
 def library(request):
-    return render_to_response('library.html',
-    {
+    form = BookSerachFrom(request.GET if request.GET else None)
 
-    },
-    context_instance=RequestContext(request))
+    if form.is_valid():
+        books = Book.objects.filter(
+                    Q(title__contains=form.cleaned_data['search']) | 
+                    Q(author__contains=form.cleaned_data['search']) |
+                    Q(publisher__contains=form.cleaned_data['search'])
+                )
+
+        if form.cleaned_data['from_year'] and form.cleaned_data['to_year']:
+            books = books.filter(year__range=(
+                form.cleaned_data['from_year'], 
+                form.cleaned_data['to_year'])
+            )
+
+    return render(request, 'library.html', locals())
 
     
+def show_book(request, book_id):
+    book = get_object_or_404(Book, id=book_id)
+
+    return render(request, 'show_book.html', locals())

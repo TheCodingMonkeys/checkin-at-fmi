@@ -55,6 +55,9 @@ class Book(models.Model):
     """
     carrier = generic.GenericRelation('activities.Carrier')
     title = models.CharField(max_length=255)
+    author = models.CharField(max_length=255, blank=True)
+    publisher = models.CharField(max_length=255, blank=True)
+    year = models.PositiveSmallIntegerField(blank=True)
     isbn = models.CharField(max_length=63)
 
     def __unicode__(self):
