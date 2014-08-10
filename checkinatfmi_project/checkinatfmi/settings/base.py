@@ -159,6 +159,7 @@ INSTALLED_APPS = (
     'south',
     'relatedwidget',
     'kronos',
+    'debug_toolbar',
     #-----
     'clients',
     'university',

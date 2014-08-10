@@ -4,6 +4,7 @@ from django.db import models
 
 from activities.models import Checkin
 
+from django_resized import ResizedImageField
 
 class Cardowner(models.Model):
     """
@@ -59,6 +60,12 @@ class Book(models.Model):
     publisher = models.CharField(max_length=255, blank=True)
     year = models.PositiveSmallIntegerField(blank=True)
     isbn = models.CharField(max_length=63)
+
+    cover = ResizedImageField(
+        upload_to='covers',
+        max_width=400,
+        blank=True,
+    )
 
     def __unicode__(self):
         return u'%s: %s' % (self.title, self.isbn)
