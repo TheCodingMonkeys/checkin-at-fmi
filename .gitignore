@@ -7,4 +7,6 @@ keychain.py
 database_name
 checkin_db
 lags
+database
+local.py
 /checkinatfmi_project/static/

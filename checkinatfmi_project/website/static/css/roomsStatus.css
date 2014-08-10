@@ -37,14 +37,6 @@ body {
 	z-index: 2;
 }
 
-.navbar a {
-	color: #fff !important;
-}
-
-.navbar a:hover {
-	color: #5E9CD2 !important;
-}
-
 #christmas-panda {
     height: 78px;
     position: absolute;
