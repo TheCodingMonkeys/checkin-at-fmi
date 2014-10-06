@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib.contenttypes import generic
 from django.db import models
 
+from activities.models import Borrow
 from activities.models import Checkin
 
 
@@ -28,8 +29,6 @@ class Cardowner(models.Model):
 
     @classmethod
     def register_activity(self, activity):
-        print "Registering checkin for activity: " + str(activity)
-
         is_checkin = True
         active_checkins = Checkin.checkins.active()
         for checkin in active_checkins:
@@ -62,5 +61,16 @@ class Book(models.Model):
 
     @classmethod
     def register_activity(self, activity):
-        print "Registering book for activity: " + str(activity)
+        is_borrow = True
+        active_borrows = Borrow.borrows.active()
+        for borrow in active_borrows:
+            if borrow.borrow.place == activity.place and \
+                borrow.borrower == activity.carrier.identification:
+                is_borrow = False
+                borrow.handback = activity
+                borrow.save()
 
+        if is_borrow:
+            borrow = Borrow()
+            borrow.borrow = activity;
+            borrow.save()

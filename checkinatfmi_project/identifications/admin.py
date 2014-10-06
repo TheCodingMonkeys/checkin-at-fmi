@@ -32,6 +32,7 @@ class CardownerForm(forms.ModelForm):
         model = Cardowner
         exclude = ['user', 'carrier']
 
+
 class CardownerAdmin(admin.ModelAdmin):
     fields = (
         'first_name',
@@ -43,7 +44,8 @@ class CardownerAdmin(admin.ModelAdmin):
     )
 
     form = CardownerForm
-    
+    search_fields = ('faculty_number',)
+
     def save_model(self, request, obj, form, change):
         password = None
         faculty_number = form.cleaned_data['faculty_number']

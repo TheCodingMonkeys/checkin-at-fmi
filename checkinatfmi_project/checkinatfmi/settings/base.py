@@ -159,6 +159,9 @@ INSTALLED_APPS = (
     'south',
     'relatedwidget',
     'kronos',
+    'salmonella',
+    'django_extensions',
+    'ajax_select',
     #-----
     'clients',
     'university',
@@ -206,4 +209,9 @@ LOGGING = {
             'propagate': False,
         }
     }
+}
+
+# define the lookup channels in use on the site
+AJAX_LOOKUP_CHANNELS = {
+    'identification': ( 'identifications.lookups', 'IdentificationLookup' )
 }

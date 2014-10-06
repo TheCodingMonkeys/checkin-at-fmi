@@ -4,7 +4,9 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.db import models
 
+from managers import BorrowManager
 from managers import CheckinManager
+
 
 class Activity(models.Model):
     time = models.DateTimeField()
@@ -24,10 +26,10 @@ class Activity(models.Model):
 
     def __unicode__(self):
         return u'%s: %s > %s' % (
-                    self.time,
-                    self.carrier.identification,
-                    self.place
-                )
+            self.time,
+            self.carrier.identification,
+            self.place
+        )
 
     class Meta:
         verbose_name_plural = 'activities'
@@ -42,7 +44,7 @@ class Carrier(models.Model):
         (BANNED, 'BANNED'),
         (REGISTERED, 'REGISTERED'),
     )
-    
+
     state = models.CharField(choices=CARRIER_STATES, max_length=2, default=UNREGISTERED)
 
     data = models.CharField(max_length=255)
@@ -51,7 +53,7 @@ class Carrier(models.Model):
     identification = generic.GenericForeignKey('content_type', 'object_id')
 
     def is_registered(self):
-        return self.state == Carrier.REGISTERED 
+        return self.state == Carrier.REGISTERED
 
     def __unicode__(self):
         return u'%s %s: %s' % (self.state, self.content_type, self.identification)
@@ -63,14 +65,17 @@ class Carrier(models.Model):
 class Borrow(models.Model):
     borrower = models.ForeignKey('identifications.Cardowner')
     borrow = models.ForeignKey(Activity, related_name='borrowes')
-    handback = models.ForeignKey(Activity, related_name='handbackes')
+    handback = models.ForeignKey(Activity, related_name='handbackes', blank=True, null=True)
+
+    objects = models.Manager()
+    borrows = BorrowManager()
 
     @property
     def borrowed_item(self):
         return self.borrow.carrier.identification
 
     def __unicode__(self):
-        return u'%s -> %s' % (borrower, borrowed_item)
+        return u'%s -> %s' % (self.borrower, self.borrowed_item)
 
 
 class Checkin(models.Model):
@@ -111,9 +116,6 @@ class Checkin(models.Model):
             return None
 
     checkout_time_admin.admin_order_field = 'checkout_activity__time'
-
-
-
 
     @property
     def cardowner(self):

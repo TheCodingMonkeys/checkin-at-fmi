@@ -1,5 +1,12 @@
 from django.db import models
 
+
+class BorrowManager(models.Manager):
+    def active(self):
+        return super(BorrowManager, self).get_query_set()\
+                .filter(handback__isnull=True)
+
+
 class CheckinManager(models.Manager):
     def active(self):
         return super(CheckinManager, self).get_query_set()\

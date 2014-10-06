@@ -4,14 +4,39 @@ import datetime
 from django import forms
 from django.contrib import admin
 
+from ajax_select import make_ajax_form
+from ajax_select.admin import AjaxSelectAdmin
+
 from genericadmin.admin import GenericAdminModelAdmin
 from relatedwidget import RelatedWidgetWrapperBase
+from salmonella.admin import SalmonellaMixin
+
+from django_extensions.admin import ForeignKeyAutocompleteAdmin
 
 from models import Activity, Borrow, Checkin, Carrier
 
 
-class ActivityAdmin(RelatedWidgetWrapperBase, admin.ModelAdmin):
-    pass
+class ActivityAdmin(RelatedWidgetWrapperBase, SalmonellaMixin, admin.ModelAdmin):
+    # create an ajax form class using the factory function
+    #                     model,fieldlist,   [form superclass]
+    # form = make_ajax_form(Activity, {'carrier':'identification'})
+    salmonella_fields = ('carrier',)
+    search_fields = ('carrier__cardowner__faculty_number',)
+
+
+
+class BorrowAdmin(SalmonellaMixin, admin.ModelAdmin):
+    salmonella_fields = ('borrower', 'borrow', 'handback')
+    #related_search_fields = {
+        #'borrower': ('faculty_number',),
+        #'borrow': ('carrier__data',),
+        #'handback': ('carrier__data',),
+    #}
+
+    #fields = ('borrower', 'borrow', 'handback')
+
+    #class Media:
+        #js = ("//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js",)
 
 
 class CarrierForm(forms.ModelForm):
@@ -44,12 +69,12 @@ def checkout(modeladmin, request, queryset):
 
 class CheckinAdmin(admin.ModelAdmin):
     actions = [checkout]
-    list_display = ('cardowner', 'checkin_time_admin', 'checkout_time_admin', 'place', 'is_active', ) 
+    list_display = ('cardowner', 'checkin_time_admin', 'checkout_time_admin', 'place', 'is_active', )
     list_filter = ('checkin_activity__client__place',)
     search_fields = ['checkin_activity__carrier__cardowner__faculty_number']
 
 
 admin.site.register(Activity, ActivityAdmin)
-admin.site.register(Borrow)
-admin.site.register(Checkin, CheckinAdmin)
+admin.site.register(Borrow, BorrowAdmin)
 admin.site.register(Carrier, CarrierAdmin)
+admin.site.register(Checkin, CheckinAdmin)
