@@ -162,6 +162,7 @@ INSTALLED_APPS = (
     'salmonella',
     'django_extensions',
     'ajax_select',
+    'debug_toolbar',
     #-----
     'clients',
     'university',

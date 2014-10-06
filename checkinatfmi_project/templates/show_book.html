@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row">
+    <h2 class="col-md-12">{{ book.title}}</h2>
+    <div class="col-md-4">
+        <img src="{{ MEDIA_URL }}{{ book.cover }}" class="img-thumbnail" >
+    </div>
+    <div class="col-md-8">
+        <table class="table table-bordered">
+          <tbody>
+              <tr>
+                    <td>Автор: </td>
+                    <td>{{ book.author }}</td>
+                <tr>
+                    <td>Издателство</td>
+                    <td>{{ book.publisher }}</td>
+                </tr>
+
+                <tr>
+                    <td>Година</td>:
+                    <td>{{ book.year }}</td>
+                </tr>
+              </tr>
+          </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

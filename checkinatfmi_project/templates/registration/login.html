@@ -1,18 +1,17 @@
 {% extends "base.html" %}
 
- {% block content %}
+{% block content %}
 	{% if form.errors %}
-	    <div class="alert alert-warning">Your username and password didn't match. Please try again.</div>
+		<div class="alert alert-warning">Your username and password didn't match. Please try again.</div>
 	{% endif %}
+	<div style="text-align:center;">
+		<form method="post" class="form-signin" style="max-width:400px; margin:auto;">
+			<h2 class="form-signin-heading">Вход за студенти:</h2>
+			{% csrf_token %}
+			<input type="text" name="{{ form.username.name }}" class="form-control" id="username" autofocus placeholder="Email"/>
+			<input type="password" name="{{ form.password.name }}" class="form-control" id="password" placeholder="Парола"/>
+			<button style="margin-top: 20px;" class="btn btn-lg btn-primary btn-block" type="submit">Вход</button>   
+		</form>
+	</div>
 
-
-	<form method="post" class="form-signin">
- 		<h2 class="form-signin-heading">Please sign in</h2>
-	{% csrf_token %}
-	        <input type="text" name="{{ form.username.name }}" class="form-control" id="username" autofocus placeholder="Enter SUSI Username"/>
-	        <input type="password" name="{{ form.password.name }}" class="form-control" id="password" placeholder="Enter SUSI Password"/>
-	    <input type="hidden" name="next" value="{{ next }}"/>
-		
-		 <button class="btn btn-lg btn-primary btn-block" type="submit">Вход</button>   
-	</form>
 {% endblock %}

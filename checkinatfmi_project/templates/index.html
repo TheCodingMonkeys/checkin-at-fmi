@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
   {% block content %}
-    <img id="easter-bunny" src="/static/images/easter_bunny.png" alt="easter bunny">
     {% for place in places %}
       <h2>Посещаемост в {{ place.0.name }}</h2>
       <div class="progress progress-striped active">

@@ -3,11 +3,11 @@ from .base import *
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
-
+DEBUG_TOOLBAR_PATCH_SETTINGS = True
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.sqlite3',
         # 'ENGINE': 'django.db.backends.sqlite3',
         'NAME': keychain.db_name,
         'USER': keychain.db_user,
