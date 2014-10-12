@@ -44,7 +44,6 @@ class Cardowner(models.Model):
             checkin.checkin_activity = activity
             checkin.save()
 
-
     def __unicode__(self):
         return u'%s (%s): %s' % (self.first_name, self.faculty_number, self.specialty)
 
@@ -59,6 +58,7 @@ class Book(models.Model):
     publisher = models.CharField(max_length=255, blank=True)
     year = models.PositiveSmallIntegerField(blank=True)
     isbn = models.CharField(max_length=63)
+    copies = models.PositiveSmallIntegerField(default=1)
 
     cover = ResizedImageField(
         upload_to='covers',
