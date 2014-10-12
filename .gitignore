@@ -9,4 +9,6 @@ checkin_db
 lags
 database
 local.py
+media/
 /checkinatfmi_project/static/
+*.sqlite3
