@@ -34,6 +34,7 @@
       <th>Заглавие</th>
       <th>Автор</th>
       <th>Издателство</th>
+      <th>Година</th>
     </tr>
   </thead>
   <tbody>
@@ -43,6 +44,7 @@
         <td><a href="{% url 'show_book' book.id %}">{{ book.title }}</a></td>
         <td>{{ book.author }}</td>
         <td>{{ book.publisher }}</td>
+        <td>{{ book.year }}</td>
       </tr>
     {% endfor %}
   </tbody>

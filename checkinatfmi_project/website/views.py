@@ -11,7 +11,7 @@ from django.db.models import Q
 
 from utils.datetime_util import days_hours_minutes
 
-from activities.models import Checkin
+from activities.models import Checkin, Borrow
 from university.models import Place, Specialty
 from identifications.forms import BookSerachFrom
 from identifications.models import Book
@@ -70,7 +70,7 @@ def statistics(request):
                     today_date.month
                 ).count()
             ]
-        
+
         checkins_for_today = Checkin.checkins.filter_by_place_day_and_month(
                 place,
                 today_date.day,
@@ -118,8 +118,6 @@ def statistics(request):
             }
         ]
 
-        
-
     return render(request, 'statistics.html', locals())
 
 
@@ -146,8 +144,14 @@ def library(request):
 
     return render(request, 'library.html', locals())
 
-    
+
 def show_book(request, book_id):
     book = get_object_or_404(Book, id=book_id)
 
     return render(request, 'show_book.html', locals())
+
+
+def books_to_return(request):
+    borrows = Borrow.objects.filter(handback__isnull=True)
+    books = set(map(lambda x: x.borrow.carrier.identification, borrows))
+    return render(request, 'books_to_return.html', locals())

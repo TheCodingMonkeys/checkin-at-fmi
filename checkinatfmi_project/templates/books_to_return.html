@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row">
+    {% for book in books %}
+    <div class="col-md-2">
+        <p style="text-align: center; font-size: 140%;">
+            <a href="{% url 'show_book' book.id %}">{{ book.title }}</a>
+        </p>
+        <img src="{{ MEDIA_URL }}{{ book.cover }}" style="width: 100%">
+    </div>
+    {% endfor %}
+    </div>
+{% endblock %}
