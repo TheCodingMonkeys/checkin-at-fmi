@@ -169,6 +169,7 @@ INSTALLED_APPS = (
     'identifications',
     'activities',
     'website',
+    'lends',
 )
 
 

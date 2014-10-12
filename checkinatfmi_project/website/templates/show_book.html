@@ -3,7 +3,8 @@
 {% block content %}
 
 <div class="row">
-    <h2 class="col-md-12">{{ book.title}}</h2>
+    <h2 class="col-md-10">{{ book.title}}</h2>
+    <button class="col-md-2 btn btn-primary lend-request">Запази</button>
     <div class="col-md-4">
         <img src="{{ MEDIA_URL }}{{ book.cover }}" class="img-thumbnail" >
     </div>

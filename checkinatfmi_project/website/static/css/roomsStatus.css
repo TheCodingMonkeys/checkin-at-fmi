@@ -53,6 +53,9 @@ body {
     z-index: 10000;
 }
 
+.lend-request {
+    margin-top: 20px;
+}
 
 
 #site-footer {

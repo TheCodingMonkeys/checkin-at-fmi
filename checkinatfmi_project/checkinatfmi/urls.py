@@ -16,10 +16,12 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^checkin/', include('clients.urls')),
     url(r'^activities/', include('activities.urls')),
+    url(r'^lends/', include('lends.urls')),
     url(r'^login/$', 'django.contrib.auth.views.login'),
     url(r'^logout/$', 'website.views.logout_page'),
 
     url(r'', include('website.urls')),
+    url(r'^admin/salmonella/', include('salmonella.urls')),
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
         'document_root': settings.MEDIA_ROOT}),
 )

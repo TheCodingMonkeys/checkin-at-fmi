@@ -44,7 +44,7 @@ def checkin(request):
     Checkin request -> asks checks
     """
     mac = request.POST.get("mac", "")
-    key = request.POST.get("key", "")            
+    key = request.POST.get("key", "")
     time = request.POST.get("time", "")
 
     client = Client.objects.get_or_create(mac = mac)[0]
@@ -52,5 +52,3 @@ def checkin(request):
         return HttpResponse(status=401)
 
     return register_activity(request, time=time, data=key, client=client)
-   
-
