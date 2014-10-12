@@ -138,7 +138,7 @@ def library(request):
 
         if form.cleaned_data['from_year'] and form.cleaned_data['to_year']:
             books = books.filter(year__range=(
-                form.cleaned_data['from_year'], 
+                form.cleaned_data['from_year'],
                 form.cleaned_data['to_year'])
             )
 
@@ -151,7 +151,12 @@ def show_book(request, book_id):
     return render(request, 'show_book.html', locals())
 
 
+@login_required
 def books_to_return(request):
-    borrows = Borrow.objects.filter(handback__isnull=True)
+    borrows = Borrow.objects.filter(
+        handback__isnull=True,
+        borrower=request.user.cardowner
+    )
+
     books = set(map(lambda x: x.borrow.carrier.identification, borrows))
     return render(request, 'books_to_return.html', locals())
