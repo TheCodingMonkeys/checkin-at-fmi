@@ -53,6 +53,7 @@ class Book(models.Model):
     Book in library
     """
     carrier = generic.GenericRelation('activities.Carrier')
+    category = models.ForeignKey('BookCategory')
     title = models.CharField(max_length=255)
     author = models.CharField(max_length=255, blank=True)
     publisher = models.CharField(max_length=255, blank=True)
@@ -82,5 +83,15 @@ class Book(models.Model):
 
         if is_borrow:
             borrow = Borrow()
-            borrow.borrow = activity;
+            borrow.borrow = activity
             borrow.save()
+
+    # TODO: Implement this!
+    def available_count(self):
+        return 1
+
+class BookCategory(models.Model):
+    title = models.CharField(max_length=80)
+
+    def __unicode__(self):
+        return unicode(self.title)

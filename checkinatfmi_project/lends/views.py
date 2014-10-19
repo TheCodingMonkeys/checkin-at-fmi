@@ -18,3 +18,13 @@ def request(request):
     lendRequest.save()
 
     return HttpResponse(status=200)
+
+
+@login_required
+def cancel_request(request):
+    book = Book.objects.get(pk=int(request.GET.get('book')))
+    cardowner = Cardowner.objects.get(user=request.user)
+    lendRequest = LendRequest.objects.get_or_create(requester=cardowner, book=book)[0]
+    lendRequest.delete()
+
+    return HttpResponse(status=200)

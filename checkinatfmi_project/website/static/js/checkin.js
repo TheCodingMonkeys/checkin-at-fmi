@@ -22,15 +22,35 @@ $(document).ready( function(){
     }
 
 
-    var lendRequestButton = $('.lend-request');
+    var lendRequestButton = $('#land');
 
-    lendRequestButton.bind('click', function(event) {
-        console.log(event);
-        $.get('/lends/request', {
-            'book': 1
+    lendRequestButton.on('click', function(event) {
+        if(lendRequestButton.data('cancel') == 'true') {
+            $.get('/lends/cancel-request', {
+                'book': lendRequestButton.data('book-id')
+            }, function(response) {
+                lendRequestButton.data('cancel', 'false');
+                lendRequestButton.text('Запази');
+            });
+        } else { 
+            $.get('/lends/request', {
+                'book': lendRequestButton.data('book-id')
+            }, function(response) {
+                lendRequestButton.data('cancel', 'true');
+                lendRequestButton.text('Отмени запазването');
+            });
+        }
+    });
+
+    var cancelLendRequestButton = $('#cancel-land');
+
+    cancelLendRequestButton.on('click', function(event) {
+        $.get('/lends/cancel-request', {
+            'book': cancelLendRequestButton.data('book-id')
         }, function(response) {
-            lendRequestButton.toggleClass('btn-primary btn-success');
-            lendRequestButton.text('Запазена');
+            cancelLendRequestButton.attr('id','land');
+            cancelLendRequestButton.toggleClass('btn-primary btn-success');
+            cancelLendRequestButton.text('Запази');
         });
     });
 });
