@@ -17,7 +17,6 @@ def get_env_variable(var_name):
         error_msg = "Set the %s environment variable" % var_name
         raise ImproperlyConfigured(error_msg)
 
-
 PROJECT_ROOT= Path(__file__).ancestor(3)
 
 ADMINS = (
@@ -133,7 +132,7 @@ WSGI_APPLICATION = 'checkinatfmi.wsgi.application'
 
 
 AUTHENTICATION_BACKENDS = (
-    'checkinatfmi.settings.checkin_auth.EmailOrUsernameModelBackend',
+    'checkinatfmi.checkin_auth.EmailOrUsernameModelBackend',
     'django.contrib.auth.backends.ModelBackend'
 )
 
@@ -155,14 +154,11 @@ INSTALLED_APPS = (
     #-----
     'genericadmin',
     'bootstrap_admin',
-    'django.contrib.admin',
-    'south',
-    'relatedwidget',
-    'kronos',
     'salmonella',
-    'django_extensions',
-    'ajax_select',
-    'debug_toolbar',
+    'django.contrib.admin',
+    'autocomplete_light',
+    'south',
+    'kronos',
     #-----
     'clients',
     'university',
@@ -211,9 +207,4 @@ LOGGING = {
             'propagate': False,
         }
     }
-}
-
-# define the lookup channels in use on the site
-AJAX_LOOKUP_CHANNELS = {
-    'identification': ( 'identifications.lookups', 'IdentificationLookup' )
 }

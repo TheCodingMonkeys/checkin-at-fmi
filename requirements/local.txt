@@ -1,1 +1,5 @@
--r base.txt # includes base dependency
+-r base.txt
+
+django-debug-toolbar==1.2.1
+ipdb==0.8
+ipython==1.1.0

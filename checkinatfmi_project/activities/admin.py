@@ -4,44 +4,25 @@ import datetime
 from django import forms
 from django.contrib import admin
 
-from ajax_select import make_ajax_form
-from ajax_select.admin import AjaxSelectAdmin
-
+import autocomplete_light
 from genericadmin.admin import GenericAdminModelAdmin
-from relatedwidget import RelatedWidgetWrapperBase
 from salmonella.admin import SalmonellaMixin
 
-from django_extensions.admin import ForeignKeyAutocompleteAdmin
-
 from models import Activity, Borrow, Checkin, Carrier
+from identifications.models import Cardowner
 
 
-class ActivityAdmin(RelatedWidgetWrapperBase, SalmonellaMixin, admin.ModelAdmin):
-    # create an ajax form class using the factory function
-    #                     model,fieldlist,   [form superclass]
-    # form = make_ajax_form(Activity, {'carrier':'identification'})
+class ActivityAdmin(SalmonellaMixin, admin.ModelAdmin):
     salmonella_fields = ('carrier',)
-    search_fields = ('carrier__cardowner__faculty_number',)
-
 
 
 class BorrowAdmin(SalmonellaMixin, admin.ModelAdmin):
-    salmonella_fields = ('borrower', 'borrow', 'handback')
-    #related_search_fields = {
-        #'borrower': ('faculty_number',),
-        #'borrow': ('carrier__data',),
-        #'handback': ('carrier__data',),
-    #}
-
-    #fields = ('borrower', 'borrow', 'handback')
-
-    #class Media:
-        #js = ("//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js",)
+    salmonella_fields = ('borrow', 'handback')
+    form = autocomplete_light.modelform_factory(Borrow)
 
 
 class CarrierForm(forms.ModelForm):
     state = forms.ChoiceField(choices=Carrier.CARRIER_STATES, widget=forms.Select)
-    #list_display = ('fistname')
 
     class Meta:
         model = Carrier
@@ -53,6 +34,7 @@ class CarrierAdmin(GenericAdminModelAdmin):
         'identifications/cardowner',
     )
     readonly_fields = ('data',)
+    search_fields = ['book__title', 'cardowner__faculty_number', 'data']
     form = CarrierForm
 
 

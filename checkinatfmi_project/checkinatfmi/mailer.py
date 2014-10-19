@@ -13,7 +13,16 @@ and password:
 Soon there will be login :)
 
 Best Regards,
-TheCodingMonkeys""" 
+TheCodingMonkeys"""
+
+REMINDER_TEMPLATE ="""
+Hi $s,
+We are sending you this email to remind you that your borrow - %s - is due today.
+Please return it.
+
+Best Regards,
+TheCodingMonkeys"""
+
 
 
 
@@ -27,9 +36,21 @@ TheCodingMonkeys"""
 
 def send_welcome(name, email, username, password):
     subject = "Welcome to Checkin@FMI"
-    welcome_msg = WELCOME_TEMPLATE % (name, username, password)
+    msg = WELCOME_TEMPLATE % (name, username, password)
     send_mail(
-	subject,
-	welcome_msg,
-	"thecodingmonkeys@gmail.com",
-	[email])
+        subject,
+        welcome_msg,
+        "thecodingmonkeys@gmail.com",
+        [email]
+    )
+
+
+def send_reminder(name, email, item):
+    subject = "Reminder for a borrow from Checkin@FMI"
+    msg = REMINDER_TEMPLATE % (name, item)
+    send_mail(
+        subject,
+        msg,
+        "thecodingmonkeys@gmail.com",
+        [email]
+    )

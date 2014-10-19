@@ -8,6 +8,8 @@ from managers import BorrowManager
 from managers import CheckinManager
 
 
+DEFAULT_BORROW_DAYS = 7 # Extract in settings
+
 class Activity(models.Model):
     time = models.DateTimeField()
     client = models.ForeignKey('clients.Client')
@@ -66,6 +68,7 @@ class Borrow(models.Model):
     borrower = models.ForeignKey('identifications.Cardowner')
     borrow = models.ForeignKey(Activity, related_name='borrowes')
     handback = models.ForeignKey(Activity, related_name='handbackes', blank=True, null=True)
+    days = models.PositiveSmallIntegerField(default=DEFAULT_BORROW_DAYS)
 
     objects = models.Manager()
     borrows = BorrowManager()

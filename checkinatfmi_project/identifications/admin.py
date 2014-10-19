@@ -6,7 +6,7 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 
 from models import Cardowner, Book
-from mailer import send_welcome
+from checkinatfmi.mailer import send_welcome
 
 class CardownerForm(forms.ModelForm):
     first_name = forms.CharField()
@@ -75,7 +75,9 @@ class CardownerAdmin(admin.ModelAdmin):
         obj.user = user
         obj.save()
 
+class BookAdmin(admin.ModelAdmin):
+    search_fields = ('title',)
+
 
 admin.site.register(Cardowner, CardownerAdmin)
-admin.site.register(Book)
-
+admin.site.register(Book, BookAdmin)
