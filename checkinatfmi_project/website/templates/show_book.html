@@ -3,8 +3,10 @@
 {% block content %}
 
 <div class="row">
-    <h2 class="col-md-10">{{ book.title}}</h2>
-    <button class="col-md-2 btn btn-primary lend-request">Запази</button>
+    <div class="col-md-9">
+        <h2>{{ book.title}}</h2>
+    </div>
+    
     <div class="col-md-4">
         <img src="{{ MEDIA_URL }}{{ book.cover }}" class="img-thumbnail" >
     </div>
@@ -12,7 +14,7 @@
         <table class="table table-bordered">
           <tbody>
               <tr>
-                    <td>Автор: </td>
+                    <td>Автор</td>
                     <td>{{ book.author }}</td>
                 <tr>
                     <td>Издателство</td>
@@ -20,12 +22,26 @@
                 </tr>
 
                 <tr>
-                    <td>Година</td>:
+                    <td>Година</td>
                     <td>{{ book.year }}</td>
+                </tr>
+                <tr>
+                    <td>Категория</td>
+                    <td>{{ book.category }}</td>
                 </tr>
               </tr>
           </tbody>
         </table>
+        <div class="alert alert-warning" role="alert">
+            Запазването на книга гарантира, че книгата няма да бъде зета от дур потребител. Книгата се пази в срок от два дни след запазването.
+        </div>
+        {% if not book_borrowed %}
+            {% if book_lended %}
+                <button class="btn btn-primary" id="land" data-cancel="true" data-book-id="{{ book.id }}">Отмени запазването</button>
+            {% else %}
+                <button class="btn btn-primary" id="land" data-book-id="{{ book.id }}">Запази</button>
+            {% endif %}
+        {% endif %} 
     </div>
 </div>
 {% endblock %}

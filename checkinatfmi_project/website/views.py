@@ -15,7 +15,7 @@ from activities.models import Checkin, Borrow
 from university.models import Place, Specialty
 from identifications.forms import BookSerachFrom
 from identifications.models import Book
-
+from lends.models import LendRequest
 
 def index(request):
     now = datetime.now()
@@ -147,6 +147,14 @@ def library(request):
 
 def show_book(request, book_id):
     book = get_object_or_404(Book, id=book_id)
+    book_borrowed = Borrow.objects.filter(
+        handback__isnull=True,
+        borrower=request.user.cardowner
+    )
+    book_lended = LendRequest.objects.filter(
+        book=book,
+        requester=request.user.cardowner
+    )
 
     return render(request, 'show_book.html', locals())
 
