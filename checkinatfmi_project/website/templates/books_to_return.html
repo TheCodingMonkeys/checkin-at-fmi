@@ -10,5 +10,11 @@
         <img src="{{ MEDIA_URL }}{{ book.cover }}" style="width: 100%">
     </div>
     {% endfor %}
+
+    {% if not books %}
+        <div class="alert alert-warning" role="alert">
+            Няма книги, които трябва да върнете!
+        </div>
+    {% endif %}
     </div>
 {% endblock %}
