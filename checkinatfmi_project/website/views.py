@@ -48,7 +48,7 @@ def statistics(request):
     place_checkins = []
 
     places = Place.objects.all()
-    for place in places:    
+    for place in places:
         today_date = datetime.now().date()
 
         monthly_checkins = []
@@ -131,7 +131,7 @@ def library(request):
 
     if form.is_valid():
         books = Book.objects.filter(
-                    Q(title__contains=form.cleaned_data['search']) | 
+                    Q(title__contains=form.cleaned_data['search']) |
                     Q(author__contains=form.cleaned_data['search']) |
                     Q(publisher__contains=form.cleaned_data['search'])
                 )
@@ -147,14 +147,17 @@ def library(request):
 
 def show_book(request, book_id):
     book = get_object_or_404(Book, id=book_id)
-    book_borrowed = Borrow.objects.filter(
-        handback__isnull=True,
-        borrower=request.user.cardowner
-    )
-    book_lended = LendRequest.objects.filter(
-        book=book,
-        requester=request.user.cardowner
-    )
+
+    user = request.user
+    if not user.is_anonymous():
+        book_borrowed = Borrow.objects.filter(
+            handback__isnull=True,
+            borrower=user.cardowner
+        )
+        book_lended = LendRequest.objects.filter(
+            book=book,
+            requester=user.cardowner
+        )
 
     return render(request, 'show_book.html', locals())
 

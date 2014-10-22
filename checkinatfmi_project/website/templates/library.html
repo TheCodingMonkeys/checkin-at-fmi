@@ -35,16 +35,18 @@
       <th>Автор</th>
       <th>Издателство</th>
       <th>Година</th>
+      <th>Наличност</th>
     </tr>
   </thead>
   <tbody>
     {% for book in books %}
       <tr>
-        <td></td>
+        <td>{{ forloop.counter }}</td>
         <td><a href="{% url 'show_book' book.id %}">{{ book.title }}</a></td>
         <td>{{ book.author }}</td>
         <td>{{ book.publisher }}</td>
         <td>{{ book.year }}</td>
+        <td>Заета - 4 чакащи</td> <!-- TODO: implement logic -->
       </tr>
     {% endfor %}
   </tbody>
