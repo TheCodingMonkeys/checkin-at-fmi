@@ -1,5 +1,7 @@
 from django.contrib import admin
 
+import checkinatfmi.translations_bg as translate
+
 from models import Client
 
 
@@ -13,7 +15,8 @@ class ProxyClient(Client):
     class Meta:
         proxy = True
         app_label = 'university'
-        verbose_name = 'Terminal'
-        verbose_name_plural = 'Terminals'
+        verbose_name = translate.client
+        verbose_name_plural = translate.clients
+
 
 admin.site.register(ProxyClient, ClientAdmin)

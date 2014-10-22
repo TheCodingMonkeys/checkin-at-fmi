@@ -4,6 +4,8 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.db import models
 
+import checkinatfmi.translations_bg as translate
+
 from managers import BorrowManager
 from managers import CheckinManager
 
@@ -11,9 +13,10 @@ from managers import CheckinManager
 DEFAULT_BORROW_DAYS = 7 # Extract in settings
 
 class Activity(models.Model):
-    time = models.DateTimeField()
-    client = models.ForeignKey('clients.Client')
-    carrier = models.ForeignKey('Carrier', verbose_name='Indentification Carrier')
+    time = models.DateTimeField(verbose_name=translate.time)
+    client = models.ForeignKey('clients.Client', verbose_name = translate.client)
+    carrier = models.ForeignKey('Carrier',
+                verbose_name=translate.carrier)
 
     @property
     def place(self):
@@ -34,7 +37,8 @@ class Activity(models.Model):
         )
 
     class Meta:
-        verbose_name_plural = 'activities'
+        verbose_name = translate.activity
+        verbose_name_plural = translate.activities
 
 
 class Carrier(models.Model):
@@ -42,16 +46,20 @@ class Carrier(models.Model):
     REGISTERED = 'R'
     BANNED = 'B'
     CARRIER_STATES = (
-        (UNREGISTERED, 'UNREGISTERED'),
-        (BANNED, 'BANNED'),
-        (REGISTERED, 'REGISTERED'),
+        (UNREGISTERED,  translate.unregistered),
+        (BANNED, translate.banned),
+        (REGISTERED, translate.registered),
     )
 
-    state = models.CharField(choices=CARRIER_STATES, max_length=2, default=UNREGISTERED)
+    state = models.CharField(verbose_name = translate.state,
+                choices=CARRIER_STATES,
+                max_length=2,
+                default=UNREGISTERED
+            )
 
-    data = models.CharField(max_length=255)
-    content_type = models.ForeignKey(ContentType, null=True)
-    object_id = models.PositiveIntegerField(null=True)
+    data = models.CharField(verbose_name = translate.data, max_length=255, unique=True)
+    content_type = models.ForeignKey(ContentType, verbose_name = translate.content_type, null=True)
+    object_id = models.PositiveIntegerField(verbose_name = translate.object_id, null=True)
     identification = generic.GenericForeignKey('content_type', 'object_id')
 
     def is_registered(self):
@@ -61,14 +69,15 @@ class Carrier(models.Model):
         return u'%s %s: %s' % (self.state, self.content_type, self.identification)
 
     class Meta:
-        verbose_name = "Identification Carrier"
+        verbose_name = translate.carrier
+        verbose_name_plural = translate.carriers
 
 
 class Borrow(models.Model):
-    borrower = models.ForeignKey('identifications.Cardowner')
-    borrow = models.ForeignKey(Activity, related_name='borrowes')
-    handback = models.ForeignKey(Activity, related_name='handbackes', blank=True, null=True)
-    days = models.PositiveSmallIntegerField(default=DEFAULT_BORROW_DAYS)
+    borrower = models.ForeignKey('identifications.Cardowner', verbose_name = translate.borrower)
+    borrow = models.ForeignKey(Activity, verbose_name = translate.borrow_activity, related_name='borrowes')
+    handback = models.ForeignKey(Activity, verbose_name = translate.handback_activity, related_name='handbackes', blank=True, null=True)
+    days = models.PositiveSmallIntegerField(verbose_name = translate.borrow_days, default=DEFAULT_BORROW_DAYS)
 
     objects = models.Manager()
     borrows = BorrowManager()
@@ -80,10 +89,19 @@ class Borrow(models.Model):
     def __unicode__(self):
         return u'%s -> %s' % (self.borrower, self.borrowed_item)
 
+    class Meta:
+        verbose_name = translate.borrow
+        verbose_name_plural = translate.borrows
+
 
 class Checkin(models.Model):
-    checkin_activity = models.ForeignKey(Activity, related_name='checkins')
-    checkout_activity = models.ForeignKey(Activity, related_name='checkouts', null=True)
+    checkin_activity = models.ForeignKey(Activity,
+            verbose_name = translate.checkin_activity,
+            related_name='checkins')
+    checkout_activity = models.ForeignKey(Activity,
+            verbose_name = translate.checkout_activity,
+            related_name='checkouts',
+            null=True)
 
     objects = models.Manager()
     checkins = CheckinManager()
@@ -135,3 +153,7 @@ class Checkin(models.Model):
 
     def __unicode__(self):
         return u'%s @ %s' % (self.cardowner, self.checkin_activity)
+
+    class Meta:
+        verbose_name = translate.checkin
+        verbose_name_plural = translate.checkins

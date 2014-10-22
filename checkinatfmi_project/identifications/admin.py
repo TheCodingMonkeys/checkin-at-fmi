@@ -5,14 +5,16 @@ from django import forms
 from django.contrib import admin
 from django.contrib.auth.models import User
 
+import checkinatfmi.translations_bg as translate
+
 from models import Cardowner, Book, BookCategory
 from checkinatfmi.mailer import send_welcome
 
 
 class CardownerForm(forms.ModelForm):
-    first_name = forms.CharField()
-    last_name = forms.CharField()
-    email = forms.EmailField()
+    first_name = forms.CharField(label=translate.first_name)
+    last_name = forms.CharField(label=translate.last_name)
+    email = forms.EmailField(label=translate.email)
 
     def __init__(self, *args, **kwargs):
         super(forms.ModelForm, self).__init__(*args, **kwargs)
@@ -76,9 +78,37 @@ class CardownerAdmin(admin.ModelAdmin):
         obj.user = user
         obj.save()
 
+
+class CardownerProxy(Cardowner):
+    class Meta:
+        proxy = True
+        app_label = 'university'
+        verbose_name = translate.cardowner
+        verbose_name_plural = translate.cardowners
+
+
 class BookAdmin(admin.ModelAdmin):
     search_fields = ('title',)
 
-admin.site.register(Cardowner, CardownerAdmin)
-admin.site.register(Book, BookAdmin)
-admin.site.register(BookCategory)
+
+class BookProxy(Book):
+    class Meta:
+        proxy = True
+        app_label = 'university'
+        verbose_name = translate.book
+        verbose_name_plural = translate.books
+
+
+class BookCategoryAdmin(admin.ModelAdmin):
+    pass
+
+class BookCategoryProxy(BookCategory):
+    class Meta:
+        proxy = True
+        app_label = 'university'
+        verbose_name = translate.category
+        verbose_name_plural = translate.categories
+
+admin.site.register(CardownerProxy, CardownerAdmin)
+admin.site.register(BookProxy, BookAdmin)
+admin.site.register(BookCategoryProxy, BookCategoryAdmin)

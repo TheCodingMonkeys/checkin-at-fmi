@@ -2,10 +2,13 @@ from django.conf import settings
 from django.contrib.contenttypes import generic
 from django.db import models
 
+from django_resized import ResizedImageField
+
+import checkinatfmi.translations_bg as translate
+
 from activities.models import Borrow
 from activities.models import Checkin
 
-from django_resized import ResizedImageField
 
 class Cardowner(models.Model):
     """
@@ -13,12 +16,12 @@ class Cardowner(models.Model):
     """
     user = models.OneToOneField(settings.AUTH_USER_MODEL, blank=True)
 
-    carrier = generic.GenericRelation('activities.Carrier')
-    faculty_number = models.IntegerField(unique=True)
-    grade = models.IntegerField()
-    specialty = models.ForeignKey('university.Specialty')
-    susi_name = models.CharField(max_length=63, null=True, blank=True)
-    sudi_password = models.CharField(max_length=63, null=True, blank=True)
+    carrier = generic.GenericRelation('activities.Carrier', verbose_name = translate.carrier)
+    faculty_number = models.IntegerField(unique=True, verbose_name = translate.faculty_number)
+    grade = models.IntegerField(verbose_name = translate.grade)
+    specialty = models.ForeignKey('university.Specialty', verbose_name = translate.specialty)
+    susi_name = models.CharField(max_length=63, null=True, blank=True, verbose_name = translate.susi_name)
+    sudi_password = models.CharField(max_length=63, null=True, blank=True, verbose_name = translate.sudi_password)
 
     @property
     def first_name(self):
@@ -47,24 +50,29 @@ class Cardowner(models.Model):
     def __unicode__(self):
         return u'%s (%s): %s' % (self.first_name, self.faculty_number, self.specialty)
 
+    class Meta:
+        verbose_name = translate.cardowner
+        verbose_name_plural = translate.cardowners
+
 
 class Book(models.Model):
     """
     Book in library
     """
-    carrier = generic.GenericRelation('activities.Carrier')
-    category = models.ForeignKey('BookCategory')
-    title = models.CharField(max_length=255)
-    author = models.CharField(max_length=255, blank=True)
-    publisher = models.CharField(max_length=255, blank=True)
-    year = models.PositiveSmallIntegerField(blank=True)
-    isbn = models.CharField(max_length=63)
-    copies = models.PositiveSmallIntegerField(default=1)
+    carrier = generic.GenericRelation('activities.Carrier', verbose_name = translate.carrier)
+    category = models.ForeignKey('BookCategory', verbose_name = translate.category)
+    title = models.CharField(max_length=255, verbose_name = translate.title)
+    author = models.CharField(max_length=255, verbose_name = translate.author, blank=True)
+    publisher = models.CharField(max_length=255, verbose_name = translate.publisher, blank=True)
+    year = models.PositiveSmallIntegerField(blank=True, verbose_name = translate.year)
+    isbn = models.CharField(max_length=63, verbose_name = translate.isbn)
+    copies = models.PositiveSmallIntegerField(default=1, verbose_name = translate.copies)
 
     cover = ResizedImageField(
         upload_to='covers',
         max_width=400,
         blank=True,
+        verbose_name = translate.cover,
     )
 
     def __unicode__(self):
@@ -90,8 +98,17 @@ class Book(models.Model):
     def available_count(self):
         return 1
 
+    class Meta:
+        verbose_name = translate.book
+        verbose_name_plural = translate.books
+
+
 class BookCategory(models.Model):
-    title = models.CharField(max_length=80)
+    title = models.CharField(max_length=80, verbose_name = translate.title)
 
     def __unicode__(self):
         return unicode(self.title)
+
+    class Meta:
+        verbose_name = translate.category
+        verbose_name_plural = translate.categories

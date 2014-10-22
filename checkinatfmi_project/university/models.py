@@ -1,15 +1,20 @@
 from django.db import models
 
+import checkinatfmi.translations_bg as translate
+
 
 class Specialty(models.Model):
     """
     Specialty in University
     """
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, verbose_name = translate.name)
 
     def __unicode__(self):
         return self.name
 
+    class Meta:
+        verbose_name = translate.specialty
+        verbose_name_plural = translate.specialties
 
 class PlaceManager(models.Manager):
     pass
@@ -24,10 +29,14 @@ class Place(models.Model):
     Methods:
         unicode - print representation
     """
-    name = models.CharField(max_length=255)
-    capacity = models.IntegerField()
+    name = models.CharField(max_length=255, verbose_name = translate.name)
+    capacity = models.IntegerField(verbose_name = translate.capacity)
     objects = models.Manager()
     places = PlaceManager()
 
     def __unicode__(self):
         return self.name
+
+    class Meta:
+        verbose_name = translate.place
+        verbose_name_plural = translate.places

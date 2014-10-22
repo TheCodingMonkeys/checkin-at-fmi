@@ -29,10 +29,10 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.sqlite3', #postgresql_psycopg2',
         'NAME': keychain.db_name,
-        'USER': keychain.db_user,
-        'PASSWORD': keychain.db_pass,
+        #'USER': keychain.db_user,
+        # 'PASSWORD': keychain.db_pass,
         'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         'PORT': '',                      # Set to empty string for default.
     }
@@ -50,7 +50,7 @@ TIME_ZONE = 'Europe/Sofia'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'bg'
 
 SITE_ID = 1
 

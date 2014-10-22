@@ -11,6 +11,7 @@ from salmonella.admin import SalmonellaMixin
 from models import Activity, Borrow, Checkin, Carrier
 from identifications.models import Cardowner
 
+import checkinatfmi.translations_bg as translate
 
 class ActivityAdmin(SalmonellaMixin, admin.ModelAdmin):
     salmonella_fields = ('carrier',)
@@ -22,7 +23,7 @@ class BorrowAdmin(SalmonellaMixin, admin.ModelAdmin):
 
 
 class CarrierForm(forms.ModelForm):
-    state = forms.ChoiceField(choices=Carrier.CARRIER_STATES, widget=forms.Select)
+    state = forms.ChoiceField(choices=Carrier.CARRIER_STATES, widget=forms.Select, label = translate.state)
 
     class Meta:
         model = Carrier
