@@ -151,6 +151,7 @@ def show_book(request, book_id):
     user = request.user
     if not user.is_anonymous():
         book_borrowed = Borrow.objects.filter(
+            borrow__carrier__book = book,
             handback__isnull=True,
             borrower=user.cardowner
         )

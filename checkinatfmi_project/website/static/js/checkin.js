@@ -30,9 +30,9 @@ $(document).ready( function(){
                 'book': lendRequestButton.data('book-id')
             }, function(response) {
                 lendRequestButton.data('cancel', 'false');
-                lendRequestButton.text('Запази');
+                lendRequestButton.text('Заявка за заемане');
             });
-        } else { 
+        } else {
             $.get('/lends/request', {
                 'book': lendRequestButton.data('book-id')
             }, function(response) {
@@ -50,7 +50,7 @@ $(document).ready( function(){
         }, function(response) {
             cancelLendRequestButton.attr('id','land');
             cancelLendRequestButton.toggleClass('btn-primary btn-success');
-            cancelLendRequestButton.text('Запази');
+            cancelLendRequestButton.text('Заявка за заемане');
         });
     });
 });
