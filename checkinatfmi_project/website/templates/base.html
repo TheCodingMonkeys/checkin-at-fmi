@@ -25,11 +25,11 @@
             </div>
             <div class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
-                <li><a href="/">Начало</a></li>
-                <li><a href="/statistics/">Статистика</a></li>
-                <li><a href="/library/">Библиотека</a></li>
+                <li>{% block nav-home %}<a href="/">Начало</a>{% endblock %}</li>
+                <li>{% block nav-stat %}<a href="/statistics/">Статистика</a>{% endblock %}</li>
+                <li>{% block nav-lib %}<a href="/library/">Библиотека</a>{% endblock %}</li>
                 {% if user.is_authenticated %}
-                  <li><a href="{% url 'books_to_return' %}">Книги за връщане</a></li>
+                  <li>{% block nav-reader %}<a href="{% url 'books_to_return' %}">Читателски Картон</a>{% endblock %}</li>
                 {% endif %}
               </ul>
               <ul class="nav navbar-nav navbar-right">

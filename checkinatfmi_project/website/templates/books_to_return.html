@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 
+
+{% block nav-reader %}<a href="{% url 'books_to_return' %}" class="active">Читателски Картон</a>{% endblock %}
+
 {% block content %}
+    <h2>Заети книги</h2>
     <div class="row">
     {% for book in books %}
     <div class="col-md-2">
@@ -8,6 +12,7 @@
             <a href="{% url 'show_book' book.id %}">{{ book.title }}</a>
         </p>
         <img src="{{ MEDIA_URL }}{{ book.cover }}" style="width: 100%">
+        <div><strong>Върни до: 2014-10-30</strong></div> <!-- TODO -->
     </div>
     {% endfor %}
 

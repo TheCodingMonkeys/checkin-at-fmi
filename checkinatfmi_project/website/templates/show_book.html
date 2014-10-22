@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 
+{% block nav-lib %}<a href="/library/" class="active">Библиотека</a>{% endblock %}
+
 {% block content %}
 
 <div class="row">
     <div class="col-md-9">
         <h2>{{ book.title}}</h2>
     </div>
-    
     <div class="col-md-4">
         <img src="{{ MEDIA_URL }}{{ book.cover }}" class="img-thumbnail" >
 
@@ -26,31 +27,34 @@
     <div class="col-md-8">
         <table class="table table-bordered">
           <tbody>
-              <tr>
-                    <td>Автор</td>
-                    <td>{{ book.author }}</td>
-                <tr>
-                    <td>Издателство</td>
-                    <td>{{ book.publisher }}</td>
-                </tr>
+            <tr>
+                <td>Автор</td>
+                <td>{{ book.author }}</td>
+            <tr>
+            <tr>
+                <td>Автор</td>
+                <td>{{ book.author }}</td>
+            <tr>
+                <td>Издателство</td>
+                <td>{{ book.publisher }}</td>
+            </tr>
 
-                <tr>
-                    <td>Година</td>
-                    <td>{{ book.year }}</td>
-                </tr>
-                <tr>
-                    <td>Категория</td>
-                    <td>{{ book.category }}</td>
-                </tr>
-                <tr>
-                    <td>ISBN</td>
-                    <td>{{ book.isbn }}</td>
-                </tr>
-                <tr>
-                    <td>Налични копия</td>
-                    <td>0 / 1</td> <!-- TODO: implement logic -->
-                </tr>
-              </tr>
+            <tr>
+                <td>Година</td>
+                <td>{{ book.year }}</td>
+            </tr>
+            <tr>
+                <td>Категория</td>
+                <td>{{ book.category }}</td>
+            </tr>
+            <tr>
+                <td>ISBN</td>
+                <td>{{ book.isbn }}</td>
+            </tr>
+            <tr>
+                <td>Налични копия</td>
+                <td>0 / 1</td> <!-- TODO: implement logic -->
+            </tr>
           </tbody>
         </table>
 
