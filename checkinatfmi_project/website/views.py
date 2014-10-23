@@ -170,5 +170,5 @@ def books_to_return(request):
         borrower=request.user.cardowner
     )
 
-    books = set(map(lambda x: x.borrow.carrier.identification, borrows))
+    # books = set(map(lambda x: x.borrow.carrier.identification, borrows))
     return render(request, 'books_to_return.html', locals())
