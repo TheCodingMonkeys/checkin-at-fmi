@@ -4,21 +4,28 @@
 {% block nav-reader %}<a href="{% url 'books_to_return' %}" class="active">Читателски Картон</a>{% endblock %}
 
 {% block content %}
-    <h2>Заети книги:</h2>
+    <h2>Заети книги: </h2>
     <div class="row">
     {% for borrow in borrows %}
+
         {% with book=borrow.borrowed_item %}
-            <div class="col-md-2">
-                <p style="text-align: center; font-size: 140%;">
-                    <a href="{% url 'show_book' book.id %}">{{ book.title }}</a>
-                </p>
-                <img src="{{ MEDIA_URL }}{{ book.cover }}" style="width: 100%">
-                <div><strong>Върни до: 2014-10-30</strong></div> <!-- TODO -->
+        <div class="col-md-2">
+            <p style="text-align: center; font-size: 140%;">
+                <a href="{% url 'show_book' book.id %}">{{ book.title }}</a>
+            </p>
+            <img src="{{ MEDIA_URL }}{{ book.cover }}" style="width: 100%" class="img-thumbnail">
+            <div style="text-align: center;">
+            {% if borrow.return_time > now%}
+                <strong>Върни до: {{ borrow.return_time|date:"d.m.Y" }}</strong>
+            {% else %}
+                <strong style="color: red" >Върни до: {{ borrow.return_time|date:"d.m.Y" }}</strong>
+            {% endif %}
             </div>
+        </div>
         {% endwith %}
     {% endfor %}
 
-    {% if not borrowed_books %}
+    {% if not borrows %}
         <div class="alert alert-warning" role="alert">
             Няма книги, които трябва да върнете!
         </div>
@@ -26,21 +33,24 @@
     </div>
     <h2>Върнати книги:</h2>
     <div class="row">
-    {% for book in handback_books %}
+    {% for borrow in handbacks %}
+
         {% with book=borrow.borrowed_item %}
-            <div class="col-md-2">
-                <p style="text-align: center; font-size: 140%;">
-                    <a href="{% url 'show_book' book.id %}">{{ book.title }}</a>
-                </p>
-                <img src="{{ MEDIA_URL }}{{ book.cover }}" style="width: 100%">
-                <div><strong>Върната на: </strong></div>
+        <div class="col-md-2">
+            <p style="text-align: center; font-size: 140%;">
+                <a href="{% url 'show_book' book.id %}">{{ book.title }}</a>
+            </p>
+            <img src="{{ MEDIA_URL }}{{ book.cover }}" style="width: 100%" class="img-thumbnail">
+            <div style="text-align: center;">
+                <strong>Върната на: {{ borrow.borrow.time|date:"d.m.Y" }}</strong>
             </div>
+        </div>
         {% endwith %}
     {% endfor %}
 
-    {% if not handback_books %}
+    {% if not borrows %}
         <div class="alert alert-warning" role="alert">
-            Нямате върнати книги.
+            Няма книги, които трябва да върнете!
         </div>
     {% endif %}
     </div>

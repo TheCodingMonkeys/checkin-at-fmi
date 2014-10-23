@@ -178,4 +178,6 @@ def books_to_return(request):
     borrowed_books = set(map(lambda x: x.borrow.carrier.identification, borrows))
     handback_books = set(map(lambda x: x.borrow.carrier.identification, handbacks))
 
+    # books = set(map(lambda x: x.borrow.carrier.identification, borrows))
+
     return render(request, 'user_library.html', locals())

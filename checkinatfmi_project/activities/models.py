@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
@@ -85,6 +85,10 @@ class Borrow(models.Model):
     @property
     def borrowed_item(self):
         return self.borrow.carrier.identification
+
+    @property
+    def return_time(self):
+        return self.borrow.time + timedelta(self.days)
 
     def __unicode__(self):
         return u'%s -> %s' % (self.borrower, self.borrowed_item)
