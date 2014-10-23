@@ -98,6 +98,11 @@ class Book(models.Model):
     def available_count(self):
         return 1
 
+    def is_available(self):
+        if self.available_count > 0:
+            return True
+        return False
+
     class Meta:
         verbose_name = translate.book
         verbose_name_plural = translate.books

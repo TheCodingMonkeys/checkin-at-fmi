@@ -48,7 +48,13 @@
         <td>{{ book.author }}</td>
         <td>{{ book.publisher }}</td>
         <td>{{ book.year }}</td>
-        <td>Заета - 4 чакащи</td> <!-- TODO: implement logic -->
+        <td>
+            {% if book.is_available %}
+              Свободна
+            {% else %}
+              Заета
+            {% endif %}
+        </td>
       </tr>
     {% endfor %}
   </tbody>

@@ -87,7 +87,7 @@ class Borrow(models.Model):
         return self.borrow.carrier.identification
 
     @property
-    def return_time(self):
+    def give_back_time(self):
         return self.borrow.time + timedelta(self.days)
 
     def __unicode__(self):

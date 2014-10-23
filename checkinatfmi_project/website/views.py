@@ -151,14 +151,20 @@ def show_book(request, book_id):
     user = request.user
     if not user.is_anonymous():
         book_borrowed = Borrow.objects.filter(
-            borrow__carrier__book = book,
+            borrow__carrier__book=book,
             handback__isnull=True,
             borrower=user.cardowner
         )
+
         book_lended = LendRequest.objects.filter(
             book=book,
             requester=user.cardowner
         )
+
+    current_borrowers = Borrow.objects.filter(
+        borrow__carrier__book=book,
+        handback__isnull=True,
+    )
 
     return render(request, 'show_book.html', locals())
 

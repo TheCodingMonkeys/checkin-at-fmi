@@ -15,10 +15,10 @@
             </p>
             <img src="{{ MEDIA_URL }}{{ book.cover }}" style="width: 100%" class="img-thumbnail">
             <div style="text-align: center;">
-            {% if borrow.return_time > now%}
-                <strong>Върни до: {{ borrow.return_time|date:"d.m.Y" }}</strong>
+            {% if borrow.give_back_time > now%}
+                <strong>Върни до: {{ borrow.give_back_time|date:"d.m.Y" }}</strong>
             {% else %}
-                <strong style="color: red" >Върни до: {{ borrow.return_time|date:"d.m.Y" }}</strong>
+                <strong style="color: red" >Върни до: {{ borrow.give_back_time|date:"d.m.Y" }}</strong>
             {% endif %}
             </div>
         </div>

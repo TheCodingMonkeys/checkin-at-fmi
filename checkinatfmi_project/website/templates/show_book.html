@@ -49,12 +49,11 @@
             </tr>
             <tr>
                 <td>Налични копия</td>
-                <td>0 / 1</td> <!-- TODO: implement logic -->
+                <td>{{ book.available_count }}</td>
             </tr>
           </tbody>
         </table>
 
-        <!--TODO-->
         <h2>Заели в момента:</h2>
         <table class="table table-striped">
             <tr>
@@ -62,11 +61,13 @@
                 <td>Заел от дата</td>
                 <td>Заел до дата</td>
             </tr>
-            <tr>
-                <td><a>Огнян Ангелов</a></td>
-                <td>2014-10-20</td>
-                <td>2014-10-30</td>
-            </tr>
+            {% for borrower in current_borrowers %}
+                <tr>
+                    <td>{{ borrower.borrower.user.get_full_name }}</td>
+                    <td>{{ borrower.borrow.time|date:"d-m-Y" }}</td>
+                    <td>{{ borrower.give_back_time|date:"d-m-Y" }}</td>
+                </tr>
+            {% endfor %}
         </table>
         <h2>Чакащи на опашка:</h2>
         <table class="table table-striped">
