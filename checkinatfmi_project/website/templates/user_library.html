@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+
+{% block nav-reader %}<a href="{% url 'books_to_return' %}" class="active">Читателски Картон</a>{% endblock %}
+
+{% block content %}
+    <h2>Заети книги:</h2>
+    <div class="row">
+    {% for borrow in borrows %}
+        {% with book=borrow.borrowed_item %}
+            <div class="col-md-2">
+                <p style="text-align: center; font-size: 140%;">
+                    <a href="{% url 'show_book' book.id %}">{{ book.title }}</a>
+                </p>
+                <img src="{{ MEDIA_URL }}{{ book.cover }}" style="width: 100%">
+                <div><strong>Върни до: 2014-10-30</strong></div> <!-- TODO -->
+            </div>
+        {% endwith %}
+    {% endfor %}
+
+    {% if not borrowed_books %}
+        <div class="alert alert-warning" role="alert">
+            Няма книги, които трябва да върнете!
+        </div>
+    {% endif %}
+    </div>
+    <h2>Върнати книги:</h2>
+    <div class="row">
+    {% for book in handback_books %}
+        {% with book=borrow.borrowed_item %}
+            <div class="col-md-2">
+                <p style="text-align: center; font-size: 140%;">
+                    <a href="{% url 'show_book' book.id %}">{{ book.title }}</a>
+                </p>
+                <img src="{{ MEDIA_URL }}{{ book.cover }}" style="width: 100%">
+                <div><strong>Върната на: </strong></div>
+            </div>
+        {% endwith %}
+    {% endfor %}
+
+    {% if not handback_books %}
+        <div class="alert alert-warning" role="alert">
+            Нямате върнати книги.
+        </div>
+    {% endif %}
+    </div>
+{% endblock %}

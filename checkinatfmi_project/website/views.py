@@ -170,5 +170,12 @@ def books_to_return(request):
         borrower=request.user.cardowner
     )
 
-    books = set(map(lambda x: x.borrow.carrier.identification, borrows))
-    return render(request, 'books_to_return.html', locals())
+    handbacks = Borrow.objects.filter(
+        handback__isnull=False,
+        borrower=request.user.cardowner
+    )
+
+    borrowed_books = set(map(lambda x: x.borrow.carrier.identification, borrows))
+    handback_books = set(map(lambda x: x.borrow.carrier.identification, handbacks))
+
+    return render(request, 'user_library.html', locals())
