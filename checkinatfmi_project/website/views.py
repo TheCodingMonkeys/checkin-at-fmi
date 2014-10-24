@@ -187,3 +187,7 @@ def books_to_return(request):
     # books = set(map(lambda x: x.borrow.carrier.identification, borrows))
 
     return render(request, 'user_library.html', locals())
+
+
+def statistics(request):
+    return render(request, 'lib_statistics.html', locals())
