@@ -1,14 +1,19 @@
+from django.core.exceptions import ObjectDoesNotExist
+
 from django.contrib.auth.models import User
 
 class EmailOrUsernameModelBackend(object):
     def authenticate(self, username=None, password=None):
-        if '@' in username:
-            user = User.objects.get(email=username)
-        else:
-            user = User.objects.get(username=username)
+        try:
+            if '@' in username:
+                user = User.objects.get(email=username)
+            else:
+                user = User.objects.get(username=username)
 
-        if user.check_password(password):
-            return user
+            if user.check_password(password):
+                return user
+        except ObjectDoesNotExist:
+            return None
 
         return None
 
