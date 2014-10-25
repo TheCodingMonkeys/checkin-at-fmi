@@ -6,7 +6,8 @@ from models import LendRequest
 
 
 class LendRequestAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('requester', 'book', 'date', 'status',)
+
 
 class LendRequestProxy(LendRequest):
     class Meta:
@@ -14,6 +15,7 @@ class LendRequestProxy(LendRequest):
         app_label = 'activities'
         verbose_name = translate.lend_request
         verbose_name_plural = translate.lend_requests
+
 
 admin.site.register(LendRequestProxy, LendRequestAdmin)
 

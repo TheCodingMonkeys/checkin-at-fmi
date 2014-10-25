@@ -1,6 +1,5 @@
 from django.conf.urls import patterns, url
 
-# /checkin/
 urlpatterns = patterns('website.views',
     url(r'^$', 'index'),
     url(r'statistics/$', 'statistics'),

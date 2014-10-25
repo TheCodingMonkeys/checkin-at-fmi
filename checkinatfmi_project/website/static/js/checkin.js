@@ -25,32 +25,27 @@ $(document).ready( function(){
     var lendRequestButton = $('#land');
 
     lendRequestButton.on('click', function(event) {
-        if(lendRequestButton.data('cancel') == 'true') {
+        var bookId = lendRequestButton.data('book-id');
+        var shouldCancel = lendRequestButton.data('should-cancel');
+
+        console.log(shouldCancel);
+
+        if(shouldCancel == 'yes') {
             $.get('/lends/cancel-request', {
-                'book': lendRequestButton.data('book-id')
+                'book': bookId
             }, function(response) {
-                lendRequestButton.data('cancel', 'false');
+                lendRequestButton.data('should-cancel', 'no');
                 lendRequestButton.text('Заявка за заемане');
             });
         } else {
             $.get('/lends/request', {
-                'book': lendRequestButton.data('book-id')
+                'book': bookId
             }, function(response) {
-                lendRequestButton.data('cancel', 'true');
-                lendRequestButton.text('Отмени запазването');
+                lendRequestButton.data('should-cancel', 'yes');
+                lendRequestButton.text('Отмени заявката');
+            }).fail(function() {
+                $('#lend-request-error').text('Възникна грешка при обработката на заявката ви. Вероятно сте превишили максималния борй заявки за деня. Опитайте пак утре!');
             });
         }
-    });
-
-    var cancelLendRequestButton = $('#cancel-land');
-
-    cancelLendRequestButton.on('click', function(event) {
-        $.get('/lends/cancel-request', {
-            'book': cancelLendRequestButton.data('book-id')
-        }, function(response) {
-            cancelLendRequestButton.attr('id','land');
-            cancelLendRequestButton.toggleClass('btn-primary btn-success');
-            cancelLendRequestButton.text('Заявка за заемане');
-        });
     });
 });

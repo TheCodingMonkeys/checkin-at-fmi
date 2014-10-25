@@ -156,9 +156,10 @@ def show_book(request, book_id):
             borrower=user.cardowner
         )
 
-        book_lended = LendRequest.objects.filter(
+        lend_requests = LendRequest.objects.filter(
             book=book,
-            requester=user.cardowner
+            requester=user.cardowner,
+            status=LendRequest.WAITING
         )
 
     current_borrowers = Borrow.objects.filter(
@@ -185,7 +186,6 @@ def books_to_return(request):
     handback_books = set(map(lambda x: x.borrow.carrier.identification, handbacks))
 
     now = datetime.now()
-    # books = set(map(lambda x: x.borrow.carrier.identification, borrows))
 
     return render(request, 'user_library.html', locals())
 

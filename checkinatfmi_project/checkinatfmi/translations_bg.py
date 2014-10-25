@@ -61,7 +61,7 @@ cover = 'Обложка'
 lend_request = 'Заявка за заемане'
 lend_requests = 'Заявки за заемане'
 
-date = 'Дате'
+date = 'Дата'
 requester = 'Заявител'
 
 waiting = 'Чакаща'

@@ -16,12 +16,13 @@
                 Заявлението за книга ще те нареди на опашка чакащи. Когато дойде твоя ред ще бъдеш уведомен с имейл.
             </div>
 
-            {% if book_lended %}
-                <button class="btn btn-primary" id="land" data-cancel="true" data-book-id="{{ book.id }}">Отмени заявката</button>
+            {% if lend_requests|length > 0 %}
+                <button class="btn btn-primary" id="land" data-should-cancel="yes" data-book-id="{{ book.id }}">Отмени заявката</button>
             {% else %}
-                <button class="btn btn-primary" id="land" data-book-id="{{ book.id }}">Заявка за заемане</button>
+                <button class="btn btn-primary" id="land" data-should-cancel="no" data-book-id="{{ book.id }}">Заявка за заемане</button>
             {% endif %}
-        {% endif %} 
+            <div id="lend-request-error" class="text-danger"></div>
+        {% endif %}
 
     </div>
     <div class="col-md-8">
