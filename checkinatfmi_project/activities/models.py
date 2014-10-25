@@ -90,6 +90,11 @@ class Borrow(models.Model):
     def give_back_time(self):
         return self.borrow.time + timedelta(self.days)
 
+    def _time_left(self):
+        return self.give_back_time > datetime.now()
+    _time_left.boolean = True
+    time_left = property(_time_left)
+
     def __unicode__(self):
         return u'%s -> %s' % (self.borrower, self.borrowed_item)
 

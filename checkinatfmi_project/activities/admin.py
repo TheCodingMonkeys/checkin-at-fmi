@@ -23,6 +23,12 @@ class ActivityAdmin(SalmonellaMixin, admin.ModelAdmin):
 class BorrowAdmin(SalmonellaMixin, admin.ModelAdmin):
     salmonella_fields = ('borrow', 'handback')
     form = autocomplete_light.modelform_factory(Borrow)
+    list_display = ('borrower', 'borrowed_item', 'give_back_time', '_time_left')
+    search_fields = (
+        'borrower__faculty_number',
+        'borrower__user__first_name',
+        'borrower__user__last_name',
+    )
 
     def save_model(self, request, obj, form, change):
         if obj.handback and 'handback' in form.changed_data:
@@ -48,8 +54,15 @@ class CarrierAdmin(GenericAdminModelAdmin):
         'identifications/book',
         'identifications/cardowner',
     )
-    readonly_fields = ('data',)
-    search_fields = ['book__title', 'cardowner__faculty_number', 'data']
+    search_fields = ['book__title',
+        'book__isbn',
+        'cardowner__faculty_number',
+        'cardowner__user__first_name',
+        'cardowner__user__last_name',
+        'data'
+    ]
+
+    list_filter = ('content_type', 'state')
     form = CarrierForm
 
 

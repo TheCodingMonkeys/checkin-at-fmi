@@ -37,6 +37,8 @@ TheCodingMonkeys"""
     #s.sendmail(EMAIL_HOST_USER, [to], message)
 
 
+# TODO: Extract the other templates to the translations
+
 def send_welcome(name, email, username, password):
     subject = "Welcome to Checkin@FMI"
     msg = WELCOME_TEMPLATE % (name, username, password)

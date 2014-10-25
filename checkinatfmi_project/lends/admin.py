@@ -7,6 +7,11 @@ from models import LendRequest
 
 class LendRequestAdmin(admin.ModelAdmin):
     list_display = ('requester', 'book', 'date', 'status',)
+    search_fields = (
+        'requester__faculty_number',
+        'requester__user__first_name',
+        'requester__user__last_name',
+    )
 
 
 class LendRequestProxy(LendRequest):
