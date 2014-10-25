@@ -85,3 +85,19 @@ clients = 'Терминали'
 first_name = 'Име'
 last_name = 'Фамилия'
 email = 'E-mail'
+
+
+borrow_invite_subject = "Заповядайте да вземете книгата, която сте запазили!"
+borrow_reminder_subject = "Reminder for a borrow from Checkin@FMI"
+
+borrow_invite_template =u"""
+Здравей {0},
+Дойде твоя ред да вземеш книгата за която заяви заявка - {1}! Заповядай да я вземеш от зала 100.
+Ако не го направите в следващите няколко дни, ще трябва да отменим заявката ви.
+
+Best Regards,
+TheCodingMonkeys"""
+
+
+
+

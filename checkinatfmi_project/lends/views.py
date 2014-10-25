@@ -4,6 +4,8 @@ from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
+from checkinatfmi import mailer
+
 from identifications.models import Book
 from identifications.models import Cardowner
 
@@ -14,16 +16,25 @@ from models import LendRequest
 def request(request):
     today = date.today()
 
-    if len(LendRequest.objects.filter(date__year=today.year, date__month=today.month, date__day=today.day)) >= 10:
-        return HttpResponse(status=403)
-
     book = Book.objects.get(pk=int(request.GET.get('book')))
     cardowner = Cardowner.objects.get(user=request.user)
+
+    if len(LendRequest.objects.filter(requester=cardowner, book=book,
+            date__year=today.year,
+            date__month=today.month,
+            date__day=today.day)) >= 10:
+
+        return HttpResponse(status=403)
 
     lend_request = LendRequest()
     lend_request.requester = cardowner
     lend_request.book = book
-    lend_request.status = LendRequest.WAITING
+    book_requests = LendRequest.objects.filter(book=book, status=LendRequest.WAITING)
+    if len(book_requests) == 0:
+        lend_request.status = LendRequest.FOR_LEND
+        mailer.send_borrow_invite(cardowner, book)
+    else:
+        lend_request.status = LendRequest.WAITING
 
     lend_request.save()
 

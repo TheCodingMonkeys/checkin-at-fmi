@@ -8,8 +8,11 @@ import autocomplete_light
 from genericadmin.admin import GenericAdminModelAdmin
 from salmonella.admin import SalmonellaMixin
 
-from models import Activity, Borrow, Checkin, Carrier
+from checkinatfmi import mailer
+
 from identifications.models import Cardowner
+from lends.models import LendRequest
+from models import Activity, Borrow, Checkin, Carrier
 
 import checkinatfmi.translations_bg as translate
 
@@ -20,6 +23,17 @@ class ActivityAdmin(SalmonellaMixin, admin.ModelAdmin):
 class BorrowAdmin(SalmonellaMixin, admin.ModelAdmin):
     salmonella_fields = ('borrow', 'handback')
     form = autocomplete_light.modelform_factory(Borrow)
+
+    def save_model(self, request, obj, form, change):
+        if obj.handback and 'handback' in form.changed_data:
+            book_requests = LendRequest.objects.filter(book=obj.borrowed_item, status=LendRequest.WAITING).order_by('date')
+            if len(book_requests) > 0:
+                lend_request = book_requests[0]
+                lend_request.status = LendRequest.FOR_LEND
+                mailer.send_borrow_invite(lend_request.requester, obj.borrowed_item)
+                lend_request.save()
+
+        obj.save()
 
 
 class CarrierForm(forms.ModelForm):
