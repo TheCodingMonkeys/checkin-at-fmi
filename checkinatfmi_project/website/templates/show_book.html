@@ -12,7 +12,7 @@
         {% if book.cover %}
             <img src="{{ MEDIA_URL }}{{ book.cover }}" class="img-thumbnail" >
         {% else %}
-            <img src="{{ STATIC_URL }}images/no-cover.jpg" class="img-thumbnail" >
+            <img src="{{ STATIC_URL }}images/nocover.jpg" class="img-thumbnail" >
         {% endif %}
 
         {% if not book_borrowed %}
