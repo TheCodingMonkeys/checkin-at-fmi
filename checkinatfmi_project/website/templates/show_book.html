@@ -52,32 +52,35 @@
             
           </tbody>
         </table>
-
-        <h2>Заели в момента:</h2>
-        <table class="table table-striped">
-            <tr>
-                <td>Име</td>
-                <td>Заел от дата</td>
-                <td>Заел до дата</td>
-            </tr>
-            {% for borrower in current_borrowers %}
+        {% if current_borrowers %}
+            <h2>Заели в момента:</h2>
+            <table class="table table-striped">
                 <tr>
-                    <td>{{ borrower.borrower.user.get_full_name }}</td>
-                    <td>{{ borrower.borrow.time|date:"d-m-Y" }}</td>
-                    <td>{{ borrower.give_back_time|date:"d-m-Y" }}</td>
+                    <td>Име</td>
+                    <td>Заел от дата</td>
+                    <td>Заел до дата</td>
                 </tr>
-            {% endfor %}
-        </table>
+                {% for borrower in current_borrowers %}
+                    <tr>
+                        <td>{{ borrower.borrower.user.get_full_name }}</td>
+                        <td>{{ borrower.borrow.time|date:"d-m-Y" }}</td>
+                        <td>{{ borrower.give_back_time|date:"d-m-Y" }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
         <h2>Чакащи на опашка:</h2>
         <table class="table table-striped">
             <tr>
                 <td>Име</td>
                 <td>Заявил на дата</td>
             </tr>
-            <tr>
-                <td><a>Ивайло Бачваров</a></td>
-                <td>2014-10-25</td>
-            </tr>
+            {% for lend_request in lend_requests %}
+                <tr>
+                    <td><a>{{ lend_request.requester.get_full_name }}</a></td>
+                    <td>{{ lend_request.date|date:"d-m-Y" }}</td>
+                </tr>
+            {% endfor %}
         </table>
         {% if not book_borrowed %}
             <div class="alert alert-warning lend-info" role="alert">
