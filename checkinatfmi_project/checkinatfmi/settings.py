@@ -1,7 +1,5 @@
 # Django settings for checkinatfmi project.
-
 import os
-import keychain
 
 from unipath import Path
 
@@ -26,17 +24,6 @@ ADMINS = (
 
 
 MANAGERS = ADMINS
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3', #postgresql_psycopg2',
-        'NAME': keychain.db_name,
-        #'USER': keychain.db_user,
-        # 'PASSWORD': keychain.db_pass,
-        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '',                      # Set to empty string for default.
-    }
-}
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
@@ -74,13 +61,6 @@ MEDIA_ROOT = PROJECT_ROOT.child("media")
 # Examples: "http://example.com/media/", "http://media.example.com/"
 MEDIA_URL = '/media/'
 
-# Absolute path to the directory static files should be collected to.
-# Don't put anything in this directory yourself; store your static files
-# in apps' "static/" subdirectories and in STATICFILES_DIRS.
-# Example: "/var/www/example.com/static/"
-STATIC_ROOT = PROJECT_ROOT.child("static")
-
-
 GENERICADMIN_JS = ""
 
 # URL prefix for static files.
@@ -103,10 +83,6 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
-
-# Make this unique, and don't share it with anybody.
-# gets the secret_key from the env (put the secretkey in bashrc for example)
-SECRET_KEY = keychain.secret_key
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -208,3 +184,13 @@ LOGGING = {
         }
     }
 }
+
+
+try:
+    if 'TRAVIS' in os.environ:
+        from travis_settings import *
+    else:
+        from local_settings import *
+
+except ImportError:
+    exit("{}_settings.py not found!".format("travis" if 'TRAVIS' in os.environ else "local"))

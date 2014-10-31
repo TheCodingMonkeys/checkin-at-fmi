@@ -12,3 +12,4 @@ local.py
 media/
 /checkinatfmi_project/static/
 *.sqlite3
+local_settings.py

@@ -5,7 +5,6 @@ import smtplib
 from django.core.mail import send_mail
 
 import checkinatfmi.translations_bg as translate
-from checkinatfmi.settings.keychain import *
 
 
 WELCOME_TEMPLATE ="""Welcome at Checkin@FMI,
