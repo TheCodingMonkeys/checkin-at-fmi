@@ -50,6 +50,10 @@ books = 'Книги'
 category = 'Категория'
 categories = 'Категории'
 
+language = 'Език'
+languages = 'Езици'
+
+
 title = 'Заглавие'
 author = 'Автор'
 publisher = 'Издателство'

@@ -19,6 +19,7 @@ class Specialty(models.Model):
 class PlaceManager(models.Manager):
     pass
 
+
 class Place(models.Model):
     """
     Represents physical place at the university/institution
@@ -29,8 +30,8 @@ class Place(models.Model):
     Methods:
         unicode - print representation
     """
-    name = models.CharField(max_length=255, verbose_name = translate.name)
-    capacity = models.IntegerField(verbose_name = translate.capacity)
+    name = models.CharField(max_length=255, verbose_name=translate.name)
+    capacity = models.IntegerField(verbose_name=translate.capacity)
     objects = models.Manager()
     places = PlaceManager()
 

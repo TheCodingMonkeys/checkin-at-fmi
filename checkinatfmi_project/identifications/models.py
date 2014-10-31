@@ -59,20 +59,21 @@ class Book(models.Model):
     """
     Book in library
     """
-    carrier = generic.GenericRelation('activities.Carrier', verbose_name = translate.carrier)
-    category = models.ForeignKey('BookCategory', verbose_name = translate.category)
-    title = models.CharField(max_length=255, verbose_name = translate.title)
-    author = models.CharField(max_length=255, verbose_name = translate.author, blank=True)
-    publisher = models.CharField(max_length=255, verbose_name = translate.publisher, blank=True)
-    year = models.PositiveSmallIntegerField(blank=True, verbose_name = translate.year)
-    isbn = models.CharField(max_length=63, verbose_name = translate.isbn)
-    copies = models.PositiveSmallIntegerField(default=1, verbose_name = translate.copies)
+    carrier = generic.GenericRelation('activities.Carrier', verbose_name=translate.carrier)
+    category = models.ForeignKey('BookCategory', verbose_name=translate.category)
+    language = models.ForeignKey('BookLanguage', verbose_name=translate.language)
+    title = models.CharField(max_length=255, verbose_name=translate.title)
+    author = models.CharField(max_length=255, verbose_name=translate.author, blank=True)
+    publisher = models.CharField(max_length=255, verbose_name=translate.publisher, blank=True)
+    year = models.PositiveSmallIntegerField(blank=True, null=True, verbose_name=translate.year)
+    isbn = models.CharField(max_length=63, verbose_name=translate.isbn)
+    copies = models.PositiveSmallIntegerField(default=1, verbose_name=translate.copies)
 
     cover = ResizedImageField(
         upload_to='covers',
         max_width=400,
         blank=True,
-        verbose_name = translate.cover,
+        verbose_name=translate.cover,
     )
 
     def __unicode__(self):
@@ -84,10 +85,10 @@ class Book(models.Model):
         active_borrows = Borrow.borrows.active()
         for borrow in active_borrows:
             if borrow.borrow.place == activity.place and \
-                borrow.borrower == activity.carrier.identification:
-                is_borrow = False
-                borrow.handback = activity
-                borrow.save()
+                    borrow.borrower == activity.carrier.identification:
+                    is_borrow = False
+                    borrow.handback = activity
+                    borrow.save()
 
         if is_borrow:
             borrow = Borrow()
@@ -109,7 +110,7 @@ class Book(models.Model):
 
 
 class BookCategory(models.Model):
-    title = models.CharField(max_length=80, verbose_name = translate.title)
+    title = models.CharField(max_length=80, verbose_name=translate.title)
 
     def __unicode__(self):
         return unicode(self.title)
@@ -117,3 +118,14 @@ class BookCategory(models.Model):
     class Meta:
         verbose_name = translate.category
         verbose_name_plural = translate.categories
+
+
+class BookLanguage(models.Model):
+    title = models.CharField(max_length=80, verbose_name=translate.title)
+
+    def __unicode__(self):
+        return unicode(self.title)
+
+    class Meta:
+        verbose_name = translate.language
+        verbose_name_plural = translate.languages

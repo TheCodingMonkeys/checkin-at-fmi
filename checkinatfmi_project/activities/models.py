@@ -10,13 +10,13 @@ from managers import BorrowManager
 from managers import CheckinManager
 
 
-DEFAULT_BORROW_DAYS = 7 # Extract in settings
+DEFAULT_BORROW_DAYS = 7  # Extract in settings
+
 
 class Activity(models.Model):
     time = models.DateTimeField(verbose_name=translate.time)
-    client = models.ForeignKey('clients.Client', verbose_name = translate.client)
-    carrier = models.ForeignKey('Carrier',
-                verbose_name=translate.carrier)
+    client = models.ForeignKey('clients.Client', verbose_name=translate.client)
+    carrier = models.ForeignKey('Carrier', verbose_name=translate.carrier)
 
     @property
     def place(self):
@@ -51,15 +51,16 @@ class Carrier(models.Model):
         (REGISTERED, translate.registered),
     )
 
-    state = models.CharField(verbose_name = translate.state,
-                choices=CARRIER_STATES,
-                max_length=2,
-                default=UNREGISTERED
-            )
+    state = models.CharField(
+        verbose_name=translate.state,
+        choices=CARRIER_STATES,
+        max_length=2,
+        default=UNREGISTERED
+    )
 
-    data = models.CharField(verbose_name = translate.data, max_length=255, unique=True)
-    content_type = models.ForeignKey(ContentType, verbose_name = translate.content_type, null=True)
-    object_id = models.PositiveIntegerField(verbose_name = translate.object_id, null=True)
+    data = models.CharField(verbose_name=translate.data, max_length=255, unique=True)
+    content_type = models.ForeignKey(ContentType, verbose_name=translate.content_type, null=True)
+    object_id = models.PositiveIntegerField(verbose_name=translate.object_id, null=True)
     identification = generic.GenericForeignKey('content_type', 'object_id')
 
     def is_registered(self):
@@ -104,13 +105,16 @@ class Borrow(models.Model):
 
 
 class Checkin(models.Model):
-    checkin_activity = models.ForeignKey(Activity,
-            verbose_name = translate.checkin_activity,
-            related_name='checkins')
-    checkout_activity = models.ForeignKey(Activity,
-            verbose_name = translate.checkout_activity,
-            related_name='checkouts',
-            null=True)
+    checkin_activity = models.ForeignKey(
+        Activity,
+        verbose_name=translate.checkin_activity,
+        related_name='checkins')
+
+    checkout_activity = models.ForeignKey(
+        Activity,
+        verbose_name=translate.checkout_activity,
+        related_name='checkouts',
+        null=True)
 
     objects = models.Manager()
     checkins = CheckinManager()
