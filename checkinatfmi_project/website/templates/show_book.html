@@ -9,7 +9,11 @@
         <h2>{{ book.title}}</h2>
     </div>
     <div class="col-md-4">
-        <img src="{{ MEDIA_URL }}{{ book.cover }}" class="img-thumbnail" >
+        {% if book.cover %}
+            <img src="{{ MEDIA_URL }}{{ book.cover }}" class="img-thumbnail" >
+        {% else %}
+            <img src="{{ STATIC_URL }}images/no-cover.jpg" class="img-thumbnail" >
+        {% endif %}
 
         {% if not book_borrowed %}
             <div class="alert alert-warning lend-info" role="alert">
@@ -35,23 +39,31 @@
                 <td>Издателство</td>
                 <td>{{ book.publisher }}</td>
             </tr>
-
-            <tr>
-                <td>Година</td>
-                <td>{{ book.year }}</td>
-            </tr>
+            {% if book.year %}
+                <tr>
+                    <td>Година</td>
+                    <td>{{ book.year }}</td>
+                </tr>
+            {% endif %}
             <tr>
                 <td>Категория</td>
                 <td>{{ book.category }}</td>
             </tr>
-            <tr>
-                <td>ISBN</td>
-                <td>{{ book.isbn }}</td>
-            </tr>
+            {% if book.isbn %}
+                <tr>
+                    <td>ISBN</td>
+                    <td>{{ book.isbn }}</td>
+                </tr>
+            {% endif %}
             <tr>
                 <td>Налични копия</td>
                 <td>{{ book.available_count }}</td>
             </tr>
+            <tr>
+                <td>Език</td>
+                <td>{{ book.language }}</td>
+            </tr>
+            
           </tbody>
         </table>
 
