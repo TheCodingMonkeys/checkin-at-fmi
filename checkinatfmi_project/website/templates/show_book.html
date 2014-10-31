@@ -14,20 +14,6 @@
         {% else %}
             <img src="{{ STATIC_URL }}images/nocover.jpg" class="img-thumbnail" >
         {% endif %}
-
-        {% if not book_borrowed %}
-            <div class="alert alert-warning lend-info" role="alert">
-                Заявлението за книга ще те нареди на опашка чакащи. Когато дойде твоя ред ще бъдеш уведомен с имейл.
-            </div>
-
-            {% if lend_requests|length > 0 %}
-                <button class="btn btn-primary" id="land" data-should-cancel="yes" data-book-id="{{ book.id }}">Отмени заявката</button>
-            {% else %}
-                <button class="btn btn-primary" id="land" data-should-cancel="no" data-book-id="{{ book.id }}">Заявка за заемане</button>
-            {% endif %}
-            <div id="lend-request-error" class="text-danger"></div>
-        {% endif %}
-
     </div>
     <div class="col-md-8">
         <table class="table table-bordered">
@@ -93,6 +79,18 @@
                 <td>2014-10-25</td>
             </tr>
         </table>
+        {% if not book_borrowed %}
+            <div class="alert alert-warning lend-info" role="alert">
+                Заявлението за книга ще те нареди на опашка чакащи. Когато дойде твоя ред ще бъдеш уведомен с имейл.
+            </div>
+
+            {% if lend_requests|length > 0 %}
+                <button class="btn btn-primary" id="land" data-should-cancel="yes" data-book-id="{{ book.id }}">Отмени заявката</button>
+            {% else %}
+                <button class="btn btn-primary" id="land" data-should-cancel="no" data-book-id="{{ book.id }}">Заявка за заемане</button>
+            {% endif %}
+            <div id="lend-request-error" class="text-danger"></div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
