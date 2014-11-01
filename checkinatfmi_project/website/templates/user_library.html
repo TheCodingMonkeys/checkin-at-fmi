@@ -8,7 +8,7 @@
     <div class="row">
     {% for borrow in borrows %}
         {% with book=borrow.borrowed_item %}
-        <div class="col-md-2">
+        <div class="col-md-3">
             <p style="text-align: center; font-size: 140%;">
                 <a href="{% url 'show_book' book.id %}">{{ book.title }}</a>
             </p>
@@ -39,7 +39,7 @@
     {% for borrow in handbacks %}
 
         {% with book=borrow.borrowed_item %}
-        <div class="col-md-2">
+        <div class="col-md-3">
             <p style="text-align: center; font-size: 140%;">
                 <a href="{% url 'show_book' book.id %}">{{ book.title }}</a>
             </p>
