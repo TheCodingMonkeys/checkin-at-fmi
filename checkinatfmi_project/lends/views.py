@@ -3,6 +3,7 @@ from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from django.db.models import Q
 
 from checkinatfmi import mailer
 
@@ -46,11 +47,10 @@ def cancel_request(request):
     book = Book.objects.get(pk=int(request.GET.get('book')))
     cardowner = Cardowner.objects.get(user=request.user)
 
-    lend_request = LendRequest.objects.filter(requester=cardowner, book=book, status=LendRequest.WAITING).order_by('-date')[0]
-    print lend_request
-    print 'babami'
-
-    lend_request.status = LendRequest.CANCELED
-    lend_request.save()
+    lend_requests = LendRequest.objects.filter(requester=cardowner, book=book).filter(Q(status=LendRequest.WAITING) | Q(status = LendRequest.FOR_LEND)).order_by('-date')
+    if len(lend_requests) > 0:
+        lend_request = lend_requests[0]
+        lend_request.status = LendRequest.CANCELED
+        lend_request.save()
 
     return HttpResponse(status=200)

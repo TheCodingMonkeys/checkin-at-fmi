@@ -69,19 +69,21 @@
                 {% endfor %}
             </table>
         {% endif %}
-        <h2>Чакащи на опашка:</h2>
-        <table class="table table-striped">
-            <tr>
-                <td>Име</td>
-                <td>Заявил на дата</td>
-            </tr>
-            {% for lend_request in lend_requests %}
+        {% if lend_requests %}
+            <h2>Чакащи на опашка:</h2>
+            <table class="table table-striped">
                 <tr>
-                    <td><a>{{ lend_request.requester.get_full_name }}</a></td>
-                    <td>{{ lend_request.date|date:"d-m-Y" }}</td>
+                    <td>Име</td>
+                    <td>Заявил на дата</td>
                 </tr>
-            {% endfor %}
-        </table>
+                {% for lend_request in lend_requests %}
+                    <tr>
+                        <td><a>{{ lend_request.requester.first_name }} {{ lend_request.requester.last_name }}</a></td>
+                        <td>{{ lend_request.date|date:"d-m-Y" }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
         {% if not book_borrowed %}
             <div class="alert alert-warning lend-info" role="alert">
                 Заявлението за книга ще те нареди на опашка чакащи. Когато дойде твоя ред ще бъдеш уведомен с имейл.

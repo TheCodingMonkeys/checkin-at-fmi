@@ -158,9 +158,7 @@ def show_book(request, book_id):
 
         lend_requests = LendRequest.objects.filter(
             book=book,
-            requester=user.cardowner,
-            status=LendRequest.WAITING
-        )
+        ).filter(Q(status=LendRequest.WAITING) | Q(status = LendRequest.FOR_LEND))
 
     current_borrowers = Borrow.objects.filter(
         borrow__carrier__book=book,
