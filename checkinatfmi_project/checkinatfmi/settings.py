@@ -15,7 +15,7 @@ def get_env_variable(var_name):
         error_msg = "Set the %s environment variable" % var_name
         raise ImproperlyConfigured(error_msg)
 
-PROJECT_ROOT= Path(__file__).ancestor(3)
+PROJECT_ROOT= Path(__file__).ancestor(2)
 
 ADMINS = (
     ('Ognyan Angelov', 'ognyan.v.angelov@gmail.com'),
