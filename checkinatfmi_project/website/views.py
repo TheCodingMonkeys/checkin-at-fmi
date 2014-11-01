@@ -165,6 +165,12 @@ def show_book(request, book_id):
         handback__isnull=True,
     )
 
+    print book.copies
+    print len(lend_requests)
+    book.copies = book.copies - len(book_borrowed) - len(lend_requests)
+    if book.copies < 0:
+        book.copies = 0
+
     return render(request, 'show_book.html', locals())
 
 
