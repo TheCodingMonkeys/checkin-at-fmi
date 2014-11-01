@@ -12,7 +12,11 @@
             <p style="text-align: center; font-size: 140%;">
                 <a href="{% url 'show_book' book.id %}">{{ book.title }}</a>
             </p>
-            <img src="{{ MEDIA_URL }}{{ book.cover }}" style="width: 100%" class="img-thumbnail">
+            {% if book.cover %}
+                <img src="{{ MEDIA_URL }}{{ book.cover }}" class="img-thumbnail" style="width: 100%" >
+            {% else %}
+                <img src="{{ STATIC_URL }}images/nocover.jpg" class="img-thumbnail"  style="width: 100%">
+            {% endif %}
             <div style="text-align: center;">
             {% if borrow.give_back_time > now %}
                 <strong>Върни до: {{ borrow.give_back_time|date:"d.m.Y" }}</strong>
@@ -39,7 +43,11 @@
             <p style="text-align: center; font-size: 140%;">
                 <a href="{% url 'show_book' book.id %}">{{ book.title }}</a>
             </p>
-            <img src="{{ MEDIA_URL }}{{ book.cover }}" style="width: 100%" class="img-thumbnail">
+            {% if book.cover %}
+                <img src="{{ MEDIA_URL }}{{ book.cover }}" class="img-thumbnail" style="width: 100%" >
+            {% else %}
+                <img src="{{ STATIC_URL }}images/nocover.jpg" class="img-thumbnail"  style="width: 100%">
+            {% endif %}
             <div style="text-align: center;">
                 <strong>Върната на: {{ borrow.borrow.time|date:"d.m.Y" }}</strong>
             </div>

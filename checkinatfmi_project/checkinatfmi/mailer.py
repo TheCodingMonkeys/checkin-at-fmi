@@ -41,6 +41,7 @@ TheCodingMonkeys"""
 def send_welcome(name, email, username, password):
     subject = "Welcome to Checkin@FMI"
     msg = WELCOME_TEMPLATE % (name, username, password)
+    return
     send_mail(
         subject,
         welcome_msg,
@@ -52,6 +53,7 @@ def send_welcome(name, email, username, password):
 def send_reminder(name, email, item):
     subject = translate.borrow_reminder_subject
     msg = REMINDER_TEMPLATE % (name, item)
+    return
     send_mail(
         subject,
         msg,
@@ -63,6 +65,7 @@ def send_reminder(name, email, item):
 def send_borrow_invite(cardowner, book):
     subject = translate.borrow_invite_subject
     msg = translate.borrow_invite_template.format(cardowner.user.first_name, book.title)
+    return
     send_mail(
         subject,
         msg,

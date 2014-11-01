@@ -21,4 +21,3 @@ STATIC_ROOT = PROJECT_ROOT.child("static")
 
 # Make this unique, and don't share it with anybody.
 # gets the secret_key from the env (put the secretkey in bashrc for example)
-SECRET_KEY = ""
